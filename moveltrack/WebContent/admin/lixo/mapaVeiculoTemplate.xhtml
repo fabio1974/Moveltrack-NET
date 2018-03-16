@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+	
+<h:head>
+	<!-- base href="#{request.requestURL.substring(0, request.requestURL.length() - request.requestURI.length())}#{request.contextPath}/site/admin/" /-->
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+	<title>MOVELTRACK RASTERAMENTO</title>
+
+	<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
+	<link href="css/bootstrap.css" rel="stylesheet" />
+	<link href="font-awesome/css/font-awesome.css" rel="stylesheet" />
+	<link href="css/animate.css" rel="stylesheet" />
+	<link href="css/style.css" rel="stylesheet" />
+	<link href="css/plugins/iCheck/custom.css" rel="stylesheet" />
+	<link href="css/tabelas.css" rel="stylesheet" type="text/css" />
+	<link href="css/bootstrap-datetimepicker.css" rel="stylesheet"/>
+
+
+<style type="text/css">
+html,body,table,td {
+	height: 100%;
+	background-color: #FFF
+}
+</style>
+
+
+			<!-- Mainly scripts -->
+<script src="js/jquery-2.1.1.js"></script>
+<script src="js/jquery-ui-1.10.4.min.js"></script>
+<script src="js/jquery-ui.custom.min.js"></script>
+<script src="js/datepicker-pt-BR.js"></script>
+<script src="js/autocompleter.js"></script>   
+
+
+
+<script src="js/jquery.maskedinput.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/plugins/metisMenu/jquery.metisMenu.js"></script>
+<script src="js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+
+<!-- Custom and plugin javascript -->
+<script src="js/inspinia.js"></script>
+<script src="js/plugins/pace/pace.min.js"></script>
+
+<!-- Peity -->
+<script src="js/plugins/peity/jquery.peity.min.js"></script>
+<script src="js/demo/peity-demo.js"></script>
+    
+<!-- iCheck -->
+<script src="js/plugins/iCheck/icheck.min.js"></script>
+    	<script src="js/moment-with-locales.js"></script>
+			<script src="js/bootstrap-datetimepicker.js"></script>
+
+
+</h:head>		
+	
+<h:body  >
+
+
+
+
+
+	<table class="white-bg" border="0"
+		style="height: 6%; width: 100%; margin-left: 10px; margin-right: 10px">
+		<tr>
+			<td align="left" ><h:form>
+					<h:commandLink  class=" btn btn-primary btn-xs " value="Menu" action="admin.xhtml">
+						<i class="fa fa-bars "></i>
+					</h:commandLink>
+				</h:form>
+				</td>
+
+			<td width="25%" align="right">
+
+			</td>
+
+
+
+			<td width="60%" align="center">Usuário: <h:outputText
+					value="#{loginBean.usuarioNome}" /></td>
+			<td align="center" width="10%"><h:form>
+					<h:commandLink action="#{loginBean.logout}"
+						style="color: #999C9E;font-size:12px;font-weight:bold"
+						value="Sair">
+						<i class="fa fa-sign-out  "></i>
+					</h:commandLink>
+				</h:form></td>
+		</tr>
+	</table>
+
+
+
+	<table border="0" style="height: 94%;width: 100%" >
+			
+			
+			<tr>
+			<td width="27%" >
+			
+				    <iframe style="margin-right:10px"  frameborder="0" marginheight="0" marginwidth="0" scrolling="yes" width="100%" height="100%"  src="mapaVeiculoTable.xhtml" name="veiculoFrame" id="veiculoFrame">
+   						<small>iframes are not supported by your browser.</small>
+					</iframe>
+					
+					
+			
+			
+			
+			</td>
+			
+			<td width="73%" >
+			
+				    <iframe style="margin-left:10px" frameborder="0" marginheight="0" marginwidth="0" scrolling="yes" width="100%" height="100%"  src="mapaVeiculo.xhtml" name="mapaFrame" id="mapaFrame">
+   						<small>iframes are not supported by your browser.</small>
+					</iframe>
+					
+				
+					
+					
+
+
+
+			</td>
+			
+			</tr>
+			
+			
+			</table>
+			
+<script type="text/javascript"> 
+ jQuery(function($){
+   $("#form\\:celular1,#form\\:celular2").mask("(99) 9999-9999?9");
+   $("#form\\:telefoneFixo").mask("(99) 9999-9999");
+   $("#form\\:cpf").mask("999.999.999-99");
+   $("#form\\:cep").mask("99.999-999");
+   $("#form\\:cnpj").mask("99.999.999/9999-99");
+
+
+   $("#dataNascimento,#validadeCnh").datetimepicker({
+       locale: 'pt',
+       format: 'DD/MM/YYYY',
+       showClose:true,
+       viewMode: 'years'
+   });
+   
+
+   $("#inicio,#fim,#dataDaDespesa,#partida,#chegadaPrevista,#dataInstalacao,#dataDesinstalacao,#dataCadastro").datetimepicker({
+       locale: 'pt',
+       format: 'DD/MM/YYYY HH:mm',
+       showClose: true,
+   });
+ 
+});
+
+
+</script>			
+
+
+</h:body>
+
+</html>
+
+
+
+
+
+

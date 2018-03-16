@@ -1,0 +1,371 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:b="http://bootsfaces.net/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"  
+	xmlns:c="http://java.sun.com/jsp/jstl/core" 
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<h:body>
+
+
+
+	<ui:composition template="template/adminTemplate.xhtml">
+		<ui:define name="content">
+		
+			
+			
+
+			<div class="wrapper wrapper-content ">
+
+				<div class="ibox">
+					<div class="inbox title">
+						<b><h:outputText
+								value='#{viagemForm.action.equals("INSERT")?"Inserir Nova ":viagemForm.action.equals("UPDATE")?"Atualizar ":"Detalhes da "}Viagem' /></b>
+
+					</div>
+					<div class="ibox-content">
+						<h:form onsubmit="document.body.style.cursor='wait'" id="form" role="form">
+
+								
+								<div class="row">
+								
+								<div class="col-sm-3">
+									<div class="form-group">
+										<label for="cidadeOrigem">Cidade de Origem</label>
+										<h:inputText id="cidadeOrigem"
+											value="#{viagemForm.viagem.cidadeOrigem}"
+											readonly="true"
+											converter="#{municipioConverter}"
+											styleClass="form-control input-sm"
+											style="#{component.valid?'':'border-color:red;'}" 
+											placeholder="cidadeOrigem" />
+									</div>
+								</div>
+								
+								
+								
+								<div class="col-sm-3">
+									<div class="form-group">
+										<label for="cidadeDestino">Cidade de Destino</label>
+										<h:inputText id="cidadeDestino"
+											value="#{viagemForm.viagem.cidadeDestino}"
+											readonly='#{viagemForm.action.equals("SHOW")}'
+											converter="#{municipioConverter}"
+											styleClass="form-control input-sm"
+											style="#{component.valid?'':'border-color:red;'}" 
+											placeholder="Cidade de Destino" />
+									</div>
+								</div>
+								
+									<div class="col-sm-3">
+									<div class="form-group">
+										<label  for="veiculo">Veiculo</label>
+										<h:selectOneMenu id="veiculo" converter="#{veiculoConverter}"
+											value="#{viagemForm.viagem.veiculo}"
+											disabled='#{viagemForm.action.equals("SHOW")}'
+											styleClass="form-control input-sm"
+											style="#{component.valid?'':'border-color:red;'}" 
+										 >
+										    <f:selectItem itemLabel="&nbsp;"  noSelectionOption="yes"/>
+											<f:selectItems value="#{viagemForm.veiculos}"
+												var="veiculo" itemLabel="#{veiculo.placa}"
+												itemValue="#{veiculo}" />
+										</h:selectOneMenu>
+									</div>
+									</div>
+								
+								
+								
+									<div class="col-sm-3">
+									<div class="form-group">
+										<label for="motorista">Motorista</label>
+										<h:selectOneMenu id="motorista"
+											converter="#{motoristaConverter}"
+											value="#{viagemForm.viagem.motorista}"
+											disabled='#{viagemForm.action.equals("SHOW")}'
+											styleClass="form-control input-sm"
+											style="#{component.valid?'':'border-color:red;'}" 
+											placeholder="Motorista">
+											<f:selectItem itemLabel="&nbsp;"  noSelectionOption="yes"/>
+											<f:selectItems value="#{viagemForm.motoristas}" 
+												var="motorista" itemLabel="#{motorista.nome}"
+												itemValue="#{motorista}" />
+										</h:selectOneMenu>
+									</div>
+									</div>
+								
+								
+								
+								</div>
+								
+								
+							<div class="row">
+
+								<div class="col-sm-3">
+									<div class="form-group">
+									<label for="partida">Data/Hora da Partida</label>
+									
+									<div class='input-group date' id='partida'>
+										
+										<h:inputText id="partida"
+											value="#{viagemForm.viagem.partida}"
+											readonly='#{viagemForm.action.equals("SHOW")}'
+											styleClass="form-control input-sm"
+											style="#{component.valid?'':'border-color:red;'}">
+											<f:convertDateTime pattern="dd/MM/yyyy HH:mm" timeZone="GMT-3" />
+										</h:inputText>
+
+										<span  class="input-group-addon"> 
+											<span class="glyphicon glyphicon-calendar"></span>
+										</span>
+
+										</div>	
+									</div>
+								</div>
+								
+								
+								
+								<div class="col-sm-3">
+									<div class="form-group">
+										<label for="chegadaPrevista">Chegada Prevista</label>
+										<div class='input-group date' id='chegadaPrevista'>
+										<h:inputText id="chegadaPrevista"
+											value="#{viagemForm.viagem.chegadaPrevista}"
+											readonly='#{viagemForm.action.equals("SHOW")}'
+											styleClass="form-control input-sm"
+											style="#{component.valid?'':'border-color:red;'}">
+											<f:convertDateTime pattern="dd/MM/yyyy HH:mm" timeZone="GMT-3" />
+										</h:inputText>
+										<span  class="input-group-addon"> 
+											<span class="glyphicon glyphicon-calendar"></span>
+										</span>
+									</div>	
+										
+									</div>
+								</div>
+								
+								<div class="col-sm-3">
+									<div class="form-group">
+										<label for="chegadaReal">Chegada Real</label>
+										<div class='input-group date' id='chegadaReal'>
+										
+										<h:outputText id="chegadaReal"
+													value="#{viagemForm.viagem.chegadaReal}"
+													styleClass="form-control input-sm "
+													style="background-color:#eee; opacity:1;"
+										 >
+										 <f:convertDateTime pattern="dd/MM/yy HH:mm" timeZone="GMT-3" />
+										 </h:outputText>
+										<span  class="input-group-addon"> 
+											<span class="glyphicon glyphicon-calendar"></span>
+										</span>
+									</div>	
+									</div>
+								</div>
+								
+								
+								<div class="col-sm-3">
+									<div class="form-group">
+										<label for="status">Status</label>
+										
+										<h:outputText id="status"
+													value="#{viagemForm.viagem.status.descricao}"
+													styleClass="form-control input-sm "
+													style="background-color:#eee; opacity:1;"
+										 />
+										
+									</div>
+								</div>
+								
+								
+
+							</div>
+								
+								
+								
+								<div class="row">
+								
+								<div class="col-sm-3">
+									<div class="form-group">
+										<label for="qtdCidades">Quantidade de Cidades</label>
+										<h:inputText id="qtdCidades"
+											value="#{viagemForm.viagem.qtdCidades}"
+											readonly='#{viagemForm.action.equals("SHOW")}'
+											styleClass="form-control input-sm"
+											style="#{component.valid?'':'border-color:red;'}"
+											 />
+									</div>
+								</div>
+								
+								<div class="col-sm-3">
+									<div class="form-group">
+										<label for="qtdClientes">Quantidade de Clientes</label>
+										<h:inputText id="qtdClientes"
+											value="#{viagemForm.viagem.qtdClientes}"
+											readonly='#{viagemForm.action.equals("SHOW")}'
+											styleClass="form-control input-sm"
+											style="#{component.valid?'':'border-color:red;'}"
+											 />
+									</div>
+								</div>
+								
+								<div class="col-sm-3">
+									<div class="form-group">
+										<label for="valorDaCarga">Valor da Carga</label>
+										<h:inputText id="valorDaCarga"
+											value="#{viagemForm.viagem.valorDaCarga}"
+											readonly='#{viagemForm.action.equals("SHOW")}'
+											styleClass="form-control input-sm"
+
+											style="#{component.valid?'':'border-color:red;'}"
+											converter="#{realConverter}"
+											 >
+
+
+
+										</h:inputText>	 
+											 
+									</div>
+								</div>
+								
+								<div class="col-sm-3">
+									<div class="form-group">
+										<label for="descricao">Descricao da Carga</label>
+										<h:inputText id="descricao"
+											value="#{viagemForm.viagem.descricao}"
+											readonly='#{viagemForm.action.equals("SHOW")}'
+											styleClass="form-control input-sm"
+											style="#{component.valid?'':'border-color:red;'}" 
+											placeholder="Descrição" />
+									</div>
+								</div>
+								
+
+							</div>
+
+
+						
+								
+								<div class="row">
+								
+								<div class="col-sm-3">
+									<div class="form-group">
+										<label for="pesoDaCarga">Peso da Carga</label>
+										<h:inputText id="pesoDaCarga"
+											value="#{viagemForm.viagem.pesoDaCarga}"
+											readonly='#{viagemForm.action.equals("SHOW")}'
+											styleClass="form-control input-sm"
+											style="#{component.valid?'':'border-color:red;'}"
+											 />
+									</div>
+								</div>
+								
+								<div class="col-sm-3">
+									<div class="form-group">
+										<label for="distanciaPercorrida">Distância pelo Rastreador (km)</label>
+										<h:inputText id="distanciaPercorrida"
+													value="#{viagemForm.viagem.distanciaPercorrida}"
+													styleClass="form-control input-sm "
+													readonly="#{viagemForm.distanciaPercorridaReadOnly}"
+													style="#{component.valid?'':'border-color:red;'}"
+										 >
+										 	<f:convertNumber pattern="#0.000"   />
+										 </h:inputText>
+									</div>
+								</div>
+								
+								<div class="col-sm-3">
+									<div class="form-group">
+										<label for="distanciaHodometro">Distância pelo Hodrômetro (km)</label>
+										<h:inputText id="distanciaHodometro"
+													value="#{viagemForm.viagem.distanciaHodometro}"
+													styleClass="form-control input-sm "
+													readonly="#{viagemForm.action.equals('SHOW')}"
+													style="#{component.valid?'':'border-color:red;'}"
+										 >
+										 	<f:convertNumber pattern="#0.000"   />
+										 </h:inputText>
+									</div>
+								</div>
+								
+								
+								<div class="col-sm-3">
+									<div class="form-group">
+										<label for="valorDevolucao">Valor de Devolução</label>
+										<h:inputText id="valorDevolucao"
+											value="#{viagemForm.viagem.valorDevolucao}"
+											readonly='#{viagemForm.action.equals("SHOW")}'
+											styleClass="form-control input-sm"
+
+											style="#{component.valid?'':'border-color:red;'}"
+											converter="#{realConverter}"
+											 >
+
+											 
+										</h:inputText>	 
+									</div>
+								</div>
+								
+								
+
+							</div>							
+							
+							
+
+
+							<div class="row">
+								<div class="col-lg-5">
+
+									<h:panelGrid columns="5">
+										<h:commandButton id="voltar"
+											value='#{viagemForm.action.equals("INSERT")?"Listar Viágens":"Voltar"}'
+											action="#{viagemForm.sair()}"
+											styleClass="btn btn-primary btn-sm" />
+										&nbsp;&nbsp;
+										<h:commandLink id="salvar" value="Salvar"
+											action="#{viagemForm.salvar()}"
+											rendered='#{viagemForm.action.equals("INSERT") or viagemForm.action.equals("SMARTINSERT") or viagemForm.action.equals("UPDATE")}'
+											styleClass=" btn btn-primary btn-sm" />
+											
+										&nbsp;&nbsp;											
+										<h:commandLink id="excluir" value="Excluir Viagem e Despesas"
+											action="#{viagemForm.excluir()}"
+											rendered='#{viagemForm.action.equals("DELETE")}'
+											styleClass=" btn btn-primary btn-sm" />
+											
+											
+									</h:panelGrid>
+
+								</div>
+								<div class="col-lg-7">
+									<h:messages styleClass="swp-msg swp-msg-sm"
+										infoClass="alert alert-success"
+										warnClass="alert alert-warning"
+										errorClass="alert alert-danger" showDetail="false" />
+								</div>
+							</div>
+
+
+						</h:form>
+
+					</div>
+				</div>
+
+			</div>
+
+		</ui:define>
+	</ui:composition>
+
+</h:body>
+
+</html>
+
+
+
+
+
+

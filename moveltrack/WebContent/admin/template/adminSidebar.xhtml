@@ -1,0 +1,276 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:c="http://java.sun.com/jsp/jstl/core" 
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<body>
+	<ui:composition>
+
+<nav class="navbar-default navbar-static-side" role="navigation">
+	    
+	    <div style="position: relative; overflow: hidden; width: auto; height: 100%;" class="slimScrollDiv">
+		
+		<div style="overflow: hidden; width: auto; height: 100%;" class="sidebar-collapse" >
+		
+		<h:form id="formNav" role="form">
+		
+				<ul style="display: block;" class="nav metismenu" id="side-menu">
+					<li class="nav-header">
+						<div >
+							<span> <img width="166" height="43" alt="image" src="../assets/img/moveltrack/#{loginBean.usuario.nomeUsuario.equals('sincoplema')?'sincoplema_logo_invertida.png':'logo_branco_166_43.png'}" />
+							</span>
+						</div>
+						
+						
+							
+					</li>
+					
+					<c:if test="#{loginBean.hasPermission('MENU_CLIENTES')}">
+					
+					<li class="#{navigator.topico.equals('cliente')?'active':''}" >
+							<h:commandLink 	action="clienteTable">
+								<c:if test="#{loginBean.hasPermission('CLIENTE_VER_TODOS')}">
+										<i class="fa fa-users"/>Clientes
+								</c:if>	
+								<c:if test="#{loginBean.hasPermission('CLIENTE_VER_PROPRIO')}">
+										<i class="fa fa-user"/>Dados do Cliente 
+								</c:if>	
+								    <f:setPropertyActionListener value="cliente" target="#{navigator.topico}" />
+								</h:commandLink>
+					</li>	
+					</c:if>
+					
+
+							<c:if test="#{loginBean.hasPermission('MENU_CONTRATO')}">
+							<li class="#{navigator.topico.equals('contrato')?'active':''}">
+								<h:commandLink 	action="contratoTable"><i class="fa fa-file-text-o"/>
+									<c:if test="#{loginBean.hasPermission('CONTRATO_VER_TODOS')}">
+										Contratos
+									</c:if>	
+									<c:if test="#{loginBean.hasPermission('CONTRATO_VER_PROPRIO')}">
+										Dados do Contrato 
+									</c:if>	
+								    <f:setPropertyActionListener value="contrato" target="#{navigator.topico}" />
+								</h:commandLink>
+							</li>
+							</c:if>
+							
+							<c:if test="#{loginBean.hasPermission('MENU_VEICULO')}">
+							<li  class="#{navigator.topico.equals('veiculo')?'active':''}">
+								<h:commandLink 	action="veiculoTable"><i class="fa fa-car"/>Veículos
+									<f:setPropertyActionListener value="veiculo" target="#{navigator.topico}" />
+								</h:commandLink>
+							</li>
+							</c:if>
+							
+							<c:if test="#{loginBean.hasPermission('MENU_RASTREADOR')}">
+							<li  class="#{navigator.topico.equals('equipamento')?'active':''}">
+								<h:commandLink 	action="equipamentoTable"><i class="fa fa-rss-square"/>Rastreadores
+									<f:setPropertyActionListener value="equipamento" target="#{navigator.topico}" />
+								</h:commandLink>
+							</li>
+							</c:if>
+							
+							<c:if test="#{loginBean.hasPermission('MENU_CHIP')}">
+							<li  class="#{navigator.topico.equals('chip')?'active':''}">
+								<h:commandLink 	action="chipTable"><i class="glyphicon glyphicon-erase"/>Chips
+									<f:setPropertyActionListener value="chip" target="#{navigator.topico}" />
+								</h:commandLink>
+							</li>
+							</c:if>
+							
+							
+					<c:if test="#{loginBean.hasPermission('MENU_FATURA')}">		
+					<li class="#{navigator.topico.equals('boleto')?'active':''}" >
+								<h:commandLink 	action="boletoTable">
+										<i class="fa fa-bitcoin"/>Boletos
+								    <f:setPropertyActionListener value="boleto" target="#{navigator.topico}" />
+								</h:commandLink>
+					</li>
+					</c:if>
+					
+										
+					<c:if test="#{loginBean.hasPermission('MENU_CARNE')}">					
+					<li class="#{navigator.topico.equals('carne')?'active':''}" >
+								<h:commandLink 	action="carneTable">
+										<i class="fa fa-file-pdf-o"/>Carnês
+								    <f:setPropertyActionListener value="carne" target="#{navigator.topico}" />
+								</h:commandLink>
+					</li>	
+					</c:if>
+					
+					
+					
+					
+					
+					<c:if test="#{loginBean.hasPermission('MENU_REMESSA')}">
+					<li class="#{navigator.topico.equals('remessa')?'active':''}" >
+								<h:commandLink 	action="remessaTable">
+										<i class="fa fa-exchange"/>Remessa
+								    <f:setPropertyActionListener value="remessa" target="#{navigator.topico}" />
+								</h:commandLink>
+					</li>
+					</c:if>
+					
+					
+					<c:if test="#{loginBean.hasPermission('MENU_OS')}">
+					<li class="#{navigator.topico.equals('ordemDeServico')?'active':''}" >
+								<h:commandLink 	action="ordemDeServicoTable">
+										<i class="glyphicon glyphicon-wrench"/>Ordem de Serviço
+								    <f:setPropertyActionListener value="ordemDeServico" target="#{navigator.topico}" />
+								</h:commandLink>
+					</li>
+					</c:if>
+
+					<c:if test="#{loginBean.hasPermission('MENU_OS')}">
+					<li class="#{navigator.topico.equals('lancamento')?'active':''}" >
+								<h:commandLink 	action="lancamentoTable">
+										<i class="glyphicon glyphicon-usd"/>Lançamento
+								    <f:setPropertyActionListener value="lancamento" target="#{navigator.topico}" />
+								</h:commandLink>
+					</li>
+					</c:if>
+					
+					
+					<c:if test="#{loginBean.hasPermission('MENU_DESPESA')}">
+					<li class="#{navigator.topico.equals('despesa')?'active':''}" >
+								<h:commandLink 	action="despesaTable">
+										<i class="glyphicon glyphicon-usd"/>Despesa
+								    <f:setPropertyActionListener value="despesa" target="#{navigator.topico}" />
+								</h:commandLink>
+					</li>
+					</c:if>
+					
+					
+					
+												
+							
+					
+					<c:if test="#{loginBean.hasPermission('MENU_CONFIG')}">
+					<li  class="#{navigator.topico.equals('config')?'active':''}">
+								<h:commandLink 	action="configTable"><i class="fa fa-cog"/>Configurações
+									<f:setPropertyActionListener value="config" target="#{navigator.topico}" />
+								</h:commandLink>
+					</li>
+					</c:if>
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							<c:if test="#{loginBean.hasPermission('MENU_EMPREGADOS')}">
+							<li class="#{navigator.topico.equals('empregado')?'active':''}">
+								<h:commandLink 	action="empregadoTable"><i class="fa fa-user"/>#{!loginBean.hasPermission('EMPREGADO_VER_PROPRIO')?'Empregados':'Meus Dados'}
+									<f:setPropertyActionListener value="empregado" target="#{navigator.topico}" />
+								</h:commandLink>
+							</li>
+							</c:if>
+							
+							<c:if test="#{loginBean.hasPermission('MENU_MOTORISTA')}">
+							<li class="#{navigator.topico.equals('motorista')?'active':''}">
+								<h:commandLink 	action="#{conversation.novaConversa('motoristaTable')}"><i class="fa fa-user"/>Motoristas
+									<f:setPropertyActionListener value="motorista" target="#{navigator.topico}" />
+								</h:commandLink>
+							</li>
+							</c:if>
+							
+							
+							
+							<c:if test="#{loginBean.hasPermission('MENU_VIAGENS')}">
+							<li  class="#{navigator.topico.equals('viagem')?'active':''}">
+								<h:commandLink 	action="#{conversation.novaConversa('viagemTable')}"><i class="glyphicon glyphicon-road"/>Viagens
+									<f:setPropertyActionListener value="viagem" target="#{navigator.topico}" />
+								</h:commandLink>
+							</li>
+							</c:if>
+							
+							<c:if test="#{loginBean.hasPermission('MENU_DESPESA_DE_FROTA')}">
+							<li class="#{navigator.topico.equals('despesaFrota')?'active':''}">
+								<h:commandLink 	action="#{conversation.novaConversa('despesaFrotaTable')}"><i class="fa fa-dollar"/>Despesas da Frota
+									<f:setPropertyActionListener value="despesaFrota" target="#{navigator.topico}" />
+								</h:commandLink>
+							</li>
+							</c:if>
+							
+							<c:if test="#{loginBean.hasPermission('MENU_VIAGENS')}">
+							<li class="#{navigator.topico.equals('relatorioJuridica')?'active':''}">
+								<h:commandLink 	action="relatorioJuridica"><i class="fa fa-file-pdf-o"/>Relatórios da Frota
+									<f:setPropertyActionListener value="relatorioJuridica" target="#{navigator.topico}" />
+								</h:commandLink>
+							</li>
+							</c:if>
+							
+							
+							<c:if test="#{loginBean.hasPermission('MENU_RELATORIO')}">
+							<li class="#{navigator.topico.equals('relatorioInterno')?'active':''}">
+								<h:commandLink 	action="relatorioInterno"><i class="fa fa-file-pdf-o"/>Relatórios Internos
+									<f:setPropertyActionListener value="relatorioInterno" target="#{navigator.topico}" />
+								</h:commandLink>
+							</li>
+							</c:if>
+							
+							
+				
+							
+							
+							<c:if test="#{loginBean.hasPermission('MENU_ACESSO')}">
+							<li  class="#{navigator.topico.equals('controle')?'active':''}">
+								<h:commandLink 	action="#{conversation.novaConversa('controleTable')}"><i class="fa fa-key"/>Controle de Acesso
+								    <f:setPropertyActionListener value="controle" target="#{navigator.topico}" />
+								</h:commandLink>
+							</li>
+							</c:if>
+							
+
+							
+							
+							<c:if test="#{loginBean.hasPermission('MAPA_DA_FROTA') &amp;&amp; loginBean.isCliente()}">
+							<li class="#{navigator.topico.equals('mapaFrota')?'active':''}">
+								<h:commandLink 	action="mapaFrota"><i class="glyphicon glyphicon-globe"></i>Mapa da Frota
+									<f:setPropertyActionListener value="mapaFrota" target="#{navigator.topico}" />
+								</h:commandLink>
+							</li>
+							</c:if>
+					
+
+						
+							
+						
+						</ul>
+						
+
+						
+				
+			
+			</h:form>	
+				
+
+			</div>
+		<div style="background: rgb(0, 0, 0) none repeat scroll 0% 0%; width: 7px; position: absolute; top: 0px; opacity: 0.4; display: none; border-radius: 7px; z-index: 99; right: 1px; height: 145.998px;"
+			class="slimScrollBar">
+		</div>
+		<div style="width: 7px; height: 100%; position: absolute; top: 0px; display: none; border-radius: 7px; background: rgb(51, 51, 51) none repeat scroll 0% 0%; opacity: 0.9; z-index: 90; right: 1px;"
+			class="slimScrollRail">
+		</div>
+	</div>
+	<div style="background: rgb(0, 0, 0) none repeat scroll 0% 0%; width: 7px; position: absolute; top: 0px; opacity: 0.4; display: none; border-radius: 7px; z-index: 99; right: 1px; height: 145.998px;"
+		class="slimScrollBar">
+	</div>
+	<div style="width: 7px; height: 100%; position: absolute; top: 0px; display: none; border-radius: 7px; background: rgb(51, 51, 51) none repeat scroll 0% 0%; opacity: 0.9; z-index: 90; right: 1px;"
+		class="slimScrollRail">
+	</div>
+</nav>
+</ui:composition>
+</body>
+</html>

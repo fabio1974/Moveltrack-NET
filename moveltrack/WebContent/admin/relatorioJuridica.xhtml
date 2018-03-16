@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:b="http://bootsfaces.net/ui"
+	xmlns:c="http://java.sun.com/jsp/jstl/core" 
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head>
+
+</h:head>	
+
+<h:body>
+
+	<ui:composition template="template/adminTemplate.xhtml">
+		<ui:define name="content">
+
+			<div class="wrapper wrapper-content ">
+
+				<div class="ibox">
+					<div class="inbox title">RELATÓRIOS DA FROTA</div>
+					<div class="ibox-content">
+						<h:form  id="form" role="form">
+						
+							<div class="row">
+
+								<div class="col-sm-2">
+								
+										<c:if test="#{loginBean.hasPermission('MENU_VIAGENS')}">
+											<h:commandLink styleClass="btn btn-primary btn-sm btn-block"  action="relatorioFrota2">Relatórios de Viagens</h:commandLink>
+											<p/>
+										</c:if>	
+					
+										<c:if test="#{loginBean.hasPermission('MENU_VIAGENS')}">
+											<h:commandLink styleClass="btn btn-primary  btn-sm btn-block"  action="relatorioFrequencia2">Frequência do Motorista</h:commandLink>
+											<p/>
+										</c:if>
+					
+										<c:if test="#{loginBean.hasPermission('MENU_VIAGENS')}">
+											<h:commandLink styleClass="btn btn-primary btn-sm btn-block"  action="relatorioUsoIndevido2">Restrição de Tráfego</h:commandLink>
+											<p/>
+										</c:if>		
+										
+										<c:if test="#{loginBean.hasPermission('MENU_VIAGENS')}">
+											<h:commandLink styleClass="btn btn-primary btn-sm btn-block"  action="relatorioCNH">Vencimento de CNH</h:commandLink>
+											<p/>
+										</c:if>
+										
+										<c:if test="#{loginBean.hasPermission('MENU_VIAGENS')}">
+											<h:commandLink styleClass="btn btn-primary btn-sm btn-block"  action="relatorioExcessoVelocidade">Excesso de Velocidade</h:commandLink>
+											<p/>
+										</c:if>		
+												
+										
+										
+												
+										
+								
+					
+								</div>
+			
+							    <div class="col-sm-1"></div>
+			
+								<div class="col-sm-9">
+								
+										<ui:insert name="relatorioDaFrota" >
+		  
+										</ui:insert>
+									
+								</div>
+							</div>
+						</h:form>	
+					
+					</div>
+				</div>
+			</div>			
+
+		</ui:define>
+		
+		
+		
+	</ui:composition>
+
+</h:body>
+
+</html>
+
+        
+        
+        
+        
+        
+ 

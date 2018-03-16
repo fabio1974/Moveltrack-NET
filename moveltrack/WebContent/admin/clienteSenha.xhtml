@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:b="http://bootsfaces.net/ui"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+	
+
+<h:body>
+
+
+
+	<ui:composition template="template/adminTemplate.xhtml">
+
+
+
+
+		<ui:define name="content">
+
+
+
+
+			
+			<div class="wrapper wrapper-content ">
+
+				<div class="ibox">
+					<div class="inbox title">
+
+						<b><h:outputText value='Atualizar Senha' /></b>
+
+					</div>
+					<div class="ibox-content">
+						<h:form onsubmit="document.body.style.cursor='wait'" id="form" role="form">
+
+								<div class="row">
+								
+								
+								<div class="col-sm-3">
+                                <div class="form-group">    
+									<div class="input-group margin-bottom-20">
+										
+										<span class="input-group-addon"><i class="fa fa-lock"></i></span>
+										<h:inputSecret id="confirmaSenha1" name="conformaSenha1"
+											pt:placeholder="Insira Nova Senha"
+											value="#{clienteForm.confirmaSenha1}"
+											style="#{component.valid?'':'border-color:red;'}"
+											class="form-control input-sm" />
+									</div>
+								</div>	
+								</div>
+							</div>
+							
+
+
+							<div class="row">
+								<div class="col-sm-3">
+                                    <div class="form-group">
+									<div class="input-group margin-bottom-20">
+										
+										<span class="input-group-addon"><i class="fa fa-lock"></i></span>
+										<h:inputSecret id="confirmaSenha2" name="confirmaSenha2" 
+											pt:placeholder="Confirme a Nova Senha"
+											value="#{clienteForm.confirmaSenha2}"
+											style="#{component.valid?'':'border-color:red;'}"
+											class="form-control input-sm" />
+									</div>
+									</div>
+								</div>
+							</div>
+
+
+
+							<div class="row">
+								<div class="col-lg-2">
+
+								<div class="form-group">
+									<h:panelGrid columns="3">
+										<h:commandLink id="voltar"
+											value='#{clienteForm.action.equals("INSERT")?"Listar Clientes":"Voltar"}'
+											action="#{clienteForm.sair()}"
+											styleClass="btn btn-primary btn-sm">&nbsp;
+											<i class="fa fa-undo"/>
+											</h:commandLink>
+										&nbsp;&nbsp;
+										<h:commandLink id="salvar" value="Salvar"
+											action="#{clienteForm.salvaSenha()}"
+											rendered='#{!clienteForm.action.equals("SHOW")}'
+											styleClass=" btn btn-primary btn-sm" />
+									</h:panelGrid>
+								</div>
+								</div>
+								<div class="col-lg-10">
+								<div class="form-group">
+									<h:messages styleClass="swp-msg swp-msg-sm"
+										infoClass="alert alert-success"
+										warnClass="alert alert-warning"
+										errorClass="alert alert-danger" showDetail="false" />
+								</div>		
+								</div>
+							</div>
+
+
+						</h:form>
+
+					</div>
+				</div>
+
+			</div>
+
+			<script>
+    function disableInput() {
+    	document.getElementById("form:cpf").disabled = document.getElementById("form:isPessoaJuridica").checked;
+    	document.getElementById("form:cnpj").disabled = !document.getElementById("form:isPessoaJuridica").checked;
+    	document.getElementById("form:nomeFantasia").disabled = !document.getElementById("form:isPessoaJuridica").checked;
+    	document.getElementById("form:cpf").value= document.getElementById("form:isPessoaJuridica").checked?"":document.getElementById("form:cpf").value;
+    	document.getElementById("form:cnpj").value= !document.getElementById("form:isPessoaJuridica").checked?"":document.getElementById("form:cnpj").value;
+    	document.getElementById("form:nomeFantasia").value= !document.getElementById("form:isPessoaJuridica").checked?"":document.getElementById("form:nomeFantasia").value;
+    }
+</script>
+
+
+		</ui:define>
+	</ui:composition>
+
+</h:body>
+
+</html>
+
+
+
+
+
+

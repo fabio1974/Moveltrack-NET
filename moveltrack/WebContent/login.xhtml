@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets" lang="en"
+	 xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
+
+
+<!--[if IE 8]> <html lang="en" class="ie8"> <![endif]-->
+<!--[if IE 9]> <html lang="en" class="ie9"> <![endif]-->
+<!--[if !IE]><!-->
+<!--<![endif]-->
+
+<h:body class="login-page">
+
+<ui:composition template="/template/login.xhtml">
+   <ui:define name="content" >
+
+	<div class="page-header"
+		style="background-image: url('#{request.contextPath}/frontend/assets/img/moveltrack/track-dark.jpg'); background-size: cover; background-position: top center;">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-4 col-md-offset-4 col-sm-6 col-sm-offset-3">
+					<div class="card card-signup">
+						<h:form id="form" role="form">
+							<div class="header header-primary text-center">
+								<h4 class="card-title">Acesso ao Sistema</h4>
+							</div>
+							<div class="content">
+																			
+								<div class="input-group">
+									<span class="input-group-addon"> <i
+										class="material-icons">account_circle</i>
+									</span>
+									<div class="form-group is-empty">
+										<h:inputText type="text" id="nomeUsuario"
+											pt:placeholder="Nome de Usuário"
+											value="#{loginBean.usuario.nomeUsuario}"
+											style="#{component.valid?'':'border-color:red;'}"
+											class="form-control" />
+									</div>
+								</div>
+
+								<div class="input-group">
+									<span class="input-group-addon"> <i
+										class="material-icons">lock_outline</i>
+									</span>
+									<div class="form-group is-empty">
+										<h:inputSecret id="senha" 
+											pt:placeholder="Senha"
+											value="#{loginBean.usuario.senha}"
+											style="#{component.valid?'':'border-color:red;'}"
+											class="form-control" />
+									</div>
+								</div>
+								
+								<div class="text-primary">
+									<h:messages styleClass="text-primary" infoClass="text-sucess"
+										warnClass="text-warning" errorClass="text-danger"
+										showDetail="false" />
+								</div>
+								
+							</div>
+							<div class="footer text-center">
+								<h:commandButton action="#{loginBean.go}" class="btn btn-primary"
+										value="Login" />
+							</div>
+							</h:form>
+					</div>
+				</div>
+
+			</div>
+		</div>
+		<footer class="footer" style="margin-top: 140px">
+		<div class="container">
+			<nav class="pull-left"> <!-- <ul>
+							<li>
+								<a href="#">
+									Link1
+								</a>
+							</li>
+							<li>
+								<a href="#">
+								    Link 2
+								</a>
+							</li>
+							<li>
+								<a href="#">
+								    Link3
+								</a>
+							</li>
+							
+			            </ul> --> </nav>
+			<div class="copyright pull-right">&copy; 2016, Moveltrack |
+				Segurança &amp; Tecnologia.</div>
+		</div>
+		</footer>
+
+	</div>
+	
+	</ui:define>
+</ui:composition>
+</h:body>
+</html>

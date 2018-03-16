@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      lang="en"
+      >
+
+<h:head>
+	<!-- base href="#{request.requestURL.substring(0, request.requestURL.length() - request.requestURI.length())}#{request.contextPath}/site/admin/" /-->
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<!-- Favicon -->
+	<link rel="shortcut icon"	href="../assets/img/moveltrack/simbolo_118_82.png" />
+
+	<title>MOVELTRACK RASTERAMENTO</title>
+	
+	
+	
+	<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
+	<link href="css/bootstrap.min.css" rel="stylesheet" />
+	<link href="font-awesome/css/font-awesome.css" rel="stylesheet" />
+	<link href="css/animate.css" rel="stylesheet" />
+	<link href="css/style.css" rel="stylesheet" />
+	<link href="css/plugins/iCheck/custom.css" rel="stylesheet" />
+	<link href="css/tabelas.css" rel="stylesheet" type="text/css" />
+
+	<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
+	<link href="css/bootstrap.min.css" rel="stylesheet" />
+	<link href="font-awesome/css/font-awesome.css" rel="stylesheet" />
+	<link href="css/animate.css" rel="stylesheet" />
+	<link href="css/style.css" rel="stylesheet" />
+	<link href="css/plugins/iCheck/custom.css" rel="stylesheet" />
+	<link href="css/tabelas.css" rel="stylesheet" type="text/css" />
+	
+	<style type="text/css">
+			html {
+				height: 100%
+			}
+			
+			#map_canvas {
+				height: 100%
+			}
+			
+			#page-wrapper {
+				height: 100%
+			}
+			
+			#wrapper {
+				height: 100%
+			}
+			
+			body {
+				height: 100%;
+				margin: 0px;
+				padding: 0px
+			}
+			
+	</style>
+	
+	<!--*******************************************JAVA SCRIPT********************************************************-->	
+
+	<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?libraries=geometry&amp;key=AIzaSyCg5eE_buXJLsJZbnTZ7z3MnJBOV3_RoYc&amp;v=3."></script>
+	<script type="text/javascript" src="js/StyledMarker.js"></script>
+	<script charset="UTF-8" type="text/javascript"	src="js/mapa_ajax.js?n=1"></script>
+
+	<script src="js/jquery-2.1.1.js"></script>
+	<script src="js/jquery-ui-1.10.4.min.js"></script>
+	<script src="js/jquery-ui.custom.min.js"></script>
+	<script src="js/autocompleter.js"></script>
+
+	<script src="js/jquery.maskedinput.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+	<script src="js/plugins/metisMenu/jquery.metisMenu.js"></script>
+	<script src="js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+
+	<!-- Custom and plugin javascript -->
+	<script src="js/inspinia.js"></script>
+	<script src="js/plugins/pace/pace.min.js"></script>
+
+	<!-- Peity -->
+	<script src="js/plugins/peity/jquery.peity.min.js"></script>
+	<script src="js/demo/peity-demo.js"></script>
+
+	<!-- iCheck -->
+	<script src="js/plugins/iCheck/icheck.min.js"></script>
+	<script src="js/cerca.js"></script>
+
+	<script type="text/javascript">
+	
+	var geocoder = new google.maps.Geocoder();
+	var circle;
+	var rectangle;
+	var map;
+	var markerInfo;
+	var styleIcon;
+	var latlonCentro;
+	var count = 0;
+	var distancia=0;
+	
+	function initialize() {
+				
+				var infoWindow;
+			    latlonCentro = new google.maps.LatLng(#{clienteForm.cliente.cerca.lat1},#{clienteForm.cliente.cerca.lon1});
+			    var seta = {
+					    path: google.maps.SymbolPath.FORWARD_OPEN_ARROW
+			    };
+
+			    var myZoom = #{clienteForm.cliente.cerca.zoom}; 
+	
+			    var myOptions = {
+			      zoom: myZoom ,
+			      center: latlonCentro,
+			      mapTypeId: google.maps.MapTypeId.HYBRID  
+			    };
+			    
+			    map = new google.maps.Map(document.getElementById("map_canvas"),myOptions);
+			    infowindow = new google.maps.InfoWindow();
+			    
+			    //styleIcon = new StyledIcon(StyledIconTypes.BUBBLE,{color:"#FFFFCC",text:"Buscar Lugar"});
+			    
+			   // markerInfo = new StyledMarker({
+			    //	styleIcon:styleIcon,
+			    	//position:map.getCenter(),
+			    	//title:"Arraste este balão para localizar um endereço em um ponto qualquer do mapa!",
+			    	//draggable:true
+			    //});
+
+			    //markerInfo.setMap(map);
+			    
+	
+			    centro = latlonCentro;
+			    raio = #{clienteForm.cliente.cerca.raio};
+			    drawCircle(centro,raio);
+
+			    //addCircle(centro,raio);
+	}		    	
+	</script>
+	
+
+
+</h:head>
+
+<body onload="initialize()">
+
+<div id="wrapper">
+
+  	<ui:insert name="nav" >
+		  <ui:include src="template/adminSidebar.xhtml" />
+	</ui:insert>
+
+    <div id="page-wrapper" class="gray-bg">
+    
+      	<ui:insert name="topbar" >
+		  <ui:include src="template/adminTopbar.xhtml" />
+		</ui:insert>
+		
+		
+
+	<div style="height: 90%;" class="wrapper wrapper-content ">
+		<div style="height: 100%;" class="ibox">
+			<div class="inbox title">
+				<b><h:outputText value=" Endereço do Clienteee&nbsp;&nbsp;  #{clienteForm.cliente.nome}" /></b>
+			</div>
+			<div style="height: 100%;" class="ibox-content">
+
+				<h:form style="height:100%;"	onsubmit="document.body.style.cursor='wait'" id="form" role="form">
+
+					<div id="map_canvas" style="width: 100%; height: 95%"></div>
+
+					<div class="table-responsive ">
+
+
+								<table class="table table-striped table-bordered  table-hover">
+									<tr>
+										<td><center>
+												<label for="lat">Latitude:&nbsp;&nbsp;</label>
+												<h:inputText id="lat"
+													value="#{clienteForm.cliente.cerca.lat1}"
+													converter="#{floatConverter}" />
+											</center></td>
+										<td><center>
+												<label for="lon">Longitude:&nbsp;&nbsp;</label>
+												<h:inputText id="lon"
+													value="#{clienteForm.cliente.cerca.lon1}"
+													converter="#{floatConverter}" />
+											</center></td>
+										<td><center>
+												<label for="raio">Raio (km):&nbsp;&nbsp;</label>
+												<h:inputText id="raio"
+													value="#{clienteForm.cliente.cerca.raio}"
+													converter="#{floatConverter}" />
+											</center></td>
+										<td><center>
+												<h:commandButton styleClass=" btn btn-primary btn-xs"
+													disabled="#{!loginBean.hasPermission('CLIENTE_VER_TODOS')}"
+													value="Salvar Endereço" action="#{clienteForm.saveCerca}" />
+											</center></td>
+										<td>
+										<center>
+											<h:commandLink 
+																style="width:110px; vertical-align: middle; "
+																styleClass="btn btn-primary btn-xs "
+																value="Rastrear" 
+																action="mapaVeiculoCompleto">
+														<f:setPropertyActionListener value="#{marcadoresBean.veiculo}" target="#{mapaVeiculoBean.veiculo}" />
+											</h:commandLink>
+										</center>
+										</td>
+									</tr>
+
+								</table>
+							</div>
+				</h:form>
+			</div>
+		</div>
+	</div>
+	
+		<ui:insert name="footer" >
+		  <ui:include src="template/adminFooter.xhtml" />
+		</ui:insert>
+
+    </div>
+
+</div>
+
+
+</body>
+</html>

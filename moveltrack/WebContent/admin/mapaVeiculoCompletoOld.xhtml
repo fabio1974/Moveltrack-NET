@@ -1,0 +1,762 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"  
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+	
+<h:head>
+	<!-- base href="#{request.requestURL.substring(0, request.requestURL.length() - request.requestURI.length())}#{request.contextPath}/site/admin/" /-->
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+	<title>MOVELTRACK SEGURANÇA E TECNOLOGIA</title>
+
+	<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
+	<link href="css/bootstrap.css" rel="stylesheet" />
+	<link href="font-awesome/css/font-awesome.css" rel="stylesheet" />
+	<link href="css/animate.css" rel="stylesheet" />
+	<link href="css/style.css" rel="stylesheet" />
+	<link href="css/plugins/iCheck/custom.css" rel="stylesheet" />
+	<link href="css/tabelas.css" rel="stylesheet" type="text/css" />
+	<link href="css/bootstrap-datetimepicker.css" rel="stylesheet"/>
+
+
+<style type="text/css">
+html,body,table,td {
+	height: 100%;
+	background-color: #FFF
+}
+</style>
+
+	<style type="text/css">
+html {
+	height: 100%
+}
+
+
+
+.divider {
+  height: 1px;
+  width:100%;
+  display:block; /* for use on default inline elements like span */
+ /* margin: 5px 0;*/
+  overflow: hidden;
+  background-color: #000;
+}
+
+#map_canvas {
+	height: 100%
+}
+
+#page-wrapper {
+	height: 100%
+}
+
+#wrapper {
+	height: 100%
+}
+
+body {
+	height: 100%;
+	margin: 0px;
+	padding: 0px
+}
+
+
+</style>
+
+
+			<!-- Mainly scripts -->
+<script src="js/jquery-2.1.1.js"></script>
+<script src="js/jquery-ui-1.10.4.min.js"></script>
+<script src="js/jquery-ui.custom.min.js"></script>
+<script src="js/datepicker-pt-BR.js"></script>
+<script src="js/autocompleter.js"></script>   
+
+
+
+<script src="js/jquery.maskedinput.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/plugins/metisMenu/jquery.metisMenu.js"></script>
+<script src="js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+
+<!-- Custom and plugin javascript -->
+<script src="js/inspinia.js"></script>
+<script src="js/plugins/pace/pace.min.js"></script>
+
+<!-- Peity -->
+<script src="js/plugins/peity/jquery.peity.min.js"></script>
+<script src="js/demo/peity-demo.js"></script>
+    
+<!-- iCheck -->
+<script src="js/plugins/iCheck/icheck.min.js"></script>
+    	<script src="js/moment-with-locales.js"></script>
+			<script src="js/bootstrap-datetimepicker.js"></script>
+			
+	<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?libraries=geometry&amp;key=AIzaSyCg5eE_buXJLsJZbnTZ7z3MnJBOV3_RoYc&amp;v=3."></script>
+	<script type="text/javascript" src="js/StyledMarker.js"></script>
+	<script src="js/date.format.js" type="text/javascript"></script>
+	<script charset="UTF-8" type="text/javascript"	src="js/mapa_ajax.js?n=1"></script>
+	<script src="js/cerca.js"></script>
+			
+<script>
+
+var map;
+var seta;
+var infoWindow;
+var pontosCaminho= new Array();
+var pontosDeVelocidade= new Array();
+var pontosDeParada= new Array();
+var veiculosArray = new Array();
+var caminho;
+var geocoder = new google.maps.Geocoder();
+var circle;
+var rectangle;
+var markerInfo;
+var styleIcon;
+var latlonCentro;
+var count = 0;
+var distancia=0;
+var centro;
+var raio;
+
+var reloadMapa = #{mapaVeiculoBean.reloadMapa};
+var erroData = '#{mapaVeiculoBean.erroData}';
+var imei =  '#{mapaVeiculoBean.veiculo.equipamento.imei}';
+var inicio = '#{mapaVeiculoBean.inicio.time}';
+var fim = '#{mapaVeiculoBean.fim.time}';
+var placa = '#{mapaVeiculoBean.veiculo.placa}';
+var marcaModelo = '#{mapaVeiculoBean.veiculo.marcaModelo}';
+var veiculoTipo =  '#{mapaVeiculoBean.veiculo.tipo}';
+
+var sLoc;
+var lastLoc;
+
+var comeco = new Date();		
+var retomada = false;
+					
+$(document).ready(function(){
+
+ 	var updateMap = function(){
+ 		if(reloadMapa &amp;&amp; !erroData){
+	 		if(((new Date()).getTime()-comeco.getTime()) >= 20*60*1000){  //Pausa  a cada vinte minutos para economizar as consultas ao servidor 
+	 			alert("A atualização automática está pausada. Para retomá-la clique em 'OK'");
+				comeco = new Date();
+				retomada = true;
+				atualizaMapa();
+	 		}else{
+				atualizaMapa();
+			}
+ 		}	
+    };
+    if(reloadMapa &amp;&amp; !erroData)
+   		setInterval(updateMap,60*1000);  //atualiza o mapa a cada 30 segundos 
+	
+});
+
+
+function atualizaMapa(){
+	$.getJSON("#{request.contextPath}/PontosMapa?imei="+imei+"&amp;inicio="+inicio+"&amp;fim="+fim,function(locs){
+    	clearAll();
+    	pontosDeVelocidade = new Array();
+    	pontosCaminho = new Array();
+    	pontosDeParada = new Array();
+    	var k=0;
+    	var loc;
+    	//var sLoc;
+    	//var lastLoc;
+
+    	if(locs.length>0){
+	        $.each(locs,function(i,loc){
+	        	pontosCaminho.push(new google.maps.LatLng(loc.latitude,loc.longitude));
+	        	//desenhaPontoDeVelocidade(loc);  //retirado por questão de performance
+	        	if(isParada(loc)){
+	        		desenhaParada(loc,k);
+	        		k++;
+	        	}
+	        	if(loc.battery)
+	        		sLoc = loc;
+	         	lastLoc = loc;
+	        });
+	        if(count==0 || lastLoc.velocidade==0 || retomada){
+	        	map.setCenter(new google.maps.LatLng(lastLoc.latitude,lastLoc.longitude));
+	        	map.setZoom(13);
+	        }
+	        retomada = false;	
+	        count++;
+			distancia = desenhaCaminho();
+	        clearVeiculos();
+	        desenhaVeiculo(lastLoc);
+	        if(sLoc &amp;&amp; sLoc.battery)
+	        	printStatus(sLoc);
+    	}else 
+        	if(#{mapaVeiculoBean.veiculo.equipamento.imei!=null})
+       			alert("Sem rastreamento para este veículo neste intervalo.");
+    });
+}
+
+
+
+function initialize() {
+
+			latlonCentro = new google.maps.LatLng(#{mapaVeiculoBean.veiculo.contrato.cliente.cerca!=null?mapaVeiculoBean.veiculo.contrato.cliente.cerca.lat1:-8},#{mapaVeiculoBean.veiculo.contrato.cliente.cerca!=null?mapaVeiculoBean.veiculo.contrato.cliente.cerca.lon1:-42});
+ 		    seta = {
+				    path: google.maps.SymbolPath.FORWARD_OPEN_ARROW
+		    };
+		    var mapOptions = {
+		      center: latlonCentro,
+		      zoom: 11,
+		      mapTypeId: google.maps.MapTypeId.ROADMAP  
+		    };
+		    map = new google.maps.Map(document.getElementById("map_canvas"),mapOptions);
+		    infowindow = new google.maps.InfoWindow();
+		    if(erroData)
+		        alert(erroData);
+		    else
+		    	atualizaMapa();
+		    centro = latlonCentro;
+		    raio = #{mapaVeiculoBean.veiculo.contrato.cliente.cerca!=null?mapaVeiculoBean.veiculo.contrato.cliente.cerca.raio:300};
+		    drawCircle(centro,raio);    
+}
+</script>
+
+</h:head>		
+	
+<h:body onload="initialize()"  >
+
+
+
+
+
+	<table class="white-bg" border="0"
+		style="height: 6%; width: 100%; margin-left: 10px; margin-right: 10px">
+		<tr>
+			<td align="left" ><h:form>
+					<h:commandLink  class=" btn btn-primary btn-xs " value="Voltar" action="veiculoTable">
+						<i class="fa fa-undo "></i>
+					</h:commandLink>
+				</h:form>
+				</td>
+
+			<td width="25%" align="left">
+				<h:form>
+					<h:commandLink  class=" btn btn-primary btn-xs " title="Mostrar/Esconder Menu"   action="#{mapaVeiculoBean.toggleMenu()}">
+						<i class="fa fa-bars"></i>
+					</h:commandLink>
+					</h:form>
+			</td>
+
+
+
+			<td width="50%" align="center">Usuário: <h:outputText
+					value="#{loginBean.usuarioNome}" /></td>
+					
+
+			<td width="10%" align="right">
+				<h:form>
+					<h:commandLink  class=" btn btn-primary btn-xs " title="Mostrar/Esconder Sensores"  action="#{mapaVeiculoBean.toggleInfo()}">
+						<i class="fa fa-info"></i>
+					</h:commandLink>
+					</h:form>
+			</td>					
+					
+					
+			<td align="center" width="10%"><h:form>
+					<h:commandLink action="#{loginBean.logout}"
+						style="color: #999C9E;font-size:12px;font-weight:bold"
+						value="Sair">
+						<i class="fa fa-sign-out  "></i>
+					</h:commandLink>
+				</h:form></td>
+		</tr>
+	</table>
+
+
+
+	<table border="1" style="height: 94%; width: 100%;">
+
+	<tr style="vertical-align: top;">
+		<td width="21%" style="margin-left: 10px;display:#{mapaVeiculoBean.displayMenu?'inline':'none'}">
+			<h:form	style="margin:10px 10px 20px 10px;" onsubmit="document.body.style.cursor='wait'" id="form" role="form">
+			
+					<div class="row">
+						<div class="col-sm-12">
+							<h:outputText id="placa1"
+								value="#{mapaVeiculoBean.veiculo.placa}" class="placa"
+								 />
+						</div>
+					</div>
+					
+					
+					
+					<div class="row">
+						<div class="col-sm-12">
+								<div class="form-group-xs">
+									<label for="marcaModelo">Marca Modelo</label>
+									<center>
+										<h:outputText id="placa"
+											value="#{mapaVeiculoBean.veiculo.marcaModelo}"
+											styleClass="form-control input-xs "
+											style="font-weight: bold;background-color:#eee; opacity:1;" />
+									</center>
+								</div>
+						</div>		
+					</div>
+					<div class="row">
+						<div class="col-sm-6">
+							<div class="form-group-xs">
+								<label for="tipo">Tipo de Veículo</label>
+								<h:outputText id="tipo"
+									value="#{mapaVeiculoBean.veiculo.tipo.descricao}"
+									styleClass="form-control input-xs "
+									style="background-color:#eee; opacity:1;">
+								</h:outputText>
+							</div>
+						</div>
+						<div class="col-sm-6">
+							<div class="form-group-xs">
+								<label for="cor">Cor</label>
+								<h:outputText id="cor"
+									value="#{mapaVeiculoBean.veiculo.cor.descricao}"
+									styleClass="form-control input-xs "
+									style="background-color:#eee; opacity:1;">
+								</h:outputText>
+							</div>
+						</div>
+					</div>						
+
+
+					<div class="row">
+						<div class="col-sm-6">
+							<div class="form-group-xs">
+								<label for="now">Hora Atual</label>
+								<h:outputText id="now" value="#{mapaVeiculoBean.now}"
+									styleClass="form-control input-xs "
+									style="background-color:#eee; opacity:1;">
+									<f:convertDateTime pattern="dd/MM/yy HH:mm" timeZone="GMT-3" />	
+								</h:outputText>
+							</div>
+						</div>
+
+						<div class="col-sm-6">
+							<div class="form-group-xs">
+								<label for="ultimoSinal">Último Sinal</label>
+								<h:outputText id="ultimoSinal"
+									styleClass="form-control input-xs "
+									style="background-color:#eee; opacity:1;">
+								</h:outputText>
+							</div>
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="col-sm-6">
+							<div class="form-group-xs">
+								<label for="distanciaPercorrida">km Percorrido</label>
+								<h:outputText id="distanciaPercorrida"
+									styleClass="form-control input-xs "
+									style="background-color:#eee; opacity:1;">
+
+									<f:convertNumber pattern="#0.000" />
+
+								</h:outputText>
+							</div>
+						</div>
+
+						<div class="col-sm-6">
+							<div class="form-group-xs">
+								<label for="velocidade">Velocidade</label>
+								<h:outputText id="velocidade"
+									styleClass="form-control input-xs "
+									style="background-color:#eee; opacity:1;">
+									<f:convertNumber pattern="#0.000km/h" />
+								</h:outputText>
+							</div>
+						</div>
+
+
+						<p:poll immediate="true" delay="0"
+							listener="#{mapaVeiculoBean.getNow()}" autoStart="true"
+							interval="30" update="now" />
+					</div>
+					
+
+
+				</h:form>
+
+				<div style="overflow:visible;"
+					class="panel panel-default">
+					<div class="panel-heading">RELATÓRIOS DO PERÍODO</div>
+					<div class="panel-body" style="padding-bottom: 0px">
+
+						<h:form title="Histórico" id="historico" role="form">
+
+							<div class="row">
+
+								<div class="col-sm-6">
+									<div class="form-group">
+										<label for="inicio">Início</label>
+										<div class='input-group input-group-xs  date' id="inicio">
+											<h:inputText id="inicio" value="#{mapaVeiculoBean.inicio}" 
+												styleClass="form-control "
+												style="#{component.valid?'':'border-color:red;'}">
+												<f:convertDateTime pattern="dd/MM/yy HH:mm" timeZone="GMT-3" />
+												<f:ajax event="focus" render="percurso parada tacografo mapa" listener="#{mapaVeiculoBean.disableReports}" />
+											</h:inputText>
+											<span class="input-group-addon"> <span
+												class="glyphicon glyphicon-calendar"></span>
+											</span>
+										</div>
+									</div>
+								</div>
+								<div class="col-sm-6">
+									<div class="form-group">
+										<label for="fim">Fim</label>
+										<div class='input-group input-group-xs date' id="fim">
+
+											<h:inputText id="fim" value="#{mapaVeiculoBean.fim}"  
+												styleClass="form-control"
+												style="#{component.valid?'':'border-color:red;'}">
+												<f:convertDateTime pattern="dd/MM/yy HH:mm" timeZone="GMT-3" />
+												<f:ajax event="focus" render="percurso parada tacografo mapa" listener="#{mapaVeiculoBean.disableReports}" />
+											</h:inputText>
+											<span class="input-group-addon"> <span
+												class="glyphicon glyphicon-calendar"></span>
+											</span>
+										</div>
+									</div>
+								</div>
+
+							</div>
+
+							<div class="row">
+								<div class="col-sm-12">
+									<div class="form-group">
+										<h:commandButton id="mapa" style="width:100%"
+											disabled="#{!mapaVeiculoBean.reportDisabled}"
+											value="Atualizar Mapa"
+											action="#{mapaVeiculoBean.atualizaMapa}"
+											styleClass="btn btn-primary btn-xs">
+										</h:commandButton>
+									</div>
+								</div>
+							</div>
+
+
+							<div class="row">
+								<div class="col-sm-12">
+									<div class="form-group">
+										<h:commandButton style="width:100%" id="percurso"
+											value="Analítico de Percurso"
+											disabled="#{mapaVeiculoBean.reportDisabled or !bloqueioBean.stop}"
+											action="#{relatorioPercursoBean.pdf('PDF')}"
+											styleClass="btn btn-primary btn-xs" />
+									</div>
+								</div>
+							</div>
+
+							<div class="row">
+								<div class="col-sm-12">
+									<div class="form-group">
+										<h:commandButton style="width:100%" value="Pontos de Parada" id="parada"
+											action="#{relatorioParadasBean.pdf('PDF')}"
+											disabled="#{mapaVeiculoBean.reportDisabled or !bloqueioBean.stop}"
+											styleClass="btn btn-primary btn-xs" />
+									</div>		
+								</div>
+							</div>
+
+							<div class="row">
+								<div class="col-sm-12">
+									<div class="form-group">
+										<h:commandButton style="width:100%"  id="tacografo"
+											value="Gráfico de Velocidade: Tacógrafo Virtual"
+											action="mapaVeiculoCompleto"
+											disabled="#{mapaVeiculoBean.reportDisabled or !bloqueioBean.stop}"
+											styleClass="btn btn-primary btn-xs" />
+									</div>
+								</div>
+							</div>
+
+
+						</h:form>
+					</div>
+				</div>
+
+				<div style="overflow: visible;border-top:0px;"
+					class="panel panel-default" >
+					<div class="panel-heading">CORTA - CORRENTE</div>
+					<div class="panel-body" style="padding-bottom: 0px" >
+
+
+						<h:form title="Bloqueio" id="bloqueio" role="form">
+
+
+							<div class="row">
+								<div class="col-sm-6">
+									<div class="form-group">
+									
+										<h:commandButton style="width:100%" id = "b"
+													value="Bloquear" 
+													disabled="#{!bloqueioBean.stop}"
+													title="Bloquear Veículo"
+													action="#{bloqueioBean.bloquear(mapaVeiculoBean.veiculo)}"
+													class="btn btn-danger btn-xs">
+										</h:commandButton>
+											
+									</div>
+								</div>
+
+								<div class="col-sm-6">
+									<div class="form-group">
+											
+										<h:commandButton style="width:100%" id="d"
+													value="Desbloquear" 
+													action="#{bloqueioBean.desbloquear(mapaVeiculoBean.veiculo)}"
+													disabled="#{!bloqueioBean.stop}"
+													title="Desbloquear Veículo"
+													class="btn btn-info btn-xs">
+										</h:commandButton>											
+											
+									</div>
+								</div>
+							</div>
+							
+							
+							<div class="row">
+								<div class="col-sm-12">
+
+									<h:panelGroup id="statusPanel">
+										<h:panelGroup
+											rendered="#{!bloqueioBean.stop}">
+											<div id="tabela1">
+												<table width="100%" border="1">
+													<tr>
+														<td class="titulo">#{bloqueioBean.titulo1}</td>
+														<td class="titulo">Status</td>
+													</tr>
+													<tr>
+														<td class="#{bloqueioBean.classe1}">#{bloqueioBean.conteudo1}</td>
+														<td class="#{bloqueioBean.classe2}">#{bloqueioBean.conteudo2}</td>
+													</tr>
+												</table>
+											</div>
+										</h:panelGroup>
+									</h:panelGroup>
+
+									<p:poll stop="#{bloqueioBean.stop}" immediate="true" delay="0"
+										autoStart="true" interval="3"
+										listener="#{bloqueioBean.updateStatus()}" update="statusPanel b d historico:percurso historico:parada historico:tacografo" />
+
+								</div>
+							</div>
+							
+							
+							
+
+						</h:form>
+
+					</div>
+				</div>
+
+
+
+
+
+			</td>
+
+			<td width="100%">
+
+
+
+				<div class="pace  pace-inactive">
+					<div data-progress="99" data-progress-text="100%"
+						style="transform: translate3d(100%, 10px, 10px);"
+						class="pace-progress">
+						<div class="pace-progress-inner"></div>
+					</div>
+					<div class="pace-activity"></div>
+				</div>
+
+
+
+				<div id="map_canvas" style="width: 100%; height: 100%" />
+
+
+
+
+
+
+
+			</td>
+
+
+			<td width="20px" style="margin-top:20px;display:#{mapaVeiculoBean.displayInfo?'inline':'none'}">
+
+				<h:form id="sinal" style="margin:10px 10px 20px 10px;">
+					<div class="row">
+
+						<div class="col-sm-12">
+							<div class="form-group-xs">
+								<label for="bateria">Bateria</label>
+								<center>
+									<h:outputText id="bateria"
+										styleClass="form-control input-xs "
+										style="background-color:#eee; opacity:1;" />
+								</center>
+							</div>
+						</div>
+						
+						<div class="col-sm-12">
+							<div class="form-group-xs">
+								<label for="voltagem">Voltagem</label>
+								<center>
+									<h:outputText id="voltagem"
+										styleClass="form-control input-xs "
+										style="background-color:#eee; opacity:1;" />
+								</center>
+							</div>
+						</div>
+						
+						<div class="col-sm-12">
+							<div class="form-group-xs">
+								<label for="gsm">Gsm</label>
+								<center>
+									<h:outputText id="gsm"
+										styleClass="form-control input-xs "
+										style="background-color:#eee; opacity:1;" />
+								</center>
+							</div>
+						</div>
+
+
+						<div class="col-sm-12">
+							<div class="form-group-xs">
+								<label for="gps">Gps</label>
+								<center>
+									<h:outputText id="gps"
+										styleClass="form-control input-xs "
+										style="background-color:#eee; opacity:1;" />
+								</center>
+							</div>
+						</div>
+
+
+						<div class="col-sm-12">
+							<div class="form-group-xs">
+								<label for="satelites">Satélites</label>
+								<center>
+									<h:outputText id="satelites"
+										styleClass="form-control input-xs "
+										style="background-color:#eee; opacity:1;" />
+								</center>
+							</div>
+						</div>
+
+
+						<div class="col-sm-12">
+							<div class="form-group-xs">
+								<label for="bloqueio">Bloqueio</label>
+								<center>
+									<h:outputText id="bloqueio"
+										styleClass="form-control input-xs "
+										style="background-color:#eee; opacity:1;" />
+								</center>
+							</div>
+						</div>
+
+
+						<div class="col-sm-12">
+							<div class="form-group-xs">
+								<label for="ignicao">Ignição</label>
+								<center>
+									<h:outputText id="ignicao"
+										styleClass="form-control input-xs "
+										style="background-color:#eee; opacity:1;" />
+								</center>
+							</div>
+						</div>
+
+
+						<div class="col-sm-12">
+							<div class="form-group-xs">
+								<label for="alarme">Alarme</label>
+								<center>
+									<h:outputText id="alarme"
+										styleClass="form-control input-xs "
+										style="background-color:#eee; opacity:1;" />
+								</center>
+							</div>
+						</div>
+						
+						<div class="col-sm-12">
+							<div class="form-group-xs">
+								<label for="dataStatus">Leitura</label>
+								<center>
+								<h:outputText id="dataStatus"
+									styleClass="form-control input-xs "
+									style="background-color:#eee; opacity:1;color:#000">
+								</h:outputText>
+								</center>
+							</div>
+						</div>
+						
+						
+						
+
+					</div>
+				</h:form>
+
+
+
+
+
+			</td>
+
+		</tr>
+
+
+
+	</table>
+
+	<script type="text/javascript"> 
+ jQuery(function($){
+   $("#form\\:celular1,#form\\:celular2").mask("(99) 9999-9999?9");
+   $("#form\\:telefoneFixo").mask("(99) 9999-9999");
+   $("#form\\:cpf").mask("999.999.999-99");
+   $("#form\\:cep").mask("99.999-999");
+   $("#form\\:cnpj").mask("99.999.999/9999-99");
+
+
+   $("#dataNascimento,#validadeCnh").datetimepicker({
+       locale: 'pt',
+       format: 'DD/MM/YYYY',
+       showClose:true,
+       viewMode: 'years'
+   });
+   
+
+   $("#inicio,#fim,#dataDaDespesa,#partida,#chegadaPrevista,#dataInstalacao,#dataDesinstalacao,#dataCadastro").datetimepicker({
+       locale: 'pt',
+       format: 'DD/MM/YY HH:mm',
+       showClose: true,
+   });
+ 
+});
+
+
+</script>			
+
+
+</h:body>
+
+</html>
+
+
+
+
+
+

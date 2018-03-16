@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      >
+    <body>
+	    <ui:composition>
+	
+			<!-- Navbar -->
+			<nav class="navbar navbar-fixed-top ">
+				<div class="container">
+			        <div class="navbar-header">
+				    	<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navigation-index">
+				        	<span class="sr-only">Navegação</span>
+				        	<span class="icon-bar"></span>
+				        	<span class="icon-bar"></span>
+				        	<span class="icon-bar"></span>
+				    	</button>
+				    	
+				        	<div class="logo-container">
+				                <div class="logo">
+				                	<a href="#{request.contextPath}/index.xhtml">
+				                   		<img src="#{request.contextPath}/frontend/assets/img/moveltrack/logo.png"  data-placement="bottom" data-html="true"></img>
+			                   		</a>
+				                </div>
+				               
+			
+			
+							</div>
+				      	
+				    </div>
+			
+				    <div class="collapse navbar-collapse" id="navigation-index">
+				    	<ul class="nav navbar-nav navbar-right">
+							<li><a href="#{request.contextPath}/index.xhtml" rel="tooltip"  data-placement="bottom" data-html="true">Quem Somos</a></li>
+			        		<li class="dropdown">
+			        			<a href="#{request.contextPath}/frontend/sevices.xhtml"   class="dropdown-toggle" data-toggle="dropdown">Serviços <b class="caret"></b></a>
+			        			<ul class="dropdown-menu">
+								  <li><a rel="tooltip"  data-placement="right" data-html="true" href="#{request.contextPath}/frontend/web-app.xhtml">Sistema Web</a></li>
+								  <li><a rel="tooltip"  data-placement="right" data-html="true" href="#{request.contextPath}/frontend/phone-app.xhtml">Aplicativo Móvel</a></li>					  
+			        			</ul>
+			        		</li>        		
+			        		<li><a rel="tooltip"  data-placement="bottom" data-html="true" href="#{request.contextPath}/frontend/prices.xhtml">Preços</a></li>
+			        		<li><a href="#{request.contextPath}/frontend/contact.xhtml" rel="tooltip"  data-placement="bottom" data-html="true">Contato</a></li>
+			        		<li><a href="#{request.contextPath}/login.xhtml" class="btn btn-danger"  data-placement="bottom" data-html="true">Acesso ao Sistema</a></li>
+				    	</ul>
+				    </div>
+				</div>
+			</nav>
+			<!-- End Navbar -->
+				
+	    </ui:composition>
+    </body>
+</html>
+
+
+
+

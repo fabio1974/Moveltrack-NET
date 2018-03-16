@@ -1,0 +1,371 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:b="http://bootsfaces.net/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head>
+</h:head>
+
+<h:body>
+	<ui:composition template="relatorioInterno.xhtml">
+		<ui:define name="relatorioInterno">
+			<div class="ibox">
+				<div class="ibox title"><h3>Relatório de Sinal</h3></div>
+				<div class="ibox-content">
+				
+				
+				
+					<div class="row">
+
+						<div class="col-sm-4">
+							<div class="form-group">
+								<label for="imei">Imei</label>
+								<h:inputText name="imei" id="imei"
+									value="#{relatorioSinal.imei}"
+									class="input-sm form-control input-s-sm "/>
+							</div>
+						</div>
+						
+						
+						<div class="col-sm-4">
+							<div class="form-group">
+								<label for="chip">Número do Chip</label>
+								<h:inputText name="chip" id="chip"
+									value="#{relatorioSinal.numero}"
+									class="input-sm form-control input-s-sm "/>
+							</div>
+						</div>
+						
+						
+						<div class="col-sm-4">
+							<div class="form-group">
+								<label for="operadora">Operadora</label>
+								<h:selectOneMenu id="operadora"
+									value="#{relatorioSinal.operadora}"
+									styleClass="form-control input-sm">
+									<f:selectItem itemLabel="&nbsp;" itemValue="#{null}" noSelectionOption="true" />
+									<f:selectItems value="#{relatorioSinal.operadoras}" />
+								</h:selectOneMenu>
+							</div>
+						</div>
+
+					</div>						
+				
+					<div class="row">
+
+						<div class="col-sm-4">
+							<div class="form-group">
+								<label for="placa">Placa</label>
+								<h:inputText name="placa" id="placa"
+									value="#{relatorioSinal.placa}"
+									class="input-sm form-control input-s-sm "/>
+							</div>
+						</div>
+						
+						
+						<div class="col-sm-4">
+							<div class="form-group">
+								<label for="tipo">Tipo de Veículo</label>
+								<h:selectOneMenu id="tipo" required="false"
+									value="#{relatorioSinal.tipo}"
+									styleClass="form-control input-sm"
+									style="#{component.valid?'':'border-color:red;'}">
+									
+									<f:selectItem itemLabel="&nbsp;" itemValue="#{null}" noSelectionOption="true" />
+									<f:selectItems value="#{relatorioSinal.tipos}" />
+								</h:selectOneMenu>
+							</div>
+						</div>
+						
+						
+						<div class="col-sm-4">
+							<div class="form-group">
+								<label for="cliente">Nome do Cliente</label>
+								<h:inputText name="cliente" id="cliente"
+									value="#{relatorioSinal.nome}"
+									class="input-sm form-control input-s-sm "/>
+							</div>
+						</div>
+
+					</div>
+					
+					
+					<div class="row">
+
+						<div class="col-sm-3">
+							<div class="form-group">
+								<label for="modelo">Modelo do Rastreador</label>
+								<h:selectOneMenu id="modelo"
+									value="#{relatorioSinal.modelo}"
+									styleClass="form-control input-sm"
+									>
+									<f:selectItem itemLabel="&nbsp;" itemValue="#{null}" noSelectionOption="true" />
+									<f:selectItems value="#{relatorioSinal.modelos}" />
+								</h:selectOneMenu>
+							</div>
+						</div>
+						
+						
+						<div class="col-sm-3">
+							<div class="form-group">
+								<label for="equipamentoSituacao">Status do Equipamento</label>
+								<h:selectOneMenu id="equipamentoSituacao"
+									value="#{relatorioSinal.equipamentoSituacao}"
+									styleClass="form-control input-sm"
+									>
+									<f:selectItem itemLabel="&nbsp;" itemValue="#{null}" noSelectionOption="true" />
+									<f:selectItems value="#{relatorioSinal.equipamentoSituacaos}" />
+								</h:selectOneMenu>
+							</div>
+						</div>
+						
+						
+						<div class="col-sm-3">
+							<div class="form-group">
+								<label for="veiculoStatus">Status do Veículo</label>
+								<h:selectOneMenu id="veiculoStatus"
+									value="#{relatorioSinal.veiculoStatus}"
+									styleClass="form-control input-sm"
+									>
+									<f:selectItem itemLabel="&nbsp;" itemValue="#{null}" noSelectionOption="true" />
+									<f:selectItems value="#{relatorioSinal.veiculoStatuses}" />
+								</h:selectOneMenu>
+							</div>
+						</div>
+						
+						
+						
+						<div class="col-sm-3">
+							<div class="form-group">
+								<label for="contratoStatus">Status do Contrato</label>
+								<h:selectOneMenu id="contratoStatus"
+									value="#{relatorioSinal.contratoStatus}"
+									styleClass="form-control input-sm"
+									>
+									<f:selectItem itemLabel="&nbsp;" itemValue="#{null}" noSelectionOption="true" />
+									<f:selectItems value="#{relatorioSinal.contratoStatuses}" />
+								</h:selectOneMenu>
+							</div>
+						</div>
+
+					</div>		
+					
+
+
+					<div class="row">
+						<div class="col-sm-3">
+							<div class="form-group">
+								<label for="inicio">Atraso Mínimo</label>
+								<h:selectOneMenu id="inicio" styleClass="form-control"
+									value="#{relatorioSinal.inicio}"
+									converter="#{selectIntegerConverter}">
+									<f:selectItem itemValue="0" itemLabel="00"/>
+									<f:selectItem itemValue="1" itemLabel="01"/>
+									<f:selectItem itemValue="2" itemLabel="02"/>
+									<f:selectItem itemValue="3" itemLabel="03"/>
+									<f:selectItem itemValue="4" itemLabel="04"/>
+									<f:selectItem itemValue="5" itemLabel="05"/>
+									<f:selectItem itemValue="6" itemLabel="06"/>
+									<f:selectItem itemValue="7" itemLabel="07"/>
+									<f:selectItem itemValue="8" itemLabel="08"/>
+									<f:selectItem itemValue="9" itemLabel="09"/>
+									
+									<f:selectItem itemValue="10" itemLabel="10"/>
+									<f:selectItem itemValue="11" itemLabel="11"/>
+									<f:selectItem itemValue="12" itemLabel="12"/>
+									<f:selectItem itemValue="13" itemLabel="13"/>
+									<f:selectItem itemValue="14" itemLabel="14"/>
+									<f:selectItem itemValue="15" itemLabel="15"/>
+									<f:selectItem itemValue="16" itemLabel="16"/>
+									<f:selectItem itemValue="17" itemLabel="17"/>
+									<f:selectItem itemValue="18" itemLabel="18"/>
+									<f:selectItem itemValue="19" itemLabel="19"/>
+									
+									<f:selectItem itemValue="20" itemLabel="20"/>
+									<f:selectItem itemValue="21" itemLabel="21"/>
+									<f:selectItem itemValue="22" itemLabel="22"/>
+									<f:selectItem itemValue="23" itemLabel="23"/>
+									<f:selectItem itemValue="24" itemLabel="24"/>
+									<f:selectItem itemValue="25" itemLabel="25"/>
+									<f:selectItem itemValue="26" itemLabel="26"/>
+									<f:selectItem itemValue="27" itemLabel="27"/>
+									<f:selectItem itemValue="28" itemLabel="28"/>
+									<f:selectItem itemValue="29" itemLabel="29"/>
+									
+									<f:selectItem itemValue="30" itemLabel="30"/>
+									<f:selectItem itemValue="31" itemLabel="31"/>
+									<f:selectItem itemValue="32" itemLabel="32"/>
+									<f:selectItem itemValue="33" itemLabel="33"/>
+									<f:selectItem itemValue="34" itemLabel="34"/>
+									<f:selectItem itemValue="35" itemLabel="35"/>
+									<f:selectItem itemValue="36" itemLabel="36"/>
+									<f:selectItem itemValue="37" itemLabel="37"/>
+									<f:selectItem itemValue="38" itemLabel="38"/>
+									<f:selectItem itemValue="39" itemLabel="39"/>
+									
+									<f:selectItem itemValue="40" itemLabel="40"/>
+									<f:selectItem itemValue="41" itemLabel="41"/>
+									<f:selectItem itemValue="42" itemLabel="42"/>
+									<f:selectItem itemValue="43" itemLabel="43"/>
+									<f:selectItem itemValue="44" itemLabel="44"/>
+									<f:selectItem itemValue="45" itemLabel="45"/>
+									<f:selectItem itemValue="46" itemLabel="46"/>
+									<f:selectItem itemValue="47" itemLabel="47"/>
+									<f:selectItem itemValue="48" itemLabel="48"/>
+									<f:selectItem itemValue="49" itemLabel="49"/>
+									
+									<f:selectItem itemValue="50" itemLabel="50"/>
+									<f:selectItem itemValue="51" itemLabel="51"/>
+									<f:selectItem itemValue="52" itemLabel="52"/>
+									<f:selectItem itemValue="53" itemLabel="53"/>
+									<f:selectItem itemValue="54" itemLabel="54"/>
+									<f:selectItem itemValue="55" itemLabel="55"/>
+									<f:selectItem itemValue="56" itemLabel="56"/>
+									<f:selectItem itemValue="57" itemLabel="57"/>
+									<f:selectItem itemValue="58" itemLabel="58"/>
+									<f:selectItem itemValue="59" itemLabel="59"/>
+									
+									
+								</h:selectOneMenu>
+							</div>
+						</div>
+						
+						<div class="col-sm-3">
+							<div class="form-group">
+								<label for="inicioTempoTipo">&nbsp;</label>
+								<h:selectOneMenu id="inicioTempoTipo" 
+									value="#{relatorioSinal.inicioTempoTipo}"
+									styleClass="form-control input-sm"
+									>
+									<f:selectItems value="#{relatorioSinal.tempoTipos}" />
+								</h:selectOneMenu>							
+							</div>
+						</div>
+							
+						
+
+						<div class="col-sm-3">
+							<div class="form-group">
+								<label for="fim">Atraso Máximo</label>
+								<h:selectOneMenu styleClass="form-control"
+									value="#{relatorioSinal.fim}"
+									converter="#{selectIntegerConverter}">
+									<f:selectItem itemLabel="&nbsp;" itemValue="#{null}" noSelectionOption="true" />
+									<f:selectItem itemValue="0" itemLabel="00"/>
+									<f:selectItem itemValue="1" itemLabel="01"/>
+									<f:selectItem itemValue="2" itemLabel="02"/>
+									<f:selectItem itemValue="3" itemLabel="03"/>
+									<f:selectItem itemValue="4" itemLabel="04"/>
+									<f:selectItem itemValue="5" itemLabel="05"/>
+									<f:selectItem itemValue="6" itemLabel="06"/>
+									<f:selectItem itemValue="7" itemLabel="07"/>
+									<f:selectItem itemValue="8" itemLabel="08"/>
+									<f:selectItem itemValue="9" itemLabel="09"/>
+									
+									<f:selectItem itemValue="10" itemLabel="10"/>
+									<f:selectItem itemValue="11" itemLabel="11"/>
+									<f:selectItem itemValue="12" itemLabel="12"/>
+									<f:selectItem itemValue="13" itemLabel="13"/>
+									<f:selectItem itemValue="14" itemLabel="14"/>
+									<f:selectItem itemValue="15" itemLabel="15"/>
+									<f:selectItem itemValue="16" itemLabel="16"/>
+									<f:selectItem itemValue="17" itemLabel="17"/>
+									<f:selectItem itemValue="18" itemLabel="18"/>
+									<f:selectItem itemValue="19" itemLabel="19"/>
+									
+									<f:selectItem itemValue="20" itemLabel="20"/>
+									<f:selectItem itemValue="21" itemLabel="21"/>
+									<f:selectItem itemValue="22" itemLabel="22"/>
+									<f:selectItem itemValue="23" itemLabel="23"/>
+									<f:selectItem itemValue="24" itemLabel="24"/>
+									<f:selectItem itemValue="25" itemLabel="25"/>
+									<f:selectItem itemValue="26" itemLabel="26"/>
+									<f:selectItem itemValue="27" itemLabel="27"/>
+									<f:selectItem itemValue="28" itemLabel="28"/>
+									<f:selectItem itemValue="29" itemLabel="29"/>
+									
+									<f:selectItem itemValue="30" itemLabel="30"/>
+									<f:selectItem itemValue="31" itemLabel="31"/>
+									<f:selectItem itemValue="32" itemLabel="32"/>
+									<f:selectItem itemValue="33" itemLabel="33"/>
+									<f:selectItem itemValue="34" itemLabel="34"/>
+									<f:selectItem itemValue="35" itemLabel="35"/>
+									<f:selectItem itemValue="36" itemLabel="36"/>
+									<f:selectItem itemValue="37" itemLabel="37"/>
+									<f:selectItem itemValue="38" itemLabel="38"/>
+									<f:selectItem itemValue="39" itemLabel="39"/>
+									
+									<f:selectItem itemValue="40" itemLabel="40"/>
+									<f:selectItem itemValue="41" itemLabel="41"/>
+									<f:selectItem itemValue="42" itemLabel="42"/>
+									<f:selectItem itemValue="43" itemLabel="43"/>
+									<f:selectItem itemValue="44" itemLabel="44"/>
+									<f:selectItem itemValue="45" itemLabel="45"/>
+									<f:selectItem itemValue="46" itemLabel="46"/>
+									<f:selectItem itemValue="47" itemLabel="47"/>
+									<f:selectItem itemValue="48" itemLabel="48"/>
+									<f:selectItem itemValue="49" itemLabel="49"/>
+									
+									<f:selectItem itemValue="50" itemLabel="50"/>
+									<f:selectItem itemValue="51" itemLabel="51"/>
+									<f:selectItem itemValue="52" itemLabel="52"/>
+									<f:selectItem itemValue="53" itemLabel="53"/>
+									<f:selectItem itemValue="54" itemLabel="54"/>
+									<f:selectItem itemValue="55" itemLabel="55"/>
+									<f:selectItem itemValue="56" itemLabel="56"/>
+									<f:selectItem itemValue="57" itemLabel="57"/>
+									<f:selectItem itemValue="58" itemLabel="58"/>
+									<f:selectItem itemValue="59" itemLabel="59"/>
+									
+									
+								</h:selectOneMenu>
+							</div>
+						</div>
+						
+						<div class="col-sm-3">
+							<div class="form-group">
+								<label for="fimTempoTipo">&nbsp;</label>
+								<h:selectOneMenu id="fimTempoTipo" 
+									value="#{relatorioSinal.fimTempoTipo}"
+									styleClass="form-control input-sm"
+									>
+									<f:selectItem itemLabel="&nbsp;" itemValue="#{null}" noSelectionOption="true" />
+									<f:selectItems value="#{relatorioSinal.tempoTipos}" />
+								</h:selectOneMenu>							
+							</div>
+						</div>
+
+
+
+					</div>
+
+
+
+
+
+					<div class="row">
+						<div class="col-sm-12 ">
+						<div class="pull-right">
+							<h:commandButton styleClass="btn btn-primary btn-sm  "
+								value="Exibir Relatório" action="#{relatorioSinal.geraPdf()}">
+							</h:commandButton>
+						</div>	
+						</div>
+
+						<div class="col-lg-7">
+							<h:messages styleClass="swp-msg swp-msg-sm"
+								infoClass="alert alert-success" warnClass="alert alert-warning"
+								errorClass="alert alert-danger" showDetail="false" />
+						</div>
+					</div>
+				
+				</div>
+			</div>
+
+		</ui:define>
+	</ui:composition>
+</h:body>
+</html>

@@ -1,0 +1,320 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:b="http://bootsfaces.net/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<h:body>
+
+
+
+	<ui:composition template="template/adminTemplate.xhtml">
+		<ui:define name="content">
+		
+			
+			
+		
+
+
+			<div class="wrapper wrapper-content ">
+
+						<div class="ibox">
+							<div class="inbox title">
+							<b><h:outputText value='#{motoristaForm.action.equals("INSERT")?"Inserir Novo ":motoristaForm.action.equals("UPDATE")?"Atualizar ":"Detalhes do "}Motorista'/></b> 
+							
+							</div>
+							<div class="ibox-content">
+								<h:form onsubmit="document.body.style.cursor='wait'" id="form" role="form">
+
+							<div class="row">
+								<div class="col-sm-4">
+									<div class="form-group">
+										<label for="nome">Nome</label>
+										<h:inputText id="nome" value="#{motoristaForm.motorista.nome}"
+											readonly='#{motoristaForm.action.equals("SHOW")}'
+											styleClass="form-control input-sm"
+											style="#{component.valid?'':'border-color:red;'}" size="20"
+											placeholder="Nome ou Razão Social" />
+									</div>
+								</div>
+
+
+
+								<div class="col-sm-2">
+									<div class="form-group input-group input-group-sm">
+										<label for="cpf">CPF</label>
+										<h:inputText id="cpf" value="#{motoristaForm.motorista.cpf}"
+											readonly='#{motoristaForm.action.equals("SHOW")}'
+											styleClass="form-control input-sm"
+											style="#{component.valid?'':'border-color:red;'}" size="20"
+											placeholder="CPF" />
+									</div>
+								</div>
+								
+								<div class="col-sm-2">
+									<div class="form-group">
+										<label for="validadeCnh">Validade da Cnh</label>
+										<div class='input-group date' id='validadeCnh'>
+										<h:inputText id="validadeCnh"
+											value="#{motoristaForm.motorista.validadeCnh}"
+											readonly='#{motoristaForm.action.equals("SHOW")}'
+											styleClass="form-control input-sm"
+											style="#{component.valid?'':'border-color:red;'}">
+											<f:convertDateTime pattern="dd/MM/yyyy" timeZone="GMT-3" />
+										</h:inputText>
+										<span  class="input-group-addon"> 
+											<span class="glyphicon glyphicon-calendar"></span>
+										</span>
+
+										</div>
+									</div>
+								</div>
+								
+
+								
+								<div class="col-sm-2">
+									<div class="form-group">
+										<label for="categoriaCnh">Categoria CNH</label>
+										<h:selectOneMenu id="categoriaCnh" 
+											value="#{motoristaForm.motorista.categoriaCnh}"
+											disabled='#{motoristaForm.action.equals("SHOW")}'
+											styleClass="form-control input-sm"
+											style="#{component.valid?'':'border-color:red;'}">
+											<f:selectItem itemLabel="&nbsp;"  noSelectionOption="yes"/>
+											<f:selectItems value="#{motoristaForm.categoriasCnh}" />
+										</h:selectOneMenu>
+									</div>
+								</div>
+								
+
+								<div class="col-sm-2">
+									<div class="form-group">
+										<label for="dataNascimento">Data de Nascimento</label>
+										<div class='input-group date' id='dataNascimento'>
+										<h:inputText id="dataNascimento"
+											value="#{motoristaForm.motorista.dataNascimento}"
+											readonly='#{motoristaForm.action.equals("SHOW")}'
+											styleClass="form-control input-sm"
+											style="#{component.valid?'':'border-color:red;'}">
+											<f:convertDateTime pattern="dd/MM/yyyy" timeZone="GMT-3" />
+										</h:inputText>
+										<span  class="input-group-addon"> 
+											<span class="glyphicon glyphicon-calendar"></span>
+										</span>
+
+										</div>
+										
+									</div>
+								</div>
+
+
+							</div>
+
+
+							<div class="row">
+								<div class="col-sm-4">
+									<div class="form-group">
+										<label for="endereco">Endereço</label>
+										<h:inputText id="endereco"
+											value="#{motoristaForm.motorista.endereco}"
+											readonly='#{motoristaForm.action.equals("SHOW")}'
+											styleClass="form-control input-sm"
+											style="#{component.valid?'':'border-color:red;'}" size="20"
+											placeholder="Endereço" />
+									</div>
+								</div>
+								<div class="col-sm-2">
+									<div class="form-group">
+										<label for="numero">Número</label>
+										<h:inputText id="numero"
+											value="#{motoristaForm.motorista.numero}"
+											readonly='#{motoristaForm.action.equals("SHOW")}'
+											styleClass="form-control input-sm"
+											style="#{component.valid?'':'border-color:red;'}" size="20"
+											placeholder="Número" />
+									</div>
+								</div>
+								<div class="col-sm-2">
+									<div class="form-group">
+										<label for="complemento">Compl.</label>
+										<h:inputText id="complemento"
+											value="#{motoristaForm.motorista.complemento}"
+											readonly='#{motoristaForm.action.equals("SHOW")}'
+											styleClass="form-control input-sm"
+											style="#{component.valid?'':'border-color:red;'}" size="20"
+											placeholder="Complemento" />
+									</div>
+								</div>
+
+								<div class="col-sm-4">
+									<div class="form-group">
+										<label for="bairro">Bairro</label>
+										<h:inputText id="bairro"
+											value="#{motoristaForm.motorista.bairro}"
+											readonly='#{motoristaForm.action.equals("SHOW")}'
+											styleClass="form-control input-sm"
+											style="#{component.valid?'':'border-color:red;'}" size="20"
+											placeholder="Bairro" />
+									</div>
+								</div>
+							</div>
+
+							<div class="row">
+								<div class="col-sm-4">
+									<div class="form-group">
+										<label for="municipio">Cidade</label>
+										<h:inputText id="municipio"
+											value="#{motoristaForm.motorista.municipio}"
+											converter="#{municipioConverter}"
+											readonly='#{motoristaForm.action.equals("SHOW")}'
+											styleClass="form-control input-sm"
+											style="#{component.valid?'':'border-color:red;'}" size="20"
+											placeholder="Cidade" />
+									</div>
+								</div>
+
+
+								<div class="col-sm-4">
+									<div class="form-group">
+										<label for="cep">CEP</label>
+										<h:inputText id="cep" value="#{motoristaForm.motorista.cep}"
+											readonly='#{motoristaForm.action.equals("SHOW")}'
+											styleClass="form-control input-sm"
+											style="#{component.valid?'':'border-color:red;'}" size="20"
+											placeholder="CEP" />
+									</div>
+								</div>
+								
+
+								
+								<div class="col-sm-4">
+									<div class="form-group">
+										<label for="email">Email</label>
+										<h:inputText id="email"
+											value="#{motoristaForm.motorista.email}"
+											readonly='#{motoristaForm.action.equals("SHOW")}'
+											styleClass="form-control input-sm"
+											style="#{component.valid?'':'border-color:red;'}" />
+									</div>
+								</div>
+
+
+
+							</div>
+
+
+
+							<div class="row">
+								<div class="col-sm-2">
+									<div class="form-group">
+										<label for="telefoneFixo">Telefone Fixo</label>
+										<h:inputText id="telefoneFixo"
+											value="#{motoristaForm.motorista.telefoneFixo}"
+											readonly='#{motoristaForm.action.equals("SHOW")}'
+											styleClass="form-control input-sm"
+											style="#{component.valid?'':'border-color:red;'}" size="20"
+											placeholder="Telefone Fixo" />
+									</div>
+								</div>
+								<div class="col-sm-2">
+									<div class="form-group">
+										<label for="celular1">Celular 1 </label>
+										<h:inputText id="celular1"
+											value="#{motoristaForm.motorista.celular1}"
+											readonly='#{motoristaForm.action.equals("SHOW")}'
+											styleClass="form-control input-sm"
+											style="#{component.valid?'':'border-color:red;'}" size="20"
+											placeholder="Celular 1" />
+									</div>
+								</div>
+								<div class="col-sm-2">
+									<div class="form-group">
+										<label for="celular2">Celular 2 </label>
+										<h:inputText id="celular2"
+											value="#{motoristaForm.motorista.celular2}"
+											readonly='#{motoristaForm.action.equals("SHOW")}'
+											styleClass="form-control input-sm"
+											style="#{component.valid?'':'border-color:red;'}" size="20"
+											placeholder="Celular 2" />
+									</div>
+								</div>
+								
+								<div class="col-sm-2">
+									<div class="form-group">
+										<label for="status">Status</label>
+										<h:selectOneMenu id="contratoTipo" 
+											value="#{motoristaForm.motorista.status}"
+											disabled='#{motoristaForm.action.equals("SHOW")}'
+											styleClass="form-control input-sm"
+											style="#{component.valid?'':'border-color:red;'}">
+											<f:selectItem itemLabel="&nbsp;" noSelectionOption="yes" />
+											<f:selectItems value="#{motoristaForm.statuses}" />
+										</h:selectOneMenu>
+									</div>
+								</div>
+								
+								
+								<div class="col-sm-4">
+									<div class="form-group">
+										<label for="dataCadastro">Data do Cadastro</label>
+										<div class='input-group date' id='dataCadastro'>
+										<h:inputText id="dataCadastro"
+											value="#{motoristaForm.motorista.dataCadastro}"
+											readonly='#{motoristaForm.action.equals("SHOW")}'
+											styleClass="form-control input-sm"
+											style="#{component.valid?'':'border-color:red;'}">
+											<f:convertDateTime pattern="dd/MM/yyyy HH:mm" timeZone="GMT-3" />
+										</h:inputText>
+										<span  class="input-group-addon"> 
+											<span class="glyphicon glyphicon-calendar"></span>
+										</span>
+
+										</div>
+									</div>
+								</div>
+								
+								
+
+
+							</div>
+
+
+
+							<div class="row">
+										<div class="col-lg-5">
+										
+										<h:panelGrid   columns="3">
+										<h:commandButton id="voltar" value='#{motoristaForm.action.equals("INSERT")?"Listar Motoristas":"Voltar"}' action="#{motoristaForm.sair()}"    styleClass="btn btn-primary btn-sm" />
+										&nbsp;&nbsp;
+										<h:commandLink id="salvar" value="Salvar" action="#{motoristaForm.salvar()}"  rendered='#{!motoristaForm.action.equals("SHOW")}' styleClass=" btn btn-primary btn-sm" />
+										</h:panelGrid>
+										
+										</div>
+										<div class="col-lg-7">
+										<h:messages styleClass="swp-msg swp-msg-sm" infoClass="alert alert-success" warnClass="alert alert-warning" errorClass="alert alert-danger"  showDetail="false" />
+										</div>
+									</div>
+									
+						
+							</h:form>
+
+						</div>
+						</div>
+						
+					</div>
+
+		</ui:define>
+	</ui:composition>
+
+</h:body>
+
+</html>
+
+
+
+
+
+

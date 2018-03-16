@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core" lang="en">
+
+<h:head>
+
+
+
+<link href="../css/estilos3.css" rel="stylesheet" type="text/css" />
+
+<style type="text/css">
+html {
+	height: 100%
+}
+
+body {
+	height: 100%;
+	margin: 0px;
+	padding: 0px
+}
+
+#map_canvas {
+	height: 100%
+}
+
+input.btn {
+	font: Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size: 10px;
+	font-weight: bold;
+	border-width: 1px 1px 1px 1px;
+	color: #000000;
+	margin: 0;
+}
+</style>
+
+
+<script type="text/javascript" src="https://maps.google.com/maps/api/js?sensor=true"></script>
+<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?libraries=geometry"></script>
+<script type="text/javascript" src="../js/StyledMarker.js"></script>
+<script type="text/javascript" src="../js/cerca.js"></script>
+<script type="text/javascript" src="../js/mapa.js"></script>
+
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"/>
+<title>Insert title here</title>
+
+</h:head>
+
+
+
+
+<script type="text/javascript">
+
+
+var geocoder = new google.maps.Geocoder();
+var circle;
+var rectangle;
+var map;
+var markerInfo;
+var styleIcon;
+var latlngCentro;
+var count = 0;
+var distancia=0;
+
+function initialize() {
+			
+			var infoWindow;
+		    latlngCentro = new google.maps.LatLng(-13.34,-51.82);
+		    var seta = {
+				    path: google.maps.SymbolPath.FORWARD_OPEN_ARROW
+		    };
+		    
+		    var myZoom = latlngCentro.lat()==-13.34?4:14; 
+
+		    var myOptions = {
+		      zoom: myZoom ,
+		      center: latlngCentro,
+		      mapTypeId: google.maps.MapTypeId.ROADMAP  
+		    };
+		    
+		    map = new google.maps.Map(document.getElementById("map_canvas"),myOptions);
+		    infowindow = new google.maps.InfoWindow();
+		    
+		    styleIcon = new StyledIcon(StyledIconTypes.BUBBLE,{color:"#FFFFCC",text:"Buscar Lugar"});
+		    
+		    markerInfo = new StyledMarker({
+		    	styleIcon:styleIcon,
+		    	position:map.getCenter(),
+		    	title:"Arraste este balão para localizar um endereço em um ponto qualquer do mapa!",
+		    	draggable:true
+		    });
+		    
+
+		    var ne =  new google.maps.LatLng(latlngCentro.lat()-0.009,latlngCentro.lng()-0.009);
+		    var sw =  new google.maps.LatLng(latlngCentro.lat()+0.009,latlngCentro.lng()+0.009);
+		    var centro = latlngCentro;
+		    var raio = 1000;
+		    
+		    	
+
+		    	centro = new google.maps.LatLng(-13.34,-51.82);
+		    	raio = 200;
+		    	addCircle(centro,raio);
+}		    	
+</script>
+
+<body onload="initialize()">
+<form name="form" method="get" action=""  style="width: 100%; height: 95%">	
+
+	<div id="map_canvas" style="width: 100%; height: 95%"></div>
+	<div id="apl_tabela_impressao_01">
+		<table width="100%" height="3%" border="1">
+			<tr>
+				<td width="5%"><input class="btn" id="addCircle"  type="button" value="Adicionar Cerca Circular" onclick="javascript:addInitialCircle();" /></td>
+				<td width="5%"><input class="btn" id="addRectangle"   type="button" value="Adicionar Cerca Retangular" onclick="javascript:addInitialRectangle();" /></td>
+				<td width="5%"><input class="btn"   type="button" value="Desativar Cerca Virtual" onclick="javascript:clearFence();" /></td>
+				<td width="5%"><input class="btn"   type="button" value="Salvar Configurações"  onclick="javascript:formSubmit();"  /></td>
+				<td class='dados'><div id="address"></div></td>
+			</tr>
+		</table>
+
+	</div>
+</form>	
+
+</body>
+</html>

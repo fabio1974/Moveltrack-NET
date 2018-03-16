@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:b="http://bootsfaces.net/ui" xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<h:body>
+
+	<ui:composition template="template/adminTemplate.xhtml">
+		<ui:define name="content">
+
+			<div class="wrapper wrapper-content ">
+				<div class="ibox">
+					<div class="inbox title">
+						<b><h:outputText
+								value='#{carneForm.action.equals("INSERT")?"Inserir ":carneForm.action.equals("UPDATE")?"Atualizar ":"Detalhes da "}Carne' /></b>
+					</div>
+					<div class="ibox-content">
+						<h:form onsubmit="document.body.style.cursor='wait'" id="form"
+							role="form">
+
+							<div class="row">
+
+								<div class="col-sm-6">
+									<div class="form-group">
+										<label for="cliente">Cliente</label>
+										<h:inputText name="cliente" id="cliente"
+											value="#{carneForm.cliente}"
+											class="input-sm form-control input-s-sm "
+											converter="#{clienteConverter}"
+											style="#{component.valid?'':'border-color:red;'}"
+											readonly='#{!carneForm.action.contains("INSERT")}' />
+									</div>
+								</div>
+
+								<div class="col-sm-3">
+									<div class="form-group">
+										<label for="mensalidade">Valor Mensal Por Veículo</label>
+										<h:inputText name="mensalidade" id="mensalidade"
+											value="#{carneForm.mensalidade}"
+											class="input-sm form-control input-s-sm "
+											converter="#{realConverter}"
+											style="#{component.valid?'':'border-color:red;'}"
+											readonly='#{!carneForm.action.contains("INSERT")}'>
+
+										</h:inputText>
+									</div>
+								</div>
+
+								<div class="col-sm-3">
+									<div class="form-group">
+										<label for="quantidadeBoleto">Quantidade de Boletos No
+											Carnê</label>
+
+
+										<h:selectOneMenu name="quantidadeBoleto" id="quantidadeBoleto"
+											class="input-sm form-control input-s-sm "
+											style="#{component.valid?'':'border-color:red;'}"
+											value="#{carneForm.carne.quantidadeBoleto}"
+											readonly='#{!carneForm.action.contains("INSERT")}'
+											converter="#{selectIntegerConverter}">
+											<f:selectItem itemValue="1" itemLabel="01 boleto " />
+											<f:selectItem itemValue="2" itemLabel="02 boletos" />
+											<f:selectItem itemValue="3" itemLabel="03 boletos" />
+											<f:selectItem itemValue="4" itemLabel="04 boletos" />
+											<f:selectItem itemValue="5" itemLabel="05 boletos" />
+											<f:selectItem itemValue="6" itemLabel="06 boletos" />
+											<f:selectItem itemValue="7" itemLabel="07 boletos" />
+											<f:selectItem itemValue="8" itemLabel="08 boletos" />
+											<f:selectItem itemValue="9" itemLabel="09 boletos" />
+											<f:selectItem itemValue="10" itemLabel="10 boletos" />
+											<f:selectItem itemValue="11" itemLabel="11 boletos" />
+											<f:selectItem itemValue="12" itemLabel="12 boletos" />
+
+
+
+										</h:selectOneMenu>
+
+
+									</div>
+								</div>
+
+
+
+							</div>
+
+							<div class="row">
+
+								<div class="col-sm-3">
+									<div class="form-group">
+										<label for="dataReferencia">Data de Referencia</label>
+										<div class='input-group input-group-sm date' id='dataReferencia'>
+											<h:inputText id="dataReferencia"
+												value="#{carneForm.carne.dataReferencia}" readonly='true'
+												styleClass="form-control"
+												style="#{component.valid?'':'border-color:red;'}">
+												<f:convertDateTime pattern="dd/MM/yyyy HH:mm" timeZone="GMT-3" />
+											</h:inputText>
+											<span class="input-group-addon"> <span
+												class="glyphicon glyphicon-calendar"></span>
+											</span>
+
+										</div>
+									</div>
+								</div>
+
+
+								<div class="col-sm-3">
+									<div class="form-group">
+										<label for="tipoDeCobranca">Tipo de Cobrança</label>
+										<h:selectOneMenu id="tipoDeCobranca" name="tipoDeCobranca"
+											value="#{carneForm.carne.tipoDeCobranca}" disabled='true'
+											styleClass="form-control input-sm"
+											style="#{component.valid?'':'border-color:red;'}">
+											<f:selectItems value="#{carneTable.tipoDeCobrancas}" />
+										</h:selectOneMenu>
+									</div>
+								</div>
+
+
+
+								<div class="col-sm-3">
+									<div class="form-group">
+										<label for="postagem">Data da Postagem</label>
+										<div class='input-group input-group-sm date' id='postagem'>
+											<h:inputText id="postagem"
+												value="#{carneForm.carne.postagem}"
+												readonly='#{carneForm.action.equals("SHOW")}'
+												styleClass="form-control"
+												style="#{component.valid?'':'border-color:red;'}">
+												<f:convertDateTime pattern="dd/MM/yyyy HH:mm"
+													timeZone="GMT-3" />
+											</h:inputText>
+											<span class="input-group-addon"> <span
+												class="glyphicon glyphicon-calendar"></span>
+											</span>
+
+										</div>
+									</div>
+								</div>
+								
+
+								<div class="col-sm-3">
+									<div class="form-group">
+										<label  for="veiculo">Qtde: #{carneForm.veiculos!=null?carneForm.veiculos.size():"0"} veículo(s)</label>
+										<h:selectManyMenu id="veiculo" converter="#{veiculoConverter}"
+											style="height:100px;"
+											readonly='true'
+											styleClass="form-control input-sm"
+										 >
+											<f:selectItems value="#{carneForm.veiculos}"
+												var="veiculo" itemLabel="#{veiculo.placa} -  #{veiculo.marcaModelo}"
+												itemValue="#{veiculo}" />
+										</h:selectManyMenu>
+									</div>
+									</div>
+
+
+
+							</div>
+
+
+							<div class="row">
+								<div class="col-lg-5">
+
+									<h:panelGrid columns="3">
+										<h:commandButton id="voltar"
+											value='#{carneForm.action.equals("INSERT")?"Listar Carnes":"Voltar"}'
+											action="#{carneForm.sair()}"
+											styleClass="btn btn-primary btn-sm" />
+										&nbsp;&nbsp;
+										<h:commandLink id="salvar"
+											value='#{carneForm.action.equals("INSERT")?"Criar Carnê":"Salvar"}'
+											action="#{carneForm.salvar()}"
+											rendered='#{!carneForm.action.equals("SHOW")}'
+											styleClass=" btn btn-primary btn-sm" />
+									</h:panelGrid>
+
+								</div>
+								<div class="col-lg-7">
+									<h:messages styleClass="swp-msg swp-msg-sm"
+										infoClass="alert alert-success"
+										warnClass="alert alert-warning"
+										errorClass="alert alert-danger" showDetail="false" />
+								</div>
+							</div>
+
+
+						</h:form>
+
+					</div>
+				</div>
+
+			</div>
+
+
+
+
+
+
+
+		</ui:define>
+	</ui:composition>
+
+</h:body>
+
+</html>
+
+
+

@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      lang="en"
+      >
+
+<h:head>
+    <!-- base href="#{request.requestURL.substring(0, request.requestURL.length() - request.requestURI.length())}#{request.contextPath}/site/admin/" /-->
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="../assets/img/moveltrack/simbolo_118_82.png"/>
+
+    <title>Moveltrack | Segurança e Tecnologia</title>   
+
+	<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
+    <link href="css/bootstrap.css" rel="stylesheet"/>
+    <link href="font-awesome/css/font-awesome.css" rel="stylesheet"/>
+    <link href="css/animate.css" rel="stylesheet"/>
+    <link href="css/style.css" rel="stylesheet"/>
+    <link href="css/plugins/iCheck/custom.css" rel="stylesheet"/>
+    
+	<link href="css/bootstrap-datetimepicker.css" rel="stylesheet"/>
+    
+    
+    
+ 
+
+</h:head>
+
+<h:body class="pace-done scroll-sidebar ">
+
+
+<script>
+var webContext = "#{request.contextPath}";
+
+
+
+</script>
+
+
+<!-- Mainly scripts -->
+
+
+
+
+<script src="js/jquery-2.1.1.js"></script>
+<script src="js/jquery-ui-1.10.4.min.js"></script>
+<script src="js/jquery-ui.custom.min.js"></script>
+<script src="js/datepicker-pt-BR.js"></script>
+<script src="js/autocompleter.js"></script>   
+
+
+
+<script src="js/jquery.maskedinput.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/plugins/metisMenu/jquery.metisMenu.js"></script>
+<script src="js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+
+<!-- Custom and plugin javascript -->
+<script src="js/inspinia.js"></script>
+<script src="js/plugins/pace/pace.min.js"></script>
+
+<!-- Peity -->
+<script src="js/plugins/peity/jquery.peity.min.js"></script>
+<script src="js/demo/peity-demo.js"></script>
+    
+<!-- iCheck -->
+<script src="js/plugins/iCheck/icheck.min.js"></script>
+    	<script src="js/moment-with-locales.js"></script>
+			<script src="js/bootstrap-datetimepicker.js"></script>
+			
+<script src="js/jquery.price_format.2.0.min.js"></script>
+<script src="js/jquery.price_format.2.0.js"></script>
+			
+
+
+
+
+<div class="pace  pace-inactive">
+	<div data-progress="99" data-progress-text="100%" style="transform: translate3d(100%, 0px, 0px);" class="pace-progress">
+		  <div class="pace-progress-inner"></div>
+	</div>
+	<div class="pace-activity"></div>
+</div>
+
+<div id="wrapper">
+
+  	<ui:insert name="nav" >
+		  <ui:include src="adminSidebar.xhtml" />
+	</ui:insert>
+
+    <div id="page-wrapper" class="gray-bg">
+    
+      	<ui:insert name="topbar" >
+		  <ui:include src="adminTopbar.xhtml" />
+		</ui:insert>
+		
+	  	<ui:insert name="content" >
+		  <ui:include src="adminContent.xhtml" />
+		</ui:insert>
+		
+	  	<ui:insert name="footer" >
+		  <ui:include src="adminFooter.xhtml" />
+		</ui:insert>
+		
+		<ui:insert name="javascript" >
+		  
+		</ui:insert>
+		
+
+    </div>
+
+</div>
+
+
+
+ 
+<script type="text/javascript"> 
+ jQuery(function($){
+   $("#form\\:celular1,#form\\:celular2").mask("(99) 99999-9999");
+   $("#form\\:telefoneFixo").mask("(99) 9999-9999");
+   $("#form\\:cpf").mask("999.999.999-99");
+   $("#form\\:cep").mask("99.999-999");
+   $("#form\\:cnpj").mask("99.999.999/9999-99");
+   $("#form\\:valor,#form\\:valorDaCarga,#form\\:valorDevolucao,#form\\:mensalidade,#form\\:entrada,#form\\:valorDoServico,#form\\:salario").priceFormat({
+	    prefix: 'R$ ',
+	    centsSeparator: ',',
+	    thousandsSeparator: '.'
+	});
+
+
+
+
+   $("#dataNascimento,#validadeCnh").datetimepicker({
+       locale: 'pt',
+       format: 'DD/MM/YYYY',
+       showClose:true,
+       viewMode: 'years'
+   });
+   
+   
+   $("#dataVencimento").datetimepicker({
+       locale: 'pt',
+       format: 'DD/MM/YYYY',
+       showClose:true,
+   });
+   
+
+   $("#inicio,#fim,#dataDaDespesa,#partida,#chegadaPrevista,#dataInstalacao,#dataDesinstalacao,#dataCadastro,#dataRegistroPagamento,#data,#dataDoServico,#postagem,#fechamento,#abertura").datetimepicker({
+       locale: 'pt',
+       format: 'DD/MM/YYYY HH:mm',
+       showClose: true,
+   });
+
+
+   $("#segundaInicio,#segundaFim,#tercaInicio,#tercaFim,#quartaInicio,#quartaFim,#quintaInicio,#quintaFim,#sextaInicio,#sextaFim,#sabadoInicio,#sabadoFim,#domingoInicio,#domingoFim").datetimepicker({
+       locale: 'pt',
+       format: 'HH:mm',
+       showClose: true,
+   });
+ 
+});
+
+
+</script>
+
+
+</h:body>
+
+</html>

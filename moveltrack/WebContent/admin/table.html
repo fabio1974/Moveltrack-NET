@@ -1,0 +1,294 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+<head>
+  <title><ui:insert name="title">Default title</ui:insert></title>
+  		<link rel="stylesheet"
+		href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
+	<link href="css/bootstrap.min.css" rel="stylesheet" />
+	<link href="font-awesome/css/font-awesome.css" rel="stylesheet" />
+	<link href="css/animate.css" rel="stylesheet" />
+	<link href="css/style.css" rel="stylesheet" />
+	<link href="css/plugins/iCheck/custom.css" rel="stylesheet" />
+	<link href="css/tabelas.css" rel="stylesheet" type="text/css" />
+
+	<script type="text/javascript"
+		src="http://maps.googleapis.com/maps/api/js?libraries=geometry&amp;sensor=true&amp;v=3.19"></script>
+	<script type="text/javascript" src="js/StyledMarker.js"></script>
+	<script charset="UTF-8" type="text/javascript"
+		src="js/mapa_ajax.js?n=1"></script>
+
+</head>
+
+<body>
+<div class="table-responsive ">
+<table id="form:table" class="table table-striped table-condensed table-bordered table-hover table-scrollable  ">
+<thead>
+<tr>
+<th scope="col"><a href="#" onclick="mojarra.jsfcljs(document.getElementById('form'),{'form:table:j_idt96':'form:table:j_idt96'},'');return false">Placa</a>
+										<div class="input-group input-group-sm"><input type="text" name="form:table:j_idt97" value="" class="input-sm form-control" />
+										</div></th>
+<th scope="col"><a href="#" onclick="mojarra.jsfcljs(document.getElementById('form'),{'form:table:j_idt103':'form:table:j_idt103'},'');return false">Marca/Modelo Modelo Modelo</a>
+										<div class="input-group input-group-sm"><input type="text" name="form:table:j_idt105" value="" class="input-sm form-control" />
+										</div></th>
+<th scope="col"><a href="#" onclick="mojarra.jsfcljs(document.getElementById('form'),{'form:table:j_idt109':'form:table:j_idt109'},'');return false">Cor</a><select id="form:table:cor" name="form:table:cor" class="form-control input-sm" size="1">	<option value="" selected="selected"> --- </option>
+	<option value="Amarela">Amarela</option>
+	<option value="Azul">Azul</option>
+	<option value="AzulMetalica">AzulMetalica</option>
+	<option value="Bege">Bege</option>
+	<option value="Branca">Branca</option>
+	<option value="Chumbo">Chumbo</option>
+	<option value="Cinza">Cinza</option>
+	<option value="Laranja">Laranja</option>
+	<option value="Prata">Prata</option>
+	<option value="Preta">Preta</option>
+	<option value="Rosa">Rosa</option>
+	<option value="RosaMetalica">RosaMetalica</option>
+	<option value="Verde">Verde</option>
+	<option value="Vermelha">Vermelha</option>
+	<option value="VermelhaMetalica">VermelhaMetalica</option>
+</select></th>
+<th scope="col"><a href="#" onclick="mojarra.jsfcljs(document.getElementById('form'),{'form:table:j_idt114':'form:table:j_idt114'},'');return false">Rastreador</a>
+										<div class="input-group input-group-sm"><input id="form:table:equipamento" type="text" name="form:table:equipamento" class="input-sm form-control input-s-sm " />
+										</div></th>
+<th scope="col"><input type="submit" name="form:table:j_idt44" value="Filtrar" class="btn btn-primary btn-sm " /></th>
+</tr>
+</thead>
+<tfoot>
+<tr>
+<td class="customFooter"></td>
+<td class="customFooter"></td>
+<td class="customFooter"></td>
+<td class="customFooter"></td>
+<td class="customFooter"></td>
+</tr>
+</tfoot>
+<tbody>
+<tr>
+<td class="column1"><a href="#" style="width:70px; vertical-align: middle; " title="WEFEWRFEWRF modelo legal " onclick="mojarra.jsfcljs(document.getElementById('form'),{'form:table:0:j_idt99':'form:table:0:j_idt99'},'');return false" class="btn btn-danger btn-xs ">QWF-2342
+										<!--  i class="glyphicon glyphicon-map-marker "&gt;&lt;/i--></a></td>
+<td class="column2">WEFEWRFEWRF modelo legal </td>
+<td class="column3">Amarela</td>
+<td class="column1"></td>
+<td class="column2"><table>
+<tbody>
+<tr>
+<td><a href="#" title="Visualizar" onclick="mojarra.jsfcljs(document.getElementById('form'),{'form:table:0:j_idt119':'form:table:0:j_idt119'},'');return false" class="btn btn-primary btn-xs ">
+											<i class="fa fa-search "></i></a></td>
+<td>
+																	 
+
+															</td>
+<td><a href="#" title="Atualizar" onclick="mojarra.jsfcljs(document.getElementById('form'),{'form:table:0:j_idt121':'form:table:0:j_idt121'},'');return false" class="btn btn-warning btn-xs ">
+											<i class="fa fa-wrench "></i></a></td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr>
+<td class="column1"><a href="#" style="width:70px; vertical-align: middle; " title="QWEFQWEF modelo bacana" onclick="mojarra.jsfcljs(document.getElementById('form'),{'form:table:1:j_idt99':'form:table:1:j_idt99'},'');return false" class="btn btn-danger btn-xs ">QWE-2432
+										<!--  i class="glyphicon glyphicon-map-marker "&gt;&lt;/i--></a></td>
+<td class="column2">QWEFQWEF modelo bacana</td>
+<td class="column3">Amarela</td>
+<td class="column1"></td>
+<td class="column2"><table>
+<tbody>
+<tr>
+<td><a href="#" title="Visualizar" onclick="mojarra.jsfcljs(document.getElementById('form'),{'form:table:1:j_idt119':'form:table:1:j_idt119'},'');return false" class="btn btn-primary btn-xs ">
+											<i class="fa fa-search "></i></a></td>
+<td>
+																	 
+
+															</td>
+<td><a href="#" title="Atualizar" onclick="mojarra.jsfcljs(document.getElementById('form'),{'form:table:1:j_idt121':'form:table:1:j_idt121'},'');return false" class="btn btn-warning btn-xs ">
+											<i class="fa fa-wrench "></i></a></td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr>
+<td class="column1"><a href="#" style="width:70px; vertical-align: middle; " title="SWDFGASDF modelo interessante" onclick="mojarra.jsfcljs(document.getElementById('form'),{'form:table:2:j_idt99':'form:table:2:j_idt99'},'');return false" class="btn btn-danger btn-xs ">ASF-2342
+										<!--  i class="glyphicon glyphicon-map-marker "&gt;&lt;/i--></a></td>
+<td class="column2">SWDFGASDF modelo interessante</td>
+<td class="column3">Amarela</td>
+<td class="column1"></td>
+<td class="column2"><table>
+<tbody>
+<tr>
+<td><a href="#" title="Visualizar" onclick="mojarra.jsfcljs(document.getElementById('form'),{'form:table:2:j_idt119':'form:table:2:j_idt119'},'');return false" class="btn btn-primary btn-xs ">
+											<i class="fa fa-search "></i></a></td>
+<td>
+																	 
+
+															</td>
+<td><a href="#" title="Atualizar" onclick="mojarra.jsfcljs(document.getElementById('form'),{'form:table:2:j_idt121':'form:table:2:j_idt121'},'');return false" class="btn btn-warning btn-xs ">
+											<i class="fa fa-wrench "></i></a></td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr>
+<td class="column1"><a href="#" style="width:70px; vertical-align: middle; " title="wfewrf wfewrfewrf wer frr" onclick="mojarra.jsfcljs(document.getElementById('form'),{'form:table:3:j_idt99':'form:table:3:j_idt99'},'');return false" class="btn btn-danger btn-xs ">DFA-2342
+										<!--  i class="glyphicon glyphicon-map-marker "&gt;&lt;/i--></a></td>
+<td class="column2">wfewrf wfewrfewrf wer frr</td>
+<td class="column3">Amarela</td>
+<td class="column1"></td>
+<td class="column2"><table>
+<tbody>
+<tr>
+<td><a href="#" title="Visualizar" onclick="mojarra.jsfcljs(document.getElementById('form'),{'form:table:3:j_idt119':'form:table:3:j_idt119'},'');return false" class="btn btn-primary btn-xs ">
+											<i class="fa fa-search "></i></a></td>
+<td>
+																	 
+
+															</td>
+<td><a href="#" title="Atualizar" onclick="mojarra.jsfcljs(document.getElementById('form'),{'form:table:3:j_idt121':'form:table:3:j_idt121'},'');return false" class="btn btn-warning btn-xs ">
+											<i class="fa fa-wrench "></i></a></td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr>
+<td class="column1"><a href="#" style="width:70px; vertical-align: middle; " title="wgasgasdf segfewr ewrg ewrg" onclick="mojarra.jsfcljs(document.getElementById('form'),{'form:table:4:j_idt99':'form:table:4:j_idt99'},'');return false" class="btn btn-danger btn-xs ">QWE-2342
+										<!--  i class="glyphicon glyphicon-map-marker "&gt;&lt;/i--></a></td>
+<td class="column2">wgasgasdf segfewr ewrg ewrg</td>
+<td class="column3">Amarela</td>
+<td class="column1"></td>
+<td class="column2"><table>
+<tbody>
+<tr>
+<td><a href="#" title="Visualizar" onclick="mojarra.jsfcljs(document.getElementById('form'),{'form:table:4:j_idt119':'form:table:4:j_idt119'},'');return false" class="btn btn-primary btn-xs ">
+											<i class="fa fa-search "></i></a></td>
+<td>
+																	 
+
+															</td>
+<td><a href="#" title="Atualizar" onclick="mojarra.jsfcljs(document.getElementById('form'),{'form:table:4:j_idt121':'form:table:4:j_idt121'},'');return false" class="btn btn-warning btn-xs ">
+											<i class="fa fa-wrench "></i></a></td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr>
+<td class="column1"><a href="#" style="width:70px; vertical-align: middle; " title="fqwf quwe diquwe d   q wedqwuedyqwue" onclick="mojarra.jsfcljs(document.getElementById('form'),{'form:table:5:j_idt99':'form:table:5:j_idt99'},'');return false" class="btn btn-danger btn-xs ">WFQ-2342
+										<!--  i class="glyphicon glyphicon-map-marker "&gt;&lt;/i--></a></td>
+<td class="column2">fqwf quwe diquwe d   q wedqwuedyqwue</td>
+<td class="column3">Amarela</td>
+<td class="column1"></td>
+<td class="column2"><table>
+<tbody>
+<tr>
+<td><a href="#" title="Visualizar" onclick="mojarra.jsfcljs(document.getElementById('form'),{'form:table:5:j_idt119':'form:table:5:j_idt119'},'');return false" class="btn btn-primary btn-xs ">
+											<i class="fa fa-search "></i></a></td>
+<td>
+																	 
+
+															</td>
+<td><a href="#" title="Atualizar" onclick="mojarra.jsfcljs(document.getElementById('form'),{'form:table:5:j_idt121':'form:table:5:j_idt121'},'');return false" class="btn btn-warning btn-xs ">
+											<i class="fa fa-wrench "></i></a></td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr>
+<td class="column1"><a href="#" style="width:70px; vertical-align: middle; " title="wqeq ffffffffffffffffffffff" onclick="mojarra.jsfcljs(document.getElementById('form'),{'form:table:6:j_idt99':'form:table:6:j_idt99'},'');return false" class="btn btn-danger btn-xs ">QWF-4134
+										<!--  i class="glyphicon glyphicon-map-marker "&gt;&lt;/i--></a></td>
+<td class="column2">wqeq ffffffffffffffffffffff</td>
+<td class="column3">Amarela</td>
+<td class="column1"></td>
+<td class="column2"><table>
+<tbody>
+<tr>
+<td><a href="#" title="Visualizar" onclick="mojarra.jsfcljs(document.getElementById('form'),{'form:table:6:j_idt119':'form:table:6:j_idt119'},'');return false" class="btn btn-primary btn-xs ">
+											<i class="fa fa-search "></i></a></td>
+<td>
+																	 
+
+															</td>
+<td><a href="#" title="Atualizar" onclick="mojarra.jsfcljs(document.getElementById('form'),{'form:table:6:j_idt121':'form:table:6:j_idt121'},'');return false" class="btn btn-warning btn-xs ">
+											<i class="fa fa-wrench "></i></a></td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr>
+<td class="column1"><a href="#" style="width:70px; vertical-align: middle; " title="moto3 ttttttttttttt" onclick="mojarra.jsfcljs(document.getElementById('form'),{'form:table:7:j_idt99':'form:table:7:j_idt99'},'');return false" class="btn btn-danger btn-xs ">HDF-6178
+										<!--  i class="glyphicon glyphicon-map-marker "&gt;&lt;/i--></a></td>
+<td class="column2">moto3 ttttttttttttt</td>
+<td class="column3">Amarela</td>
+<td class="column1"></td>
+<td class="column2"><table>
+<tbody>
+<tr>
+<td><a href="#" title="Visualizar" onclick="mojarra.jsfcljs(document.getElementById('form'),{'form:table:7:j_idt119':'form:table:7:j_idt119'},'');return false" class="btn btn-primary btn-xs ">
+											<i class="fa fa-search "></i></a></td>
+<td>
+																	 
+
+															</td>
+<td><a href="#" title="Atualizar" onclick="mojarra.jsfcljs(document.getElementById('form'),{'form:table:7:j_idt121':'form:table:7:j_idt121'},'');return false" class="btn btn-warning btn-xs ">
+											<i class="fa fa-wrench "></i></a></td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr>
+<td class="column1"><a href="#" style="width:70px; vertical-align: middle; " title="moto12 gggggggggggg" onclick="mojarra.jsfcljs(document.getElementById('form'),{'form:table:8:j_idt99':'form:table:8:j_idt99'},'');return false" class="btn btn-danger btn-xs ">QWY-1374
+										<!--  i class="glyphicon glyphicon-map-marker "&gt;&lt;/i--></a></td>
+<td class="column2">moto12 gggggggggggg</td>
+<td class="column3">Amarela</td>
+<td class="column1"></td>
+<td class="column2"><table>
+<tbody>
+<tr>
+<td><a href="#" title="Visualizar" onclick="mojarra.jsfcljs(document.getElementById('form'),{'form:table:8:j_idt119':'form:table:8:j_idt119'},'');return false" class="btn btn-primary btn-xs ">
+											<i class="fa fa-search "></i></a></td>
+<td>
+																	 
+
+															</td>
+<td><a href="#" title="Atualizar" onclick="mojarra.jsfcljs(document.getElementById('form'),{'form:table:8:j_idt121':'form:table:8:j_idt121'},'');return false" class="btn btn-warning btn-xs ">
+											<i class="fa fa-wrench "></i></a></td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr>
+<td class="column1"><a href="#" style="width:70px; vertical-align: middle; " title="moto1 wfefwefwefwef" onclick="mojarra.jsfcljs(document.getElementById('form'),{'form:table:9:j_idt99':'form:table:9:j_idt99'},'');return false" class="btn btn-danger btn-xs ">ASB-8719
+										<!--  i class="glyphicon glyphicon-map-marker "&gt;&lt;/i--></a></td>
+<td class="column2">moto1 wfefwefwefwef</td>
+<td class="column3">Amarela</td>
+<td class="column1"></td>
+<td class="column2"><table>
+<tbody>
+<tr>
+<td><a href="#" title="Visualizar" onclick="mojarra.jsfcljs(document.getElementById('form'),{'form:table:9:j_idt119':'form:table:9:j_idt119'},'');return false" class="btn btn-primary btn-xs ">
+											<i class="fa fa-search "></i></a></td>
+<td>
+																	 
+
+															</td>
+<td><a href="#" title="Atualizar" onclick="mojarra.jsfcljs(document.getElementById('form'),{'form:table:9:j_idt121':'form:table:9:j_idt121'},'');return false" class="btn btn-warning btn-xs ">
+											<i class="fa fa-wrench "></i></a></td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+</body>
+
+</html>

@@ -1,0 +1,500 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core" 
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<h:head>
+
+
+
+</h:head>	
+	
+<h:body>
+
+	<ui:composition template="template/adminTemplate.xhtml">
+		<ui:define name="content">
+		
+
+			
+		
+			<div class="wrapper wrapper-content">
+				<div class="row">
+					<div class="col-lg-12">
+						<div class="ibox">
+							<b>
+								<div class="inbox title">Veículos</div>
+							</b>
+							<div class="ibox-content">
+								<h:form onsubmit="document.body.style.cursor='wait'" id="form" role="form">
+									
+									<div class="row " >
+
+										<div class="col-sm-12">
+											<div class="pull-right">
+												<div class="form-inline">
+													<div class="input-group input-group-xs">
+														<h:selectOneMenu styleClass="  form-control "
+															value="#{veiculoTable.rowsPerPage}"
+															converter="#{selectIntegerConverter}">
+															<f:selectItem itemValue="5" itemLabel="05 linhas" />
+															<f:selectItem itemValue="10" itemLabel="10 linhas" />
+															<f:selectItem itemValue="15" itemLabel="15 linhas" />
+															<f:selectItem itemValue="20" itemLabel="20 linhas" />
+															<f:selectItem itemValue="30" itemLabel="30 linhas" />
+														</h:selectOneMenu>
+														<span class="input-group-btn"> <h:commandButton
+																value="Ok" action="#{veiculoTable.pageFirst}"
+																styleClass="btn btn-primary   " />
+														</span>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+
+									<p></p>
+
+									<div class="row">
+										<div class="col-lg-12">
+											<div class="table-responsive ">
+												<h:dataTable value="#{veiculoTable.veiculos}" id="table"
+													class="table table-striped table-bordered table-hover"
+													var="veiculo">
+
+													<h:column rendered="#{!loginBean.hasPermission('VEICULO_VER_PROPRIO')}" footerClass="customFooter">
+														<f:facet name="header">
+															<h:commandLink value="Cliente"
+																actionListener="#{veiculoTable.sort}">
+																<f:attribute name="sortField" value="contrato.cliente.nome" />
+															</h:commandLink>
+														</f:facet>
+
+														<f:facet name="header">
+																<h:inputText name="cliente" id="cliente"
+																	value="#{veiculoTable.cliente}"
+																	class="form-control input-xs "
+																	converter="#{clienteConverter}"
+																 />																	
+
+														</f:facet>
+														
+														<h:outputText value="#{veiculo.contrato.cliente.usuario.perfil.tipo=='CLIENTE_PJ'?veiculo.contrato.cliente.nomeFantasia:veiculo.contrato.cliente.nome}" title="#{veiculo.contrato.cliente.usuario.perfil.tipo=='CLIENTE_PJ'?veiculo.contrato.cliente.nome:null}" />
+
+														<f:facet name="footer">
+															<h:outputText value="#{veiculoTable.cliente.nome}" />
+														</f:facet>
+													</h:column>
+													
+													
+
+													<h:column footerClass="customFooter">
+														<f:facet name="header">
+															<h:commandLink value="Placa"
+																actionListener="#{veiculoTable.sort}">
+																<f:attribute name="sortField" value="placa" />
+															</h:commandLink>
+														</f:facet>
+														<f:facet name="header">
+															
+																<h:inputText value="#{veiculoTable.placa}"  styleClass="input-xs form-control" />
+															
+														</f:facet>
+
+
+														<center>
+															<h:commandLink rendered="#{veiculo.status=='ATIVO' and veiculo.equipamento.modelo!='SPOT_TRACE'}"
+																style="width:100px; vertical-align: middle; "
+																styleClass="btn btn-danger btn-xs "
+																value="#{veiculo.placa!=null?veiculo.placa:'&nbsp;'}" title="Rastrear" 
+																action="mapaVeiculoCompleto">
+																<i class="glyphicon glyphicon-map-marker "></i>
+																<f:setPropertyActionListener value="#{veiculo}" target="#{mapaVeiculoBean.veiculo}" />
+															</h:commandLink>
+															
+															<h:commandLink rendered="#{veiculo.status=='ATIVO' and veiculo.equipamento.modelo=='SPOT_TRACE'}"
+																style="width:100px; vertical-align: middle; "
+																styleClass="btn btn-danger btn-xs "
+																value="#{veiculo.placa!=null?veiculo.placa:'&nbsp;'}" title="Rastrear" 
+																action="mapaVeiculoSpot">
+																<i class="glyphicon glyphicon-map-marker "></i>
+																<f:setPropertyActionListener value="#{veiculo}" target="#{mapaVeiculoBean.veiculo}" />
+															</h:commandLink>
+															
+
+
+
+															<h:outputText rendered="#{veiculo.status=='INATIVO'}"
+																style="width:100px; vertical-align: middle; "
+																styleClass="btn btn-default btn-xs "
+																value="#{veiculo.placa!=null?veiculo.placa:'&nbsp;'}" />
+
+														</center>
+
+
+
+
+														<f:facet name="footer">
+																<h:outputText value="#{veiculoTable.placa}" />
+															</f:facet>
+													</h:column>
+
+
+													<h:column footerClass="customFooter">
+														<f:facet name="header">
+															<h:commandLink value="Marca/Modelo"
+																actionListener="#{veiculoTable.sort}">
+																<f:attribute name="sortField" value="marcaModelo" />
+															</h:commandLink>
+														</f:facet>
+														<f:facet name="header">
+															
+																<h:inputText value="#{veiculoTable.marcaModelo}"
+																	styleClass="input-xs form-control" />
+															
+														</f:facet>
+														<h:outputText value="#{veiculo.marcaModelo}" />
+														<f:facet name="footer">
+															<h:outputText value="#{veiculoTable.marcaModelo}" />
+														</f:facet>
+													</h:column>
+
+
+													<h:column footerClass="customFooter">
+														<f:facet name="header">
+														<center>
+															<h:commandLink value="Cor"
+																actionListener="#{veiculoTable.sort}">
+																<f:attribute name="sortField" value="cor" />
+															</h:commandLink>
+														</center>	
+														</f:facet>
+														<f:facet name="header">
+
+															<h:selectOneMenu id="cor" rendered="#{!loginBean.hasPermission('VEICULO_VER_PROPRIO')}"
+																value="#{veiculoTable.cor}"
+																styleClass="form-control input-xs">
+																<f:selectItem  itemLabel="&nbsp;" noSelectionOption="yes" />
+																<f:selectItems value="#{veiculoForm.cores}" />
+															</h:selectOneMenu>
+
+														</f:facet>
+														<center>
+														<h:outputText value="#{veiculo.cor}" />
+														</center>
+														<f:facet name="footer">
+															<h:outputText rendered="#{!loginBean.hasPermission('VEICULO_VER_PROPRIO')}" value="#{veiculoTable.cor}" />
+														</f:facet>
+													</h:column>
+													
+													
+													<h:column footerClass="customFooter">
+														<f:facet name="header">
+															<h:commandLink value="Tipo"
+																actionListener="#{veiculoTable.sort}">
+																<f:attribute name="sortField" value="tipo" />
+															</h:commandLink>
+														</f:facet>
+														<f:facet name="header">
+
+															<h:selectOneMenu id="tipo"
+																value="#{veiculoTable.tipo}"
+																styleClass="form-control input-xs">
+																<f:selectItem  itemLabel="&nbsp;" noSelectionOption="yes" />
+																<f:selectItems value="#{veiculoForm.tipos}" />
+															</h:selectOneMenu>
+
+														</f:facet>
+														<center>
+														<h:outputText value="#{veiculo.tipo}" />
+														</center>
+														<f:facet name="footer">
+															<h:outputText value="#{veiculoTable.tipo}" />
+														</f:facet>
+													</h:column>
+													
+													
+													<h:column footerClass="customFooter">
+														<f:facet name="header"><center>
+															<h:commandLink value="Status"
+																actionListener="#{veiculoTable.sort}">
+																<f:attribute name="sortField" value="status" />
+															</h:commandLink></center>
+														</f:facet>
+														<f:facet name="header">
+
+															<h:selectOneMenu id="status"
+																rendered="#{!loginBean.hasPermission('VEICULO_VER_PROPRIO')}" 
+																value="#{veiculoTable.status}"
+																styleClass="form-control input-xs">
+																<f:selectItem  itemLabel="&nbsp;" noSelectionOption="yes" />
+																<f:selectItems value="#{veiculoForm.statuses}" />
+															</h:selectOneMenu>
+
+														</f:facet>
+														<center>
+														<h:outputText value="#{veiculo.status}" />
+														</center>
+														<f:facet name="footer">
+															<h:outputText value="#{veiculoTable.status}"  rendered="#{!loginBean.hasPermission('VEICULO_VER_PROPRIO')}"  />
+														</f:facet>
+													</h:column>
+													
+													
+													
+													
+													<h:column rendered="#{!loginBean.hasPermission('VEICULO_VER_PROPRIO')}" footerClass="customFooter">
+														<f:facet name="header">
+															<h:commandLink value="Rastreador"
+																actionListener="#{veiculoTable.sort}">
+																<f:attribute name="sortField" value="equipamento" />
+															</h:commandLink>
+														</f:facet>
+														<f:facet name="header">
+																<h:inputText name="equipamento" id="equipamento"
+																	value="#{veiculoTable.equipamento}"
+																	class="input-xs form-control"
+																	converter="#{equipamentoConverter}"
+																 />																	
+														</f:facet>
+														
+														
+													<center>
+														
+														<h:commandLink	action="#{conversation.novaConversa('equipamentoTable')}"  value="#{veiculo.equipamento.imei}">
+															<f:setPropertyActionListener value="#{veiculo.equipamento.imei}" target="#{equipamentoTable.imei}" />
+														    <f:setPropertyActionListener value="equipamento" target="#{navigator.topico}" />
+														    <f:actionListener binding="#{equipamentoTable.refreshPage()}" />
+														</h:commandLink>
+														
+													</center>														
+														
+														
+														
+														
+														
+														
+														<f:facet name="footer">
+															<h:outputText value="#{veiculoTable.equipamento}" />
+														</f:facet>
+													</h:column>
+													
+													
+													
+													<h:column rendered="#{!loginBean.hasPermission('VEICULO_VER_PROPRIO')}" footerClass="customFooter">
+														<f:facet name="header">
+															<h:commandLink value="Instalador"
+																actionListener="#{veiculoTable.sort}">
+																<f:attribute name="sortField" value="instalador" />
+															</h:commandLink>
+														</f:facet>
+														<f:facet name="header">
+
+																<h:inputText name="instalador" id="instalador"
+																	value="#{veiculoTable.instalador}"
+																	class="input-xs form-control"
+																	converter="#{empregadoConverter}"
+																 />																	
+
+														</f:facet>
+														<h:outputText value="#{veiculo.instalador}" />
+														<f:facet name="footer">
+															<h:outputText value="#{veiculoTable.instalador}" />
+														</f:facet>
+													</h:column>
+													
+
+
+
+
+													<h:column footerClass="customFooter">
+														<f:facet name="header">
+														<center>
+															<h:commandLink value="Data de Instalação"
+																actionListener="#{veiculoTable.sort}">
+																<f:attribute name="sortField" value="dataInstalacao" />
+															</h:commandLink>
+														</center>	
+														</f:facet>
+														<!-- f:facet name="header">
+																<div class="input-group input-group-sm">
+																	<h:inputText  value="#{veiculoTable.dataInstalacao}"  styleClass="input-sm form-control"  />
+																</div>	
+															</f:facet-->
+															<center>
+														<h:outputText value="#{veiculo.dataInstalacao}" >
+															<f:convertDateTime pattern="dd/MM/yyyy HH:mm" timeZone="GMT-3"/>
+														</h:outputText>
+														</center>
+														<f:facet name="footer">
+															<h:outputText value="#{veiculoTable.dataInstalacao}" />
+														</f:facet>
+													</h:column>
+
+
+
+													<h:column footerClass="customFooter">
+													
+														<f:facet name="header">
+														<center>
+															<h:commandButton styleClass="btn btn-primary btn-xs "
+																value="Filtrar"
+																actionListener="#{veiculoTable.refreshPage}">
+															</h:commandButton>
+														</center>	
+														</f:facet>
+													<center>		
+														<h:panelGrid columns="9">
+													
+															<h:commandLink styleClass="btn btn-primary btn-xs "
+																title="Visualizar" action="veiculoForm">
+																<i class="fa fa-search "></i>
+																<f:setPropertyActionListener value="#{veiculo}"
+																	target="#{veiculoForm.veiculo}" />
+																<f:setPropertyActionListener value="SHOW"
+																	target="#{veiculoForm.action}" />
+															</h:commandLink>
+																	&nbsp;
+																	
+
+															<h:commandLink styleClass="btn btn-warning btn-xs "	title="Atualizar" action="veiculoForm">
+																<i class="fa fa-wrench "></i>
+																<f:setPropertyActionListener value="#{veiculo}" target="#{veiculoForm.veiculo}" />
+																<f:setPropertyActionListener value="UPDATE" target="#{veiculoForm.action}" />
+															</h:commandLink>
+															
+																	&nbsp;
+															
+															<h:commandLink styleClass="btn btn-danger btn-xs "
+																rendered="#{loginBean.hasPermission('MENU_DESPESA_DE_FROTA')}"	
+																title="Incluir Despesa" action="despesaFrotaForm">
+																<i class="fa fa-dollar"/>
+															    <f:setPropertyActionListener value="cadastro" target="#{navigator.topico}" />
+																<f:setPropertyActionListener value="despesaFrota" target="#{navigator.pagina}" />
+																
+																<f:setPropertyActionListener value="VEICULO" target="#{despesaFrotaForm.despesaFrota.categoria}" />
+																<f:setPropertyActionListener value="#{veiculo}" target="#{despesaFrotaForm.despesaFrota.veiculo}" />
+																<f:setPropertyActionListener value="SMARTINSERT" target="#{despesaFrotaForm.action}" />
+																
+															</h:commandLink>
+															
+															&nbsp;
+													
+															<h:commandLink styleClass="btn btn-warning btn-xs "	title="Cerca Virtual" action="poligonoTemplate"
+																
+															>
+																<i class="fa fa-circle-o"></i>
+																<f:setPropertyActionListener value="#{veiculo}" target="#{poligonoBean.veiculo}" />
+																<f:setPropertyActionListener value="UPDATE" target="#{veiculoForm.action}" />
+															</h:commandLink>
+															
+															
+															&nbsp;
+													
+															<h:commandLink styleClass="btn btn-warning btn-xs "	title="Marcadores" action="marcadoresTemplate"
+																rendered="#{loginBean.pessoaLogada.id==827}"	
+															>
+																<i class="fa fa-map-marker" ></i>
+																<f:setPropertyActionListener value="#{veiculo}" target="#{marcadoresBean.veiculo}" />
+																<f:setPropertyActionListener value="UPDATE" target="#{veiculoForm.action}" />
+															</h:commandLink>
+															
+
+
+															 
+														
+
+														</h:panelGrid>
+													</center>
+													</h:column>
+
+												</h:dataTable>
+											</div>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-lg-5  col-md-5">
+													<h:commandButton id="button" rendered="#{!loginBean.hasPermission('VEICULO_VER_PROPRIO')}"
+														styleClass="btn btn-primary btn-xs " value="Adicionar Novo Veículo"
+														action="veiculoForm" >
+														<f:setPropertyActionListener value="INSERT"  target="#{veiculoForm.action}"/>
+													</h:commandButton>	
+										</div>
+										
+															
+										
+										
+										<div class="col-lg-2 col-md-2">
+												<div class="input-group input-group-xs">
+													<span class="input-group-btn">
+													<h:commandButton
+															id="pag" styleClass="btn btn-primary btn-sm " value="Ir para Página"
+															action="#{veiculoTable.loadCurrentPage}" /> 
+													</span>	
+													<h:inputText id="currentPage"
+														styleClass="input-sm form-control" style="width: 40px"
+														value="#{veiculoTable.currentPage}"
+														onkeypress="if (event.keyCode == 13) { onchange(); return false; }">
+														<f:ajax event="change" 	listener="#{veiculoTable.loadCurrentPage}" />
+													</h:inputText>
+												</div>	
+										</div>			
+										<div class="col-lg-2  col-md-2">
+												<div class="input-group input-group-xs">
+													<span class="input-group-btn"> 
+														<h:commandLink
+															action="#{veiculoTable.pageFirst}"
+															styleClass="btn btn-white" style="width: 40px"
+															disabled="#{veiculoTable.currentPage == 1}">
+															<i class="glyphicon glyphicon-fast-backward"></i>
+														</h:commandLink> 
+														<h:commandLink action="#{veiculoTable.pagePrevious}"
+															styleClass="btn btn-white" style="width: 40px"
+															disabled="#{veiculoTable.currentPage == 1}">
+															<i class="glyphicon glyphicon-step-backward"></i>
+														</h:commandLink>
+														<h:commandLink
+															action="#{veiculoTable.pageNext}" styleClass="btn btn-white"
+															style="width: 40px"
+															disabled="#{veiculoTable.currentPage >= veiculoTable.lastPage}">
+															<i class="glyphicon glyphicon-step-forward"></i>
+														</h:commandLink> 
+														<h:commandLink action="#{veiculoTable.pageLast}"
+															styleClass="btn btn-white" style="width: 40px"
+															disabled="#{veiculoTable.currentPage >= veiculoTable.lastPage}">
+															<i class="glyphicon glyphicon-fast-forward"></i>
+														</h:commandLink>
+													</span>	
+												</div>
+										</div>
+										<div class="col-lg-3 col-md-3">
+										<div class="pull-right">
+												<b>
+													<h:outputText value="Pág.#{veiculoTable.totalPages>0?veiculoTable.currentPage:0}/#{veiculoTable.totalPages}" />
+													&nbsp;&nbsp;&nbsp;&nbsp;Registros:	<h:outputText value="#{veiculoTable.totalRows}" />
+												</b>
+										</div>		
+										</div>
+									</div>
+                                 </h:form>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</ui:define>
+	</ui:composition>
+
+</h:body>
+
+</html>
+
+
+
+
+
+

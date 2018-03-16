@@ -1,0 +1,326 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:c="http://java.sun.com/jsp/jstl/core"	
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:body>
+
+	<ui:composition template="template/adminTemplate.xhtml">
+		<ui:define name="content">
+		
+			
+			
+		
+
+			<div class="wrapper wrapper-content">
+				<div class="row">
+					<div class="col-lg-12">
+						<div class="ibox">
+							<b><div class="inbox title">#{!loginBean.hasPermission('EMPREGADO_VER_PROPRIO')?'Empregados':'Meus Dados'}</div></b>
+							<div class="ibox-content">
+								<h:form onsubmit="document.body.style.cursor='wait'" id="form" role="form">
+
+									<c:if test="#{!loginBean.hasPermission('EMPREGADO_VER_PROPRIO')}">
+									<div class="row ">
+										<div class="col-sm-12">
+											<div class="pull-right">
+												<label class="form-inline">
+													<div class="input-group input-group-xs">
+														<h:selectOneMenu styleClass="  form-control inline"
+															value="#{empregadoTable.rowsPerPage}"
+															converter="#{selectIntegerConverter}">
+															<f:selectItem itemValue="5"  itemLabel="05 linhas" />
+															<f:selectItem itemValue="10" itemLabel="10 linhas" />
+															<f:selectItem itemValue="15" itemLabel="15 linhas" />
+															<f:selectItem itemValue="20" itemLabel="20 linhas" />
+															<f:selectItem itemValue="30" itemLabel="30 linhas" />
+														</h:selectOneMenu>
+														<span class="input-group-btn"> <h:commandButton
+																value="Ok" action="#{empregadoTable.pageFirst}"
+																styleClass="btn btn-primary  " />
+														</span>
+													</div>
+												</label>
+											</div>
+										</div>
+									</div>
+									</c:if>
+									
+									<p></p>
+									
+									
+									<div class="row">
+										<div class="col-lg-12">
+											<div class="table-responsive ">
+										<h:dataTable value="#{empregadoTable.empregados}" id="table"
+											class="table table-striped table-bordered table-hover"
+											var="empregado">
+											
+
+											<h:column footerClass="customFooter">
+												<f:facet name="header">
+													<h:commandLink value="Nome" 
+														actionListener="#{empregadoTable.sort}">
+														<f:attribute name="sortField" value="nome" />
+													</h:commandLink>
+												</f:facet>
+												
+												<f:facet name="header">
+														<h:inputText  value="#{empregadoTable.nome}" rendered="#{!loginBean.hasPermission('EMPREGADO_VER_PROPRIO')}"  styleClass="input-xs form-control"  />
+												</f:facet>
+												<h:outputText value="#{empregado.nome}" />
+												<f:facet  name="footer">
+													<h:outputText  value="#{empregadoTable.nome}" rendered="#{!loginBean.hasPermission('EMPREGADO_VER_PROPRIO')}"/>
+												</f:facet>													
+											</h:column>
+											
+											<h:column footerClass="customFooter">
+												<f:facet name="header">
+													<h:commandLink value="CPF"
+														actionListener="#{empregadoTable.sort}">
+														<f:attribute name="sortField" value="cpf" />
+													</h:commandLink>
+												</f:facet>
+												<f:facet name="header">
+														<h:inputText  value="#{empregadoTable.cpf}" rendered="#{!loginBean.hasPermission('EMPREGADO_VER_PROPRIO')}" styleClass="input-xs form-control"  />
+												</f:facet>	
+												<center>											
+													<h:outputText value="#{empregado.cpf}" />
+												</center>	
+												<f:facet  name="footer">
+													<h:outputText  value="#{empregadoTable.cpf}" rendered="#{!loginBean.hasPermission('EMPREGADO_VER_PROPRIO')}"/>
+												</f:facet>	
+											</h:column>
+											
+											
+											<h:column footerClass="customFooter" rendered="#{!loginBean.hasPermission('EMPREGADO_VER_PROPRIO')}" >
+
+														<f:facet name="header">
+															<h:commandLink value="Status"
+																actionListener="#{empregadoTable.sort}">
+																<f:attribute name="sortField" value="status" />
+															</h:commandLink>
+														</f:facet>
+
+
+														<f:facet name="header">
+															<center>
+																<h:selectOneMenu id="status"
+																	rendered="#{!loginBean.hasPermission('EMPREGADO_VER_PROPRIO')}"
+																	value="#{empregadoTable.status}"
+																	styleClass="form-control input-xs">
+																	<f:selectItem itemLabel="&nbsp;" />
+																	<f:selectItems value="#{empregadoForm.statuses}" />
+																</h:selectOneMenu>
+															</center>
+														</f:facet>
+														<center>
+															<h:outputText value="#{empregado.status}" />
+														</center>
+														<f:facet name="footer">
+															<h:outputText	value="#{empregadoTable.status}" />
+														</f:facet>
+											</h:column>
+											
+											
+											
+											<h:column footerClass="customFooter" >
+												<f:facet name="header">
+													<h:commandLink value="Endereco"
+														actionListener="#{empregadoTable.sort}">
+														<f:attribute name="sortField" value="endereco" />
+													</h:commandLink>
+												</f:facet>
+												<f:facet name="header">
+														<h:inputText  value="#{empregadoTable.endereco}" rendered="#{!loginBean.hasPermission('EMPREGADO_VER_PROPRIO')}" styleClass="input-xs form-control"  />
+
+												</f:facet>												
+													<h:outputText value="#{empregado.endereco}" />
+												<f:facet  name="footer">
+													<h:outputText  value="#{empregadoTable.endereco}" rendered="#{!loginBean.hasPermission('EMPREGADO_VER_PROPRIO')}"/>
+												</f:facet>	
+											</h:column>
+											
+											<h:column footerClass="customFooter">
+												<f:facet name="header">
+													<h:commandLink value="Cidade"
+														actionListener="#{empregadoTable.sort}">
+														<f:attribute name="sortField" value="municipio" />
+													</h:commandLink>
+												</f:facet>
+												<f:facet name="header">
+													
+														<h:inputText  value="#{empregadoTable.municipio}" rendered="#{!loginBean.hasPermission('EMPREGADO_VER_PROPRIO')}" styleClass="input-xs form-control"  />
+														
+	
+												</f:facet>	
+												<center>											
+													<h:outputText value="#{empregado.municipio}" />
+												</center>	
+												<f:facet  name="footer">
+													<h:outputText  value="#{empregadoTable.municipio}" rendered="#{!loginBean.hasPermission('EMPREGADO_VER_PROPRIO')}"/>
+												</f:facet>	
+											</h:column>
+
+											
+										    <h:column footerClass="customFooter">
+												<f:facet name="header">
+													<h:commandLink value="Celular"
+														actionListener="#{empregadoTable.sort}">
+														<f:attribute name="sortField" value="celular1" />
+													</h:commandLink>
+												</f:facet>
+												<f:facet name="header">
+														<h:inputText  value="#{empregadoTable.celular1}" rendered="#{!loginBean.hasPermission('EMPREGADO_VER_PROPRIO')}"  styleClass="input-xs form-control"  />
+												</f:facet>	
+												<center>											
+													<h:outputText value="#{empregado.celular1}" />
+												</center>	
+												<f:facet  name="footer">
+													<h:outputText  value="#{empregadoTable.celular1}" />
+												</f:facet>		
+											</h:column>
+
+											
+											<h:column footerClass="customFooter">
+												<f:facet name="header">
+												<center>
+													<h:commandButton styleClass="btn btn-primary btn-xs " value="Filtrar" rendered="#{!loginBean.hasPermission('EMPREGADO_VER_PROPRIO')}"
+															action="#{empregadoTable.refreshPage}">
+													</h:commandButton>
+												</center>	
+												</f:facet>
+												<center>
+												<h:panelGrid   columns="5">
+														<h:commandLink 
+															styleClass="btn btn-primary btn-xs "
+															title="Visualizar" 
+															action="empregadoForm">
+															<i class="fa fa-search "></i>
+															<f:setPropertyActionListener value="#{empregado}"  target="#{empregadoForm.empregado}"/>
+															<f:setPropertyActionListener value="#{empregado.usuario.perfil.tipo}"  target="#{empregadoForm.tipo}"/>
+															<f:setPropertyActionListener value="SHOW"  target="#{empregadoForm.action}"/>
+														</h:commandLink>
+														&nbsp;
+														<h:commandLink 
+															rendered="#{loginBean.hasPermission('EMPREGADOS_ATUALIZAR')}"
+															styleClass="btn btn-warning btn-xs " 
+															title="Atualizar"
+															action="empregadoForm">
+															<i class="fa fa-wrench "></i>
+															<f:setPropertyActionListener value="#{empregado}"  target="#{empregadoForm.empregado}"/>
+															<f:setPropertyActionListener value="#{empregado.usuario.perfil.tipo}"  target="#{empregadoForm.tipo}"/>
+															<f:setPropertyActionListener value="UPDATE"  target="#{empregadoForm.action}"/>
+														</h:commandLink>	
+														&nbsp;&nbsp;
+														<h:commandLink 
+															styleClass="btn btn-danger btn-xs " 
+															title="Atualizar Senha"
+															action="empregadoSenha">
+															<i style="width:12px;" class="fa fa-lock"/>
+															<f:setPropertyActionListener value="#{empregado}"  target="#{empregadoForm.empregado}"/>
+															<f:setPropertyActionListener value="#{empregado.usuario.perfil.tipo}"  target="#{empregadoForm.tipo}"/>															
+															<f:setPropertyActionListener value="UPDATE"  target="#{empregadoForm.action}"/>
+														</h:commandLink>
+														
+														
+												</h:panelGrid>
+												</center>
+											</h:column>
+											
+											
+											
+											
+										</h:dataTable>
+									</div>
+										</div>
+								   </div>
+								   
+								   <c:if test="#{!loginBean.hasPermission('EMPREGADO_VER_PROPRIO')}">
+								   
+									<div class="row">
+										<div class="col-lg-5  col-md-5">
+													<h:commandButton id="button"
+														rendered="#{loginBean.hasPermission('EMPREGADOS_INSERIR')}"
+														styleClass="btn btn-primary btn-xs " value="Adicionar Novo Empregado"
+														action="empregadoForm" >
+														<f:setPropertyActionListener value="INSERT"  target="#{empregadoForm.action}"/>
+													</h:commandButton>	
+										</div>
+										<div class="col-lg-2 col-md-2">
+												<div class="input-group input-group-xs">
+													<span class="input-group-btn">
+													<h:commandButton
+															id="pag" styleClass="btn btn-primary" value="Ir para Página"
+															action="#{empregadoTable.loadCurrentPage}" /> 
+													</span>	
+													<h:inputText id="currentPage"
+														styleClass="form-control" style="width: 40px"
+														value="#{empregadoTable.currentPage}"
+														onkeypress="if (event.keyCode == 13) { onchange(); return false; }">
+														<f:ajax event="change" 	listener="#{empregadoTable.loadCurrentPage}" />
+													</h:inputText>
+												</div>	
+										</div>			
+										<div class="col-lg-2  col-md-2">
+												<div class="input-group input-group-xs">
+													<span class="input-group-btn"> 
+														<h:commandLink
+															action="#{empregadoTable.pageFirst}"
+															styleClass="btn btn-white" style="width: 40px"
+															disabled="#{empregadoTable.currentPage == 1}">
+															<i class="glyphicon glyphicon-fast-backward"></i>
+														</h:commandLink> 
+														<h:commandLink action="#{empregadoTable.pagePrevious}"
+															styleClass="btn btn-white" style="width: 40px"
+															disabled="#{empregadoTable.currentPage == 1}">
+															<i class="glyphicon glyphicon-step-backward"></i>
+														</h:commandLink>
+														<h:commandLink
+															action="#{empregadoTable.pageNext}" styleClass="btn btn-white"
+															style="width: 40px"
+															disabled="#{empregadoTable.currentPage >= empregadoTable.lastPage}">
+															<i class="glyphicon glyphicon-step-forward"></i>
+														</h:commandLink> 
+														<h:commandLink action="#{empregadoTable.pageLast}"
+															styleClass="btn btn-white" style="width: 40px"
+															disabled="#{empregadoTable.currentPage >= empregadoTable.lastPage}">
+															<i class="glyphicon glyphicon-fast-forward"></i>
+														</h:commandLink>
+													</span>	
+												</div>
+										</div>
+										<div class="col-lg-3 col-md-3">
+										<div class="pull-right">
+												<b>
+													<h:outputText value="Pág.#{empregadoTable.totalPages>0?empregadoTable.currentPage:0}/#{empregadoTable.totalPages}" />
+													&nbsp;&nbsp;&nbsp;&nbsp;Registros:	<h:outputText value="#{empregadoTable.totalRows}" />
+												</b>
+										</div>		
+										</div>
+									</div>
+								
+								</c:if>
+								
+								</h:form>
+						</div>
+					</div>
+				</div>
+			</div>
+			</div>
+			
+		</ui:define>
+	</ui:composition>
+
+</h:body>
+
+</html>
+
+
+
+
+
+

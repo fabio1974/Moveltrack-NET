@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:b="http://bootsfaces.net/ui"
+    xmlns:p="http://primefaces.org/ui"  
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<h:body>
+
+	<ui:composition template="template/adminTemplate.xhtml">
+		<ui:define name="content">
+		
+			
+			
+			
+			<div class="wrapper wrapper-content ">
+
+				<div class="ibox">
+					<div class="inbox title">
+						<b><h:outputText
+								value='#{despesaForm.action.equals("INSERT")?"Inserir ":despesaForm.action.equals("UPDATE")?"Atualizar ":"Detalhes da "}Despesa' /></b>
+					</div>
+					<div class="ibox-content">
+						<h:form onsubmit="document.body.style.cursor='wait'" id="form" role="form">
+						
+													<div class="row">
+								
+								
+								<div class="col-sm-8">
+									<div class="form-group">
+										<label for="descricao">Descrição</label>
+										<h:inputText   id="descricao" 
+											class="input-sm form-control input-s-sm " 
+											readonly='#{despesaForm.action.equals("SHOW")}' 
+											style="#{component.valid?'':'border-color:red;'}"
+											value="#{despesaForm.despesa.descricao}"
+										 /> 
+									</div>
+								</div>
+								
+
+								
+							<div class="col-sm-4">
+									<div class="form-group">
+										<label for="valor">Valor da Despesa</label>
+										<h:inputText id="valor"
+											value="#{despesaForm.despesa.valor}"
+											readonly='#{despesaForm.action.equals("SHOW")}'
+											styleClass="form-control input-sm"
+											style="#{component.valid?'':'border-color:red;'}"
+											converter="#{realConverter}"	
+										/>
+									</div>
+								</div>
+								
+
+
+							</div>
+						
+
+							<div class="row">
+							
+								
+							
+							
+	
+								
+								<div class="col-sm-4">
+									<div class="form-group">
+										<label for="tipoDeDespesa">Tipo de Despesa</label>
+										<h:selectOneMenu id="tipoDeDespesa" 
+											value="#{despesaForm.despesa.tipoDeDespesa}"
+											disabled='#{despesaForm.action.equals("SHOW")}'
+											styleClass="form-control input-sm"
+											style="#{component.valid?'':'border-color:red;'}">
+											<f:selectItem itemLabel="&nbsp;"  noSelectionOption="yes"/>
+											<f:selectItems value="#{despesaForm.tipoDeDespesas}" />
+										</h:selectOneMenu>
+									</div>
+								</div>
+								
+																								<div class="col-sm-4">
+									<div class="form-group">
+										<label for="status">Status</label>
+										<h:selectOneMenu id="status" 
+											value="#{despesaForm.despesa.status}"
+											disabled='#{despesaForm.action.equals("SHOW")}'
+											styleClass="form-control input-sm"
+											style="#{component.valid?'':'border-color:red;'}">
+											<f:selectItem itemLabel="&nbsp;"  noSelectionOption="yes"/>
+											<f:selectItems value="#{despesaForm.statuses}" />
+										</h:selectOneMenu>
+									</div>
+								</div>
+								
+															<div class="col-sm-4">
+									<div class="form-group">
+										<label for="dataDaDespesa">Data da Despesa</label>
+										<div class='input-group date' id='dataDaDespesa'>
+										<h:inputText id="dataDaDespesa"
+											value="#{despesaForm.despesa.dataDaDespesa}"
+											readonly='#{despesaForm.action.equals("SHOW")}'
+											styleClass="form-control input-sm"
+											style="#{component.valid?'':'border-color:red;'}">
+											<f:convertDateTime pattern="dd/MM/yyyy HH:mm" timeZone="GMT-3" />
+										</h:inputText>
+											<span  class="input-group-addon"> 
+											<span class="glyphicon glyphicon-calendar"></span>
+										</span>
+
+										</div>
+									</div>
+								</div>
+								
+								
+								
+							</div>
+								
+
+
+
+							<div class="row">
+								<div class="col-lg-5">
+
+									<h:panelGrid columns="3">
+										<h:commandButton id="voltar"
+											value='#{despesaForm.action.equals("INSERT")?"Listar Despesas":"Voltar"}'
+											action="#{despesaForm.sair()}"
+											styleClass="btn btn-primary btn-sm" />
+										&nbsp;&nbsp;
+										<h:commandLink id="salvar" value="Salvar"
+											action="#{despesaForm.salvar()}"
+											rendered='#{!despesaForm.action.equals("SHOW")}'
+											styleClass=" btn btn-primary btn-sm" />
+									</h:panelGrid>
+
+								</div>
+								<div class="col-lg-7">
+									<h:messages styleClass="swp-msg swp-msg-sm"
+										infoClass="alert alert-success"
+										warnClass="alert alert-warning"
+										errorClass="alert alert-danger" showDetail="false" />
+								</div>
+							</div>
+
+
+						</h:form>
+
+					</div>
+				</div>
+
+			</div>
+
+
+<script type="text/javascript"> 
+ jQuery(function($){
+   $("#form\\:numero").mask("(99) 99999-9999");
+   $("#form\\:iccid").mask("99999999999999999999");
+});
+
+</script>
+
+
+
+
+		</ui:define>
+	</ui:composition>
+
+</h:body>
+
+</html>
+
+
+

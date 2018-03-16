@@ -1,0 +1,392 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:body>
+
+	<ui:composition template="template/adminTemplate.xhtml">
+		<ui:define name="content">
+
+			<script type="text/javascript">
+				function myFunction(html) {
+					var myWindow = null;
+					myWindow = window.open("http://www.moveltrack.com.br", "_blank","menubar=no,toolbar=no,scrollbars=no,resizable=no,top=200,left=600,width=300,height=150");
+					myWindow.document.clear();
+					myWindow.document.write(html);
+					
+				}
+			</script>
+			
+			<script>
+			$(document).ready(function(){
+				$('[data-toggle="popover"]').popover({
+				    container: 'body'
+				});
+			</script>
+
+			<div class="wrapper wrapper-content">
+				<div class="row">
+					<div class="col-lg-12">
+						<div class="ibox">
+							<b><div class="inbox title">Carnes</div></b>
+							<div class="ibox-content">
+								<h:form  id="form" role="form">
+									<div class="row ">
+
+										<div class="col-sm-12">
+											<div class="pull-right">
+												<label class="form-inline">
+													<div class="input-group input-group-xs">
+
+
+														<h:selectOneMenu styleClass="  form-control inline"
+															value="#{carneTable.rowsPerPage}"
+															converter="#{selectIntegerConverter}">
+															<f:selectItem itemValue="5"  itemLabel="05 linhas" />
+															<f:selectItem itemValue="10" itemLabel="10 linhas" />
+															<f:selectItem itemValue="15" itemLabel="15 linhas" />
+															<f:selectItem itemValue="20" itemLabel="20 linhas" />
+															<f:selectItem itemValue="30" itemLabel="30 linhas" />
+														</h:selectOneMenu>
+
+
+														<span class="input-group-btn"> <h:commandButton
+																value="Ok" action="#{carneTable.pageFirst}"
+																styleClass="btn btn-primary   " />
+														</span>
+
+													</div>
+												</label>
+											</div>
+										</div>
+									</div>
+									
+									<p></p>
+
+									<div class="row">
+										<div class="col-lg-12">
+											<div class="table-responsive ">
+													<h:dataTable value="#{carneTable.carnes}" id="table"
+														class="table table-striped table-bordered table-hover"
+														var="carne">
+
+
+
+
+
+													<h:column footerClass="customFooter">
+
+														<f:facet name="header">
+															<h:commandLink value="Cliente"
+																actionListener="#{carneTable.sort}">
+																<f:attribute name="sortField"
+																	value="contrato.cliente.nome" />
+															</h:commandLink>
+														</f:facet>
+
+
+														<f:facet name="header">
+
+															<h:inputText name="cliente" id="cliente"
+																value="#{carneTable.cliente}"
+																class="input-xs form-control "
+																converter="#{clienteConverter}" />
+
+														</f:facet>
+
+
+														<button type="button" class="btn btn-link btn-xs"
+															data-toggle="modal"
+															data-target="#myModal#{carne.contrato.cliente.id}">#{carne.contrato.cliente.nome}
+														</button>
+														<!-- Modal -->
+														<div class="modal fade"
+															id="myModal#{carne.contrato.cliente.id}" role="dialog">
+															<div class="modal-dialog">
+																<div class="modal-content">
+																	<div class="modal-header">
+																		<button type="button" class="close"
+																			data-dismiss="modal">&times;</button>
+																		<h4 class="modal-title">Endereço do Cliente:</h4>
+																	</div>
+																	<div class="modal-body">
+																		<p>
+																			<h:outputText escape="false"
+																				value="#{carneTable.getEnderecoHtml(carne.contrato.cliente)}"></h:outputText>
+																		</p>
+																	</div>
+																	<div class="modal-footer">
+																		<button type="button" class="btn btn-default"
+																			data-dismiss="modal">Fechar</button>
+																	</div>
+																</div>
+															</div>
+														</div>
+													</h:column>
+
+
+
+													<h:column rendered="false" footerClass="customFooter">
+														<a href="#" data-toggle="popover" title="Endereço"
+															data-html="true"
+															data-content="#{carneTable.getEnderecoHtml(carne.contrato.cliente)}">#{carne.contrato.cliente.nome}</a>
+													</h:column>
+
+
+
+
+
+													<h:column footerClass="customFooter" >
+															<f:facet name="header">
+															<center>
+																<h:commandLink value="Data Postagem"
+																	actionListener="#{carneTable.sort}">
+																	<f:attribute name="sortField" value="postagem" />
+																</h:commandLink>
+															</center>	
+															</f:facet>
+															<center>
+																<h:outputText value="#{carne.postagem}" >
+																	<f:convertDateTime pattern="dd/MM/yyyy HH:mm" timeZone="GMT-3" />
+																</h:outputText>
+															</center>	
+														</h:column>
+
+
+														<h:column footerClass="customFooter" >
+															<f:facet name="header">
+															<center>
+																<h:commandLink value="Início da Cobrança"
+																	actionListener="#{carneTable.sort}">
+																	<f:attribute name="sortField" value="dataReferencia" />
+																</h:commandLink>
+															</center>	
+															</f:facet>
+															<center>
+																<h:outputText value="#{carne.dataReferencia}" >
+																	<f:convertDateTime pattern="dd/MM/yyyy" timeZone="GMT-3" />
+																</h:outputText>
+															</center>	
+														</h:column>
+
+	
+														<h:column footerClass="customFooter" >
+															<f:facet name="header">
+															<center>
+																<h:commandLink value="Primeiro Vencimento"
+																	actionListener="#{carneTable.sort}">
+																	<f:attribute name="sortField" value="dataVencimentoInicio" />
+																</h:commandLink>
+															</center>	
+															</f:facet>
+															<center>
+																<h:outputText value="#{carne.dataVencimentoInicio}" >
+																	<f:convertDateTime pattern="dd/MM/yyyy" timeZone="GMT-3" />
+																</h:outputText>
+															</center>	
+														</h:column>
+														
+														
+														<h:column footerClass="customFooter" >
+															<f:facet name="header">
+															<center>
+																<h:commandLink value="Último Vencimento"
+																	actionListener="#{carneTable.sort}">
+																	<f:attribute name="sortField" value="dataVencimentoFim" />
+																</h:commandLink>
+															</center>	
+															</f:facet>
+															<center>
+																<h:outputText value="#{carne.dataVencimentoFim}" >
+																	<f:convertDateTime pattern="dd/MM/yyyy" timeZone="GMT-3" />
+																</h:outputText>
+															</center>	
+														</h:column>
+
+
+
+													<h:column footerClass="customFooter">
+														<f:facet name="header">
+															<center>Qtde Boletos</center>
+														</f:facet>
+														<center>
+															<h:outputText value="#{carne.quantidadeBoleto}">
+															</h:outputText>
+														</center>
+													</h:column>
+													
+													
+													<h:column footerClass="customFooter">
+														<f:facet name="header">
+															<h:commandLink value="Tipo Cobrança"
+																actionListener="#{carneTable.sort}">
+																<f:attribute name="sortField" value="tipoDeCobranca" />
+															</h:commandLink>
+														</f:facet>
+														<f:facet name="header">
+															<h:selectOneMenu id="tipoDeCobranca"
+																value="#{carneTable.tipoDeCobranca}"
+																styleClass="form-control input-xs">
+																<f:selectItem  itemLabel="&nbsp;" noSelectionOption="yes" />
+																<f:selectItems value="#{carneTable.tipoDeCobrancas}" />
+															</h:selectOneMenu>
+														</f:facet>
+														<center>
+														<h:outputText value="#{carne.tipoDeCobranca}" />
+														</center>
+														<f:facet name="footer">
+															<h:outputText value="#{carneTable.tipoDeCobranca}" />
+														</f:facet>
+													</h:column>
+
+
+													<h:column footerClass="customFooter">
+															<f:facet name="header">
+																<center>
+																	<h:commandButton styleClass="btn btn-primary btn-xs " value="Filtrar" action="#{carneTable.refreshPage}"										>
+																	</h:commandButton>
+																</center>	
+															</f:facet>
+															
+															<center>
+															<h:panelGrid   columns="5">
+																	
+																	<h:commandLink 
+																		styleClass="btn btn-default btn-xs " 
+																		title="Mostrar Carnê"
+																		action="carneForm">
+																		<i class="fa fa-search "></i>
+																		<f:setPropertyActionListener value="#{carne}"  target="#{carneForm.carne}"/>
+																		<f:setPropertyActionListener value="#{carne.contrato.cliente}"  target="#{carneForm.cliente}"/>
+																		<f:setPropertyActionListener value="#{carne.contrato.mensalidade}"  target="#{carneForm.mensalidade}"/>
+																		<f:setPropertyActionListener value="SHOW"  target="#{carneForm.action}"/>
+																	</h:commandLink>
+																	
+																	&nbsp;
+																	
+																	
+																	<h:commandLink 
+																		styleClass="btn btn-warning btn-xs " 
+																		rendered="#{loginBean.hasPermission('CARNE_ATUALIZAR')}"
+																		title="Atualizar Data Postagem"
+																		action="carneForm">
+																		<i class="fa fa-wrench"></i>
+																		<f:setPropertyActionListener value="#{carne}"  target="#{carneForm.carne}"/>
+																		<f:setPropertyActionListener value="#{carne.contrato.cliente}"  target="#{carneForm.cliente}"/>
+																		<f:setPropertyActionListener value="#{carne.contrato.mensalidade}"  target="#{carneForm.mensalidade}"/>
+																		<f:setPropertyActionListener value="UPDATE"  target="#{carneForm.action}"/>
+																	</h:commandLink>
+																	
+
+																	&nbsp;
+																	
+
+																	<h:commandLink 
+																		styleClass="btn btn-primary btn-xs " 
+																		title="Download Boleto"
+																		rendered="true"
+																		action="#{carneTable.geraPdf(carne)}">
+																		<i class="	fa fa-file-pdf-o "></i>
+																	</h:commandLink>
+																	
+																	
+															</h:panelGrid>
+															</center>
+															
+														</h:column>
+														
+													</h:dataTable>
+									</div>
+										</div>
+								   </div>
+
+									<div class="row">
+									
+										<div class="col-lg-6  col-md-6">
+											
+													<h:commandButton id="button"
+														rendered="false"
+														styleClass="btn btn-primary btn-xs " value="Adicionar Novo Carnê"
+														action="carneForm" >
+														<f:setPropertyActionListener value="INSERT"  target="#{carneForm.action}"/>
+													</h:commandButton>
+													
+														
+										</div>
+									
+										
+										<div class="col-lg-2 col-md-2">
+												<div class="input-group input-group-xs">
+													<span class="input-group-btn">
+													<h:commandButton
+															id="pag" styleClass="btn btn-primary " value="Ir para Página"
+															action="#{carneTable.loadCurrentPage}" /> 
+													</span>	
+													<h:inputText id="currentPage"
+														styleClass="input-xs form-control" style="width: 40px"
+														value="#{carneTable.currentPage}"
+														onkeypress="if (event.keyCode == 13) { onchange(); return false; }">
+														<f:ajax event="change" 	listener="#{carneTable.loadCurrentPage}" />
+													</h:inputText>
+												</div>	
+										</div>			
+										<div class="col-lg-2  col-md-2">
+												<div class="input-group input-group-xs">
+													<span class="input-group-btn"> 
+														<h:commandLink
+															action="#{carneTable.pageFirst}"
+															styleClass="btn btn-white" style="width: 40px"
+															disabled="#{carneTable.currentPage == 1}">
+															<i class="glyphicon glyphicon-fast-backward"></i>
+														</h:commandLink> 
+														<h:commandLink action="#{carneTable.pagePrevious}"
+															styleClass="btn btn-white" style="width: 40px"
+															disabled="#{carneTable.currentPage == 1}">
+															<i class="glyphicon glyphicon-step-backward"></i>
+														</h:commandLink>
+														<h:commandLink
+															action="#{carneTable.pageNext}" styleClass="btn btn-white"
+															style="width: 40px"
+															disabled="#{carneTable.currentPage >= carneTable.lastPage}">
+															<i class="glyphicon glyphicon-step-forward"></i>
+														</h:commandLink> 
+														<h:commandLink action="#{carneTable.pageLast}"
+															styleClass="btn btn-white" style="width: 40px"
+															disabled="#{carneTable.currentPage >= carneTable.lastPage}">
+															<i class="glyphicon glyphicon-fast-forward"></i>
+														</h:commandLink>
+													</span>	
+												</div>
+										</div>
+										<div class="col-lg-2 col-md-2">
+												<b>
+													<h:outputText value="Pág. #{carneTable.totalPages>0?carneTable.currentPage:0} / #{carneTable.totalPages}" />
+													Registros:	<h:outputText value="#{carneTable.totalRows}" />
+												</b>
+										</div>
+									</div>
+
+
+
+								</h:form>
+						</div>
+					</div>
+				</div>
+			</div>
+			</div>
+			
+		</ui:define>
+	</ui:composition>
+
+</h:body>
+
+</html>
+
+
+
+
+
+

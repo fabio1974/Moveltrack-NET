@@ -1,0 +1,261 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:b="http://bootsfaces.net/ui"
+    xmlns:p="http://primefaces.org/ui"  
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<h:body>
+
+
+
+	<ui:composition template="template/adminTemplate.xhtml">
+		<ui:define name="content">
+		
+			
+			
+
+			<div class="wrapper wrapper-content ">
+			
+
+				<div class="ibox">
+					<div class="inbox title">
+						<b><h:outputText
+								value='#{contratoForm.action.contains("INSERT")?"Inserir Novo":contratoForm.action.equals("UPDATE")?"Atualizar ":"Detalhes do "}Contrato' /></b>
+					</div>
+					<div class="ibox-content">
+					
+						<h:form onsubmit="document.body.style.cursor='wait'" id="form" role="form">
+						
+							<h:inputHidden name="id" id="id"  value="#{contratoForm.contrato.id}" />
+
+							<div class="row">
+
+								<div class="col-sm-6">
+									<div class="form-group">
+										<label for="cliente">Cliente</label>
+										<h:inputText name="cliente" id="cliente"
+											value="#{contratoForm.contrato.cliente}"
+											class="input-sm form-control input-s-sm "
+											converter="#{clienteConverter}"
+											style="#{component.valid?'':'border-color:red;'}"
+											readonly='#{contratoForm.action.equals("SHOW")}' />
+									</div>
+								</div>
+								
+								
+								<div class="col-sm-6" style="#{loginBean.hasPermission('CONTRATO_VER_PROPRIO')?'display:none':'display:'}">
+									<div class="form-group">
+										<label for="vendedor">Vendedor/Indicante</label>
+										<h:inputText   id="vendedor" 
+											class="input-sm form-control input-s-sm " 
+											readonly='#{contratoForm.action.equals("SHOW")}' 
+											style="#{component.valid?'':'border-color:red;'}"
+											value="#{contratoForm.contrato.vendedor}"
+											converter="#{pessoaConverter}" /> 
+									</div>
+								</div>
+
+
+							</div>
+
+
+
+							<div class="row">
+							
+								<div class="col-sm-3">
+									<div class="form-group">
+										<label for="mensalidade">Valor Mensal por Veículo</label>
+										<h:inputText id="mensalidade"
+											value="#{contratoForm.contrato.mensalidade}"
+											readonly='#{contratoForm.action.equals("SHOW")}'
+											styleClass="form-control input-sm"
+											style="#{component.valid?'':'border-color:red;'}"
+											converter="#{realConverter}"	
+										/>
+									</div>
+								</div>
+								
+								
+								
+								<div class="col-sm-3">
+									<label for="vencimento">Vencimento</label>
+									<h:selectOneMenu
+										class="input-sm form-control input-s-sm inline"
+										disabled='#{contratoForm.action.equals("SHOW")}'
+										value="#{contratoForm.contrato.diaVencimento}"
+										style="#{component.valid?'':'border-color:red;'}"
+										converter="#{selectIntegerConverter}">
+										<f:selectItem itemValue="0" itemLabel="" />
+										<f:selectItem itemValue="1" itemLabel="1" />
+										<f:selectItem itemValue="5" itemLabel="5" />
+										<f:selectItem itemValue="10" itemLabel="10" />
+										<f:selectItem itemValue="15" itemLabel="15" />
+										<f:selectItem itemValue="20" itemLabel="20" />
+										<f:selectItem itemValue="25" itemLabel="25" />
+									</h:selectOneMenu>
+								</div>
+								
+																
+								<div class="col-sm-3">
+									<div class="form-group">
+										<label for="inicio">Inicio do Contrato</label>
+										<div class='input-group date' id='inicio'>
+										<h:inputText id="inicio"
+											value="#{contratoForm.contrato.inicio}"
+											readonly='#{contratoForm.action.equals("SHOW")}'
+											styleClass="form-control input-sm"
+											style="#{component.valid?'':'border-color:red;'}">
+											<f:convertDateTime pattern="dd/MM/yyyy HH:mm" timeZone="GMT-3" />
+										</h:inputText>
+																				<span  class="input-group-addon"> 
+											<span class="glyphicon glyphicon-calendar"></span>
+										</span>
+
+										</div>
+									</div>
+								</div>
+
+								<div class="col-sm-3">
+									<div class="form-group input-group input-group-sm">
+										<h:selectBooleanCheckbox id="isPagamentoAnual"
+											disabled='#{contratoForm.action.equals("SHOW")}'
+											value="#{contratoForm.contrato.pagamentoAnual}"
+											style="margin-top:27px" onclick="disableInput()" />
+										<label for="isPagamentoAnual">Pagamento Anual</label>
+									</div>
+								</div>
+								
+								
+								
+
+
+							</div>
+							
+							
+							<div class="row">
+								
+								<div class="col-sm-3">
+									<div class="form-group">
+										<label for="contratoTipo">Tipo de Contrato</label>
+										<h:selectOneMenu id="contratoTipo" 
+											value="#{contratoForm.contrato.contratoTipo}"
+											disabled='#{contratoForm.action.equals("SHOW")}'
+											styleClass="form-control input-sm"
+											style="#{component.valid?'':'border-color:red;'}">
+											<f:selectItem itemLabel="&nbsp;"  noSelectionOption="yes"/>
+											<f:selectItems value="#{contratoForm.tipos}" />
+										</h:selectOneMenu>
+									</div>
+								</div>
+								
+								
+								
+								<div class="col-sm-3">
+									<div class="form-group">
+										<label for="status">Status</label>
+										<h:selectOneMenu id="status" 
+											value="#{contratoForm.contrato.status}"
+											disabled='#{contratoForm.action.equals("SHOW")}'
+											styleClass="form-control input-sm"
+											style="#{component.valid?'':'border-color:red;'}">
+											<f:selectItem itemLabel="&nbsp;"  noSelectionOption="yes"/>
+											<f:selectItems value="#{contratoForm.statuses}" />
+										</h:selectOneMenu>
+									</div>
+								</div>
+								
+
+
+
+							
+
+								<div  class="col-sm-3" style="#{loginBean.hasPermission('CONTRATO_VER_PROPRIO')?'display:none':'display:'}" >
+									<div class="form-group">
+										<label for="fim">Fim do Contrato</label>
+										<div class='input-group date' id='fim'>
+										<h:inputText id="fim"
+											value="#{contratoForm.contrato.fim}"
+											readonly='#{contratoForm.action.equals("SHOW")}'
+											styleClass="form-control input-sm"
+											style="#{component.valid?'':'border-color:red;'}">
+											<f:convertDateTime pattern="dd/MM/yyyy HH:mm" timeZone="GMT-3" />
+										</h:inputText>
+																				<span  class="input-group-addon"> 
+											<span class="glyphicon glyphicon-calendar"></span>
+										</span>
+
+										</div>
+									</div>
+								</div>
+								
+
+
+
+							</div>
+
+
+							<div class="row">
+								<div class="col-lg-5">
+
+									<h:panelGrid columns="5">
+										<h:commandLink id="voltar"
+											value='#{contratoForm.action.contains("INSERT")?"Listar Contratos":"Voltar"}'
+											action="#{contratoForm.sair()}"
+											styleClass="btn btn-primary btn-sm" >&nbsp;
+											<i class="fa fa-undo"/>
+										</h:commandLink>	
+										&nbsp;&nbsp;
+										<h:commandLink id="salvar" value="Salvar"
+											action="#{contratoForm.salvar()}"
+											rendered='#{!contratoForm.action.equals("SHOW")}'
+											styleClass=" btn btn-primary btn-sm" />
+										&nbsp;&nbsp;	
+
+										<!-- h:commandButton id="adicionarVeiculo"
+											value="Adicionar Veículo ao Contrato"
+											action="veiculoForm"
+											rendered='#{!contratoForm.action.contains("INSERT")}'
+											styleClass="btn btn-primary btn-sm" >
+											
+											<f:setPropertyActionListener value="#{contratoForm.contrato}"
+																	target="#{veiculoForm.veiculo.contrato}" />
+										</h:commandButton-->							
+											
+											
+									</h:panelGrid>
+
+								</div>
+								<div class="col-lg-7">
+									<h:messages styleClass="swp-msg swp-msg-sm"
+										infoClass="alert alert-success"
+										warnClass="alert alert-warning"
+										errorClass="alert alert-danger" showDetail="false" />
+								</div>
+							</div>
+
+
+						</h:form>
+
+					</div>
+				</div>
+
+			</div>
+
+
+
+
+
+
+		</ui:define>
+	</ui:composition>
+
+</h:body>
+
+</html>
+
+
+

@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:body>
+
+	<ui:composition template="template/adminTemplate.xhtml">
+		<ui:define name="content">
+
+			<div class="wrapper wrapper-content">
+				<div class="row">
+					<div class="col-lg-12">
+						<div class="ibox">
+							<b><div class="inbox title">Remessas</div></b>
+							<div class="ibox-content">
+								<h:form  id="form" role="form">
+									<div class="row ">
+
+										<div class="col-sm-12">
+											<div class="pull-right">
+												<label class="form-inline">
+													<div class="input-group input-group-xs">
+
+
+														<h:selectOneMenu styleClass="  form-control inline"
+															value="#{remessaTable.rowsPerPage}"
+															converter="#{selectIntegerConverter}">
+															<f:selectItem itemValue="5"  itemLabel="05 linhas" />
+															<f:selectItem itemValue="10" itemLabel="10 linhas" />
+															<f:selectItem itemValue="15" itemLabel="15 linhas" />
+															<f:selectItem itemValue="20" itemLabel="20 linhas" />
+															<f:selectItem itemValue="30" itemLabel="30 linhas" />
+														</h:selectOneMenu>
+
+
+														<span class="input-group-btn"> <h:commandButton
+																value="Ok" action="#{remessaTable.pageFirst}"
+																styleClass="btn btn-primary   " />
+														</span>
+
+													</div>
+												</label>
+											</div>
+										</div>
+									</div>
+									
+									<p></p>
+
+									<div class="row">
+										<div class="col-lg-12">
+											<div class="table-responsive ">
+													<h:dataTable value="#{remessaTable.remessas}" id="table"
+														class="table table-striped table-bordered table-hover"
+														var="remessa">
+
+	
+			
+														<h:column footerClass="customFooter">
+															<f:facet name="header">
+																<h:commandLink value="Número"
+																	actionListener="#{remessaTable.sort}">
+																	<f:attribute name="sortField" value="numero" />
+																</h:commandLink>
+															</f:facet>
+															
+															<f:facet name="header">
+
+																	<h:inputText  value="#{remessaTable.numero}"  styleClass="input-xs form-control"  />
+	
+															</f:facet>
+															<h:outputText value="#{remessa.numero}" />
+															<f:facet  name="footer">
+																<h:outputText  value="#{remessaTable.numero}"/>
+															</f:facet>													
+														</h:column>
+														
+														<h:column footerClass="customFooter" >
+															<f:facet name="header">
+															<center>
+																<h:commandLink value="Abertura"
+																	actionListener="#{remessaTable.sort}">
+																	<f:attribute name="sortField" value="abertura" />
+																</h:commandLink>
+															</center>	
+															</f:facet>
+															<center>
+																<h:outputText value="#{remessa.abertura}" >
+																	<f:convertDateTime pattern="dd/MM/yyyy HH:mm" timeZone="GMT-3" />
+																</h:outputText>
+															</center>	
+														</h:column>
+														
+														
+													<h:column footerClass="customFooter" >
+															<f:facet name="header">
+															
+																<center>
+																<h:commandLink value="Fechamento"
+																	actionListener="#{remessaTable.sort}">
+																	<f:attribute name="sortField" value="fechamento" />
+																</h:commandLink>
+																</center>
+																
+															</f:facet>
+															<center>
+																<h:outputText value="#{remessa.fechamento}">
+																	<f:convertDateTime pattern="dd/MM/yyyy HH:mm"
+																		timeZone="GMT-3" />
+																</h:outputText>
+															</center>
+													</h:column>
+													
+													
+													<h:column footerClass="customFooter" >
+															<f:facet name="header">
+															
+																<center>Qtde. de Boletos</center>
+																
+															</f:facet>
+															<center>
+																<h:outputText value="#{remessaTable.getQtdeBoletos(remessa.numero)}"/>
+															</center>
+													</h:column>
+													
+														
+														
+														<h:column footerClass="customFooter">
+															<f:facet name="header">
+																<center>
+																	<h:commandButton styleClass="btn btn-primary btn-xs " value="Filtrar" action="#{remessaTable.refreshPage}"										>
+																	</h:commandButton>
+																</center>	
+															</f:facet>
+															
+															<center>
+															<h:panelGrid   columns="3">
+
+																	<h:commandLink 
+																		styleClass="btn btn-warning btn-xs " 
+																		title="Fechar Remessa"
+																		action="remessaForm">
+																		<i class="fa fa-wrench "></i>
+																		<f:setPropertyActionListener value="#{remessa}"  target="#{remessaForm.remessa}"/>
+																		<f:setPropertyActionListener value="UPDATE"  target="#{remessaForm.action}"/>
+																	</h:commandLink>
+																	
+																	&nbsp;
+																	
+																	<h:commandLink 
+																		styleClass="btn btn-primary btn-xs " 
+																		title="Gerar Arquivo de Remessa"
+																		rendered="#{remessa.fechamento!=null}"
+																		action="#{remessaTable.geraArquivo(remessa.numero)}">
+																		<i class="	fa fa-file-text-o "></i>
+																	</h:commandLink>	
+																	
+																	
+																		
+															</h:panelGrid>
+															</center>
+															
+														</h:column>
+														
+													</h:dataTable>
+									</div>
+										</div>
+								   </div>
+
+									<div class="row">
+										
+										<div class="col-lg-2 col-md-2">
+												<div class="input-group input-group-xs">
+													<span class="input-group-btn">
+													<h:commandButton
+															id="pag" styleClass="btn btn-primary " value="Ir para Página"
+															action="#{remessaTable.loadCurrentPage}" /> 
+													</span>	
+													<h:inputText id="currentPage"
+														styleClass="form-control" style="width: 40px"
+														value="#{remessaTable.currentPage}"
+														onkeypress="if (event.keyCode == 13) { onchange(); return false; }">
+														<f:ajax event="change" 	listener="#{remessaTable.loadCurrentPage}" />
+													</h:inputText>
+												</div>	
+										</div>			
+										<div class="col-lg-2  col-md-2">
+												<div class="input-group input-group-xs">
+													<span class="input-group-btn"> 
+														<h:commandLink
+															action="#{remessaTable.pageFirst}"
+															styleClass="btn btn-white" style="width: 40px"
+															disabled="#{remessaTable.currentPage == 1}">
+															<i class="glyphicon glyphicon-fast-backward"></i>
+														</h:commandLink> 
+														<h:commandLink action="#{remessaTable.pagePrevious}"
+															styleClass="btn btn-white" style="width: 40px"
+															disabled="#{remessaTable.currentPage == 1}">
+															<i class="glyphicon glyphicon-step-backward"></i>
+														</h:commandLink>
+														<h:commandLink
+															action="#{remessaTable.pageNext}" styleClass="btn btn-white"
+															style="width: 40px"
+															disabled="#{remessaTable.currentPage >= remessaTable.lastPage}">
+															<i class="glyphicon glyphicon-step-forward"></i>
+														</h:commandLink> 
+														<h:commandLink action="#{remessaTable.pageLast}"
+															styleClass="btn btn-white" style="width: 40px"
+															disabled="#{remessaTable.currentPage >= remessaTable.lastPage}">
+															<i class="glyphicon glyphicon-fast-forward"></i>
+														</h:commandLink>
+													</span>	
+												</div>
+										</div>
+										<div class="col-lg-2 col-md-2">
+												<b>
+													<h:outputText value="Pág. #{remessaTable.totalPages>0?remessaTable.currentPage:0} / #{remessaTable.totalPages}" />
+													Registros:	<h:outputText value="#{remessaTable.totalRows}" />
+												</b>
+										</div>
+									</div>
+
+
+
+								</h:form>
+						</div>
+					</div>
+				</div>
+			</div>
+			</div>
+			
+		</ui:define>
+	</ui:composition>
+
+</h:body>
+
+</html>
+
+
+
+
+
+

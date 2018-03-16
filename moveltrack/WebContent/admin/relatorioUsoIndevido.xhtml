@@ -1,0 +1,451 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:b="http://bootsfaces.net/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head>
+
+</h:head>	
+
+<h:body>
+
+	<ui:composition template="template/adminTemplate.xhtml">
+		<ui:define name="content">
+
+			<div class="wrapper wrapper-content ">
+
+
+				<div class="ibox">
+					<div class="inbox title">RELATÓRIO DOS VEÍCULOS TRAFEGANDO FORA DE EXPEDIENTE</div>
+					<div class="ibox-content">
+						<h:form  id="form" role="form">
+							<div class="row">
+								<div class="col-sm-2">
+								<div class="form-group ">
+									<div style="margin-top: 21px;width:100%" class="btn btn-primary btn-sm">Segunda-Feira</div>
+								</div>	
+								</div>
+								<div class="col-sm-2">
+									<div class="form-group ">
+										<label for="segundaInicio">Início de Expediente</label>
+										<div class='input-group input-group-sm date' id='segundaInicio'>
+											<h:inputText id="segundaInicio"
+												value="#{relatorioUsoIndevidoBean.ruip.segundaInicio}"
+												disabled="#{relatorioUsoIndevidoBean.disabled}"
+												style="#{component.valid?'':'border-color:red;'}"
+												styleClass="form-control ">
+												<f:convertDateTime pattern="HH:mm" timeZone="GMT-3" />
+											</h:inputText>
+											<span  class="input-group-addon"> 
+												<span class="glyphicon glyphicon-calendar"></span>
+											</span>
+										</div>
+									</div>
+								</div>
+								<div class="col-sm-2">
+									<div class="form-group">
+										<label for="segundaFim">Fim de Expediente</label>
+										<div class='input-group input-group-sm date' id='segundaFim'>
+											<h:inputText id="segundaFim"
+												value="#{relatorioUsoIndevidoBean.ruip.segundaFim}"
+												disabled="#{relatorioUsoIndevidoBean.disabled}"
+												styleClass="form-control ">
+												<f:convertDateTime pattern="HH:mm" timeZone="GMT-3" />
+											</h:inputText>
+											<span  class="input-group-addon"> 
+												<span class="glyphicon glyphicon-calendar"></span>
+											</span>
+										</div>
+									</div>
+								</div>
+								<div class="col-sm-3">
+								</div>
+							</div>
+							
+							
+							<div class="row">
+								<div class="col-sm-2">
+								<div class="form-group ">
+									<div style="margin-top: 21px;width:100%" class="btn btn-primary btn-sm">Terça-Feira</div>
+								</div>	
+								</div>
+								<div class="col-sm-2">
+									<div class="form-group ">
+										<label for="tercaInico">Início de Expediente</label>
+										<div class='input-group input-group-sm date' id='tercaInicio'>
+											<h:inputText id="tercaInicio"
+												value="#{relatorioUsoIndevidoBean.ruip.tercaInicio}"
+												disabled="#{relatorioUsoIndevidoBean.disabled}"
+												style="#{component.valid?'':'border-color:red;'}"
+												styleClass="form-control ">
+												<f:convertDateTime pattern="HH:mm" timeZone="GMT-3" />
+											</h:inputText>
+											<span  class="input-group-addon"> 
+												<span class="glyphicon glyphicon-calendar"></span>
+											</span>
+										</div>
+									</div>
+								</div>
+								<div class="col-sm-2">
+									<div class="form-group">
+										<label for="tercaFim">Fim de Expediente</label>
+										<div class='input-group input-group-sm date' id='tercaFim'>
+											<h:inputText id="tercaFim"
+												value="#{relatorioUsoIndevidoBean.ruip.tercaFim}"
+												disabled="#{relatorioUsoIndevidoBean.disabled}"
+												styleClass="form-control ">
+												<f:convertDateTime pattern="HH:mm" timeZone="GMT-3" />
+											</h:inputText>
+											<span  class="input-group-addon"> 
+												<span class="glyphicon glyphicon-calendar"></span>
+											</span>
+										</div>
+									</div>
+								</div>
+								
+								<div class="col-sm-1"/>
+									<div class="col-sm-2">
+										<div class="form-group ">
+										<label for="veiculo">Filtrar por Veículo</label>
+																<h:selectOneMenu id="veiculo"
+																	converter="#{veiculoConverter}"
+																	value="#{relatorioUsoIndevidoBean.veiculo}"
+																	styleClass="form-control">
+																	<f:selectItem itemLabel="&nbsp;"  noSelectionOption="yes"/>
+																	<f:selectItems value="#{viagemForm.veiculos}"
+																		var="veiculo" itemLabel="#{veiculo.placa}"
+																		itemValue="#{veiculo}" />
+																</h:selectOneMenu>
+										</div>
+									</div>							
+								
+								
+								<div class="col-sm-3">
+								</div>
+							</div>
+							
+							
+							<div class="row">
+								<div class="col-sm-2">
+								<div class="form-group ">
+									<div style="margin-top: 21px;width:100%" class="btn btn-primary btn-sm">Quarta-Feira</div>
+								</div>	
+								</div>
+								<div class="col-sm-2">
+									<div class="form-group ">
+										<label for="quartaInicio">Início de Expediente</label>
+										<div class='input-group input-group-sm date' id='quartaInicio'>
+											<h:inputText id="quartaInicio"
+												value="#{relatorioUsoIndevidoBean.ruip.quartaInicio}"
+												disabled="#{relatorioUsoIndevidoBean.disabled}"
+												style="#{component.valid?'':'border-color:red;'}"
+												styleClass="form-control ">
+												<f:convertDateTime pattern="HH:mm" timeZone="GMT-3" />
+											</h:inputText>
+											<span  class="input-group-addon"> 
+												<span class="glyphicon glyphicon-calendar"></span>
+											</span>
+										</div>
+									</div>
+								</div>
+								<div class="col-sm-2">
+									<div class="form-group">
+										<label for="quartaFim">Fim de Expediente</label>
+										<div class='input-group input-group-sm date' id='quartaFim'>
+											<h:inputText id="fim3"
+												value="#{relatorioUsoIndevidoBean.ruip.quartaFim}"
+												disabled="#{relatorioUsoIndevidoBean.disabled}"
+												styleClass="form-control ">
+												<f:convertDateTime pattern="HH:mm" timeZone="GMT-3" />
+											</h:inputText>
+											<span  class="input-group-addon"> 
+												<span class="glyphicon glyphicon-calendar"></span>
+											</span>
+										</div>
+									</div>
+								</div>
+								<div class="col-sm-1">
+								</div>
+								
+								<div class="col-sm-2">
+									<div class="form-group ">
+										<label for="inicio">Início do Relatorio</label>
+										<div class='input-group input-group-sm date' id='inicio'>
+											<h:inputText id="inicio"
+												value="#{relatorioUsoIndevidoBean.inicio}"
+												style="#{component.valid?'':'border-color:red;'}"
+												styleClass="form-control ">
+												<f:convertDateTime pattern="dd/MM/yyyy HH:mm" timeZone="GMT-3" />
+											</h:inputText>
+											<span  class="input-group-addon"> 
+												<span class="glyphicon glyphicon-calendar"></span>
+											</span>
+										</div>
+									</div>
+								</div>
+								<div class="col-sm-2">
+									<div class="form-group">
+										<label for="fim">Fim do Relatorio</label>
+										<div class='input-group input-group-sm date' id='fim'>
+											<h:inputText id="fim"
+												value="#{relatorioUsoIndevidoBean.fim}"
+												style="#{component.valid?'':'border-color:red;'}"
+												styleClass="form-control ">
+												<f:convertDateTime pattern="dd/MM/yyyy HH:mm" timeZone="GMT-3" />
+											</h:inputText>
+											<span  class="input-group-addon"> 
+												<span class="glyphicon glyphicon-calendar"></span>
+											</span>
+										</div>
+									</div>
+								</div>
+								
+								
+								
+								
+								
+								
+								
+							</div>
+							
+							
+							
+							
+							
+							<div class="row">
+								<div class="col-sm-2">
+								<div class="form-group ">
+									<div style="margin-top: 21px;width:100%" class="btn btn-primary btn-sm">Quinta-Feira</div>
+								</div>	
+								</div>
+								<div class="col-sm-2">
+									<div class="form-group ">
+										<label for="quintaInicio">Início de Expediente</label>
+										<div class='input-group input-group-sm date' id='quintaInicio'>
+											<h:inputText id="quintaInicio"
+												value="#{relatorioUsoIndevidoBean.ruip.quintaInicio}"
+												disabled="#{relatorioUsoIndevidoBean.disabled}"
+												style="#{component.valid?'':'border-color:red;'}"
+												styleClass="form-control ">
+												<f:convertDateTime pattern="HH:mm" timeZone="GMT-3" />
+											</h:inputText>
+											<span  class="input-group-addon"> 
+												<span class="glyphicon glyphicon-calendar"></span>
+											</span>
+										</div>
+									</div>
+								</div>
+								<div class="col-sm-2">
+									<div class="form-group">
+										<label for="quintaFim">Fim de Expediente</label>
+										<div class='input-group input-group-sm date' id='quintaFim'>
+											<h:inputText id="quintaFim"
+												value="#{relatorioUsoIndevidoBean.ruip.quintaFim}"
+												disabled="#{relatorioUsoIndevidoBean.disabled}"
+												styleClass="form-control ">
+												<f:convertDateTime pattern="HH:mm" timeZone="GMT-3" />
+											</h:inputText>
+											<span  class="input-group-addon"> 
+												<span class="glyphicon glyphicon-calendar"></span>
+											</span>
+										</div>
+									</div>
+								</div>
+								<div class="col-sm-1">
+								</div>
+								
+								
+								<div class="col-sm-4">
+								<div class="form-group">
+										<h:commandButton disabled="#{loginBean.hasPermission('CLIENTE_VER_TODOS') or !relatorioUsoIndevidoBean.disabled}" style="width:100%" value="Emitir Relatório" action="#{relatorioUsoIndevidoBean.pdf('PDF')}"	 styleClass="btn btn-danger btn-sm" />
+								</div>		
+								</div>
+								
+								
+								
+								
+							</div>
+							
+							
+							<div class="row">
+								<div class="col-sm-2">
+								<div class="form-group ">
+									<div style="margin-top: 21px;width:100%" class="btn btn-primary btn-sm">Sexta-Feira</div>
+								</div>	
+								</div>
+								<div class="col-sm-2">
+									<div class="form-group ">
+										<label for="sextaInicio">Início de Expediente</label>
+										<div class='input-group input-group-sm date' id='sextaInicio'>
+											<h:inputText id="sextaInicio"
+												value="#{relatorioUsoIndevidoBean.ruip.sextaInicio}"
+												disabled="#{relatorioUsoIndevidoBean.disabled}"
+												style="#{component.valid?'':'border-color:red;'}"
+												styleClass="form-control ">
+												<f:convertDateTime pattern="HH:mm" timeZone="GMT-3" />
+											</h:inputText>
+											<span  class="input-group-addon"> 
+												<span class="glyphicon glyphicon-calendar"></span>
+											</span>
+										</div>
+									</div>
+								</div>
+								<div class="col-sm-2">
+									<div class="form-group">
+										<label for="sextaFim">Fim de Expediente</label>
+										<div class='input-group input-group-sm date' id='sextaFim'>
+											<h:inputText id="sextaFim"
+												value="#{relatorioUsoIndevidoBean.ruip.sextaFim}"
+												disabled="#{relatorioUsoIndevidoBean.disabled}"
+												styleClass="form-control ">
+												<f:convertDateTime pattern="HH:mm" timeZone="GMT-3" />
+											</h:inputText>
+											<span  class="input-group-addon"> 
+												<span class="glyphicon glyphicon-calendar"></span>
+											</span>
+										</div>
+									</div>
+								</div>
+								<div class="col-sm-3">
+								</div>
+							</div>
+							
+							
+							
+							
+														<div class="row">
+								<div class="col-sm-2">
+								<div class="form-group ">
+									<div style="margin-top: 21px;width:100%" class="btn btn-primary btn-sm">Sábado</div>
+								</div>	
+								</div>
+								<div class="col-sm-2">
+									<div class="form-group ">
+										<label for="sabadoInicio">Início de Expediente</label>
+										<div class='input-group input-group-sm date' id='sabadoInicio'>
+											<h:inputText id="sabadoInicio"
+												value="#{relatorioUsoIndevidoBean.ruip.sabadoInicio}"
+												disabled="#{relatorioUsoIndevidoBean.disabled}"
+												style="#{component.valid?'':'border-color:red;'}"
+												styleClass="form-control ">
+												<f:convertDateTime pattern="HH:mm" timeZone="GMT-3" />
+											</h:inputText>
+											<span  class="input-group-addon"> 
+												<span class="glyphicon glyphicon-calendar"></span>
+											</span>
+										</div>
+									</div>
+								</div>
+								<div class="col-sm-2">
+									<div class="form-group">
+										<label for="sabadoFim">Fim de Expediente</label>
+										<div class='input-group input-group-sm date' id='sabadoFim'>
+											<h:inputText id="sabadoFim"
+												value="#{relatorioUsoIndevidoBean.ruip.sabadoFim}"
+												disabled="#{relatorioUsoIndevidoBean.disabled}"
+												styleClass="form-control ">
+												
+												<f:convertDateTime pattern="HH:mm" timeZone="GMT-3" />
+											</h:inputText>
+											<span  class="input-group-addon"> 
+												<span class="glyphicon glyphicon-calendar"></span>
+											</span>
+										</div>
+									</div>
+								</div>
+								<div class="col-sm-3">
+								</div>
+							</div>
+							
+							
+							
+							<div class="row">
+								<div class="col-sm-2">
+								<div class="form-group ">
+									<div style="margin-top: 21px;width:100%" class="btn btn-primary btn-sm">Domingo</div>
+								</div>	
+								</div>
+								<div class="col-sm-2">
+									<div class="form-group ">
+										<label for="domingoInicio">Início de Expediente</label>
+										<div class='input-group input-group-sm date' id='domingoInicio'>
+											<h:inputText id="domingoInicio"
+												value="#{relatorioUsoIndevidoBean.ruip.domingoInicio}"
+												disabled="#{relatorioUsoIndevidoBean.disabled}"
+												style="#{component.valid?'':'border-color:red;'}"
+												styleClass="form-control ">
+												<f:convertDateTime pattern="HH:mm" timeZone="GMT-3" />
+											</h:inputText>
+											<span  class="input-group-addon"> 
+												<span class="glyphicon glyphicon-calendar"></span>
+											</span>
+										</div>
+									</div>
+								</div>
+								<div class="col-sm-2">
+									<div class="form-group">
+										<label for="domingoFim">Fim de Expediente</label>
+										<div class='input-group input-group-sm date' id='domingoFim'>
+											<h:inputText id="domingoFim"
+												value="#{relatorioUsoIndevidoBean.ruip.domingoFim}"
+												disabled="#{relatorioUsoIndevidoBean.disabled}"
+												styleClass="form-control ">
+												<f:convertDateTime pattern="HH:mm" timeZone="GMT-3" />
+											</h:inputText>
+											<span  class="input-group-addon"> 
+												<span class="glyphicon glyphicon-calendar"></span>
+											</span>
+										</div>
+									</div>
+								</div>
+								<div class="col-sm-3">
+								</div>
+							</div>
+							
+							<div class="row">&nbsp;</div>
+							
+							<div class="row">
+								<div class="col-sm-2">
+								<div class="form-group">
+										<h:commandButton  style="width:100%" value="Salvar Expedientes" disabled="#{relatorioUsoIndevidoBean.disabled or loginBean.hasPermission('CLIENTE_VER_TODOS')}" action="#{relatorioUsoIndevidoBean.salvar}"	 styleClass="btn btn-danger btn-sm" />
+								</div>		
+								</div>
+								
+								<div class="col-sm-2">
+								<div class="form-group">
+										<h:commandButton  style="width:100%" value="Editar Expedites"  disabled="#{loginBean.hasPermission('CLIENTE_VER_TODOS') or !relatorioUsoIndevidoBean.disabled}"	action="#{relatorioUsoIndevidoBean.enableFields}" styleClass="btn btn-danger btn-sm" />
+								</div>		
+								</div>
+								
+								<div class="col-lg-6">
+									<h:messages styleClass="swp-msg swp-msg-sm"
+										infoClass="alert alert-success"
+										warnClass="alert alert-warning"
+										errorClass="alert alert-danger" showDetail="false" />
+								</div>
+
+							</div>
+							
+							
+							
+						</h:form>
+					</div>
+				</div>
+			</div>			
+
+		</ui:define>
+	</ui:composition>
+
+</h:body>
+
+</html>
+
+        
+        
+        
+        
+        
+ 

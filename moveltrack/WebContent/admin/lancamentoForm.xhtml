@@ -1,0 +1,257 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:p="http://primefaces.org/ui"  
+	xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:c="http://java.sun.com/jsp/jstl/core" 
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<h:body>
+
+	<ui:composition template="template/adminTemplate.xhtml">
+		<ui:define name="content">
+		
+			
+			
+			
+			<div class="wrapper wrapper-content ">
+
+				<div class="ibox">
+					<div class="inbox title">
+						<b><h:outputText
+								value='#{lancamentoForm.action.equals("INSERT")?"Inserir ":lancamentoForm.action.equals("UPDATE")?"Atualizar ":"Detalhes do "}Lançamento de Valores' /></b>
+					</div>
+					<div class="ibox-content">
+						<h:form onsubmit="document.body.style.cursor='wait'" id="form" role="form">
+
+							<div class="row">
+							
+								<div class="col-sm-3">
+									<div class="form-group">
+										<label for="operacao">Tipo</label>
+										<h:selectOneMenu id="operacao" name="operacao" 
+											value="#{lancamentoForm.lancamento.operacao}"
+											disabled='#{lancamentoForm.lancamento.ordemDeServico!=null || lancamentoForm.action.equals("SHOW") }'
+											styleClass="form-control input-sm"
+											style="#{component.valid?'':'border-color:red;'}">
+											<f:selectItem itemLabel="&nbsp;"  noSelectionOption="yes"/>
+											<f:selectItems value="#{lancamentoTable.operacoes}" />
+											<f:ajax event="change" render="operadorLabel solicitanteLabel status formaPagamento houveBaixa" />
+										</h:selectOneMenu>
+									</div>
+								</div>
+							
+
+								<div class="col-sm-5">
+									<div class="form-group">
+										<label for="solicitante"><h:outputText id="solicitanteLabel"  name="solicitanteLabel" value="#{lancamentoForm.solicitanteLabel}"/></label>
+										<h:inputText name="solicitante" id="solicitante"
+											value="#{lancamentoForm.lancamento.solicitante}"
+											class="input-sm form-control input-s-sm "
+											converter="#{empregadoConverter}"
+											style="#{component.valid?'':'border-color:red;'}"
+											readonly='#{lancamentoForm.action.equals("SHOW")}' />
+									</div>
+								</div>
+								
+								
+															<div class="col-sm-3">
+								<div class="form-group">
+										<label for="data">Data de Ocorrência</label>
+										<div class='input-group date' id='data'>
+										<h:inputText id="data" name="data"
+											value="#{lancamentoForm.lancamento.data}"
+											styleClass="form-control input-sm"
+											readonly="#{lancamentoForm.action.equals('SHOW')}"
+											style="#{component.valid?'':'border-color:red;'}">
+											<f:convertDateTime  pattern="dd/MM/yyyy HH:mm" timeZone="GMT-3" />
+										</h:inputText>
+										<span  class="input-group-addon"> 
+											<span class="glyphicon glyphicon-calendar"></span>
+										</span>
+										</div>
+									</div>
+								</div>
+								
+								
+	
+								
+							
+								
+								
+							</div>
+
+
+							<div class="row">
+							
+								<div class="col-sm-3">
+									<div class="form-group">
+										<label for="valor">Valor </label>
+										<h:inputText name="valor" id="valor"
+											value="#{lancamentoForm.lancamento.valor}"
+											class="input-sm form-control input-s-sm "
+											converter="#{realConverter}"
+											style="#{component.valid?'':'border-color:red;'}"
+											readonly="#{lancamentoForm.action.equals('SHOW')}"
+											>
+											</h:inputText>
+									</div>
+								</div>
+								
+								<div class="col-sm-5">
+									<div class="form-group">
+										<label for="operador"><h:outputText id="operadorLabel"  name="operadorLabel" value="#{lancamentoForm.operadorLabel}"/></label>
+										<h:inputText name="operador" id="operador"
+											value="#{lancamentoForm.lancamento.operador}"
+											class="input-sm form-control input-s-sm "
+											converter="#{empregadoConverter}"
+											style="#{component.valid?'':'border-color:red;'}"
+											readonly='#{lancamentoForm.action.equals("SHOW")}' />
+									</div>
+								</div>
+								
+								<div class="col-sm-3">
+									<div class="form-group">
+										<label for="formaPagamento">Forma de Recebimento</label>
+										<h:selectOneMenu id="formaPagamento" name="formaPagamento" 
+											value="#{lancamentoForm.lancamento.formaPagamento}"
+											disabled="#{lancamentoForm.action.equals('SHOW') or lancamentoForm.lancamento.operacao!='RECEBIMENTO_DE_CLIENTE'}"
+											styleClass="form-control input-sm"
+											style="#{component.valid?'':'border-color:red;'}">
+											 <f:selectItem itemLabel="&nbsp;"  noSelectionOption="yes"/>
+											<f:selectItems value="#{lancamentoForm.formaPagamentos}" />
+										</h:selectOneMenu>
+									</div>
+								</div>
+
+	
+							
+							
+							</div>
+														
+
+
+
+
+							<div class="row">
+							
+								<div class="col-sm-3">
+									<div class="form-group">
+										<label for="status">Status do Lancamento</label>
+										<h:selectOneMenu id="status" name="status" 
+											value="#{lancamentoForm.lancamento.status}"
+											disabled='#{lancamentoForm.action.equals("SHOW")}'
+											styleClass="form-control input-sm"
+											style="#{component.valid?'':'border-color:red;'}">
+											 <f:selectItem itemLabel="&nbsp;"  noSelectionOption="yes"/>
+											<f:selectItems value="#{lancamentoForm.statuses}" />
+										</h:selectOneMenu>
+									</div>
+								</div>
+							
+							
+								<div class="col-sm-5">
+									<div class="form-group">
+										<label for="observacao">Descrição</label>
+										<h:inputText name="observacao" id="observacao"
+											value="#{lancamentoForm.lancamento.observacao}"
+											class="input-sm form-control input-s-sm "
+											readonly='#{lancamentoForm.action.equals("SHOW")}'											
+											style="#{component.valid?'':'border-color:red;'}"
+											/>
+									</div>
+								</div>	
+							
+							
+	
+								
+						
+								
+
+							
+								<div class="col-sm-3">
+									<div class="form-group">
+										<label for="ordemDeServico">Ordem de Serviço</label>
+										<h:inputText name="ordemDeServico" id="ordemDeServico"
+											value="#{lancamentoForm.lancamento.ordemDeServico.numero}"
+											class="input-sm form-control input-s-sm "
+											style="#{component.valid?'':'border-color:red;'}"
+											readonly='true' />
+									</div>
+								</div>
+							
+
+
+								
+							
+
+							</div>
+							
+							
+							<div class="row">
+								<div class="col-sm-3">
+									<div class="form-group">
+										<label for="houveBaixa">Recebimento Relacionado c/ Baixa de Boleto?</label>
+										<h:selectOneMenu id="houveBaixa" name="houveBaixa" 
+											value="#{lancamentoForm.lancamento.houveBaixa}"
+											disabled="#{lancamentoForm.action.equals('SHOW') or lancamentoForm.lancamento.operacao!='RECEBIMENTO_DE_CLIENTE'}"
+											styleClass="form-control input-sm"
+											style="#{component.valid?'':'border-color:red;'}">
+											 <f:selectItem itemLabel="&nbsp;"  noSelectionOption="yes"/>
+											<f:selectItems value="#{lancamentoForm.houveBaixas}" />
+										</h:selectOneMenu>
+									</div>
+								</div>
+							</div>	
+								
+
+
+							<div class="row">
+								<div class="col-lg-5">
+
+									<h:panelGrid columns="3">
+										<h:commandButton id="voltar"
+											value='#{lancamentoForm.action.equals("INSERT")?"Listar Lancamentos":"Voltar"}'
+											action="lancamentoTable"
+											styleClass="btn btn-primary btn-sm" />
+										&nbsp;&nbsp;
+										<h:commandLink id="salvar" value="Salvar"
+											action="#{lancamentoForm.salvar()}"
+											rendered='#{!lancamentoForm.action.equals("SHOW")}'
+											styleClass=" btn btn-primary btn-sm" />
+									</h:panelGrid>
+
+								</div>
+								<div class="col-lg-7">
+									<h:messages styleClass="swp-msg swp-msg-sm"
+										infoClass="alert alert-success"
+										warnClass="alert alert-warning"
+										errorClass="alert alert-danger" showDetail="false" />
+								</div>
+							</div>
+
+
+						</h:form>
+
+					</div>
+				</div>
+
+			</div>
+
+
+
+
+
+
+
+		</ui:define>
+	</ui:composition>
+
+</h:body>
+
+</html>
+
+
+

@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:b="http://bootsfaces.net/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head> </h:head>	
+
+<h:body>
+	<ui:composition template="relatorioInterno.xhtml">
+		<ui:define name="relatorioInterno">
+								<div class="ibox">
+								<div class="ibox title"><h3>Totalização das Despesas No Período</h3></div>	
+								<div class="ibox-content">
+										<div class="row">
+											
+											<div class="col-sm-2">
+											
+											</div>
+											<div class="col-sm-4">
+												<div class="form-group ">
+													<label for="inicio">Início do Período</label>
+													<div class='input-group input-group-sm date' id='inicio'>
+														<h:inputText id="inicio"
+															value="#{relatorioDespesasTotais.inicio}"
+															styleClass="form-control ">
+															<f:convertDateTime pattern="dd/MM/yyyy HH:mm" timeZone="GMT-3" />
+														</h:inputText>
+														<span class="input-group-addon"> <span
+															class="glyphicon glyphicon-calendar"></span>
+														</span>
+													</div>
+												</div>
+											</div>
+											
+											<div class="col-sm-4">
+												<div class="form-group ">
+													<label for="fim">Fim do Período</label>
+													<div class='input-group input-group-sm date' id='fim'>
+														<h:inputText id="fim"
+															value="#{relatorioDespesasTotais.fim}"
+															styleClass="form-control ">
+															<f:convertDateTime pattern="dd/MM/yyyy HH:mm" timeZone="GMT-3" />
+														</h:inputText>
+														<span class="input-group-addon"> <span
+															class="glyphicon glyphicon-calendar"></span>
+														</span>
+													</div>
+												</div>
+											</div>
+											
+											
+										</div>
+										
+										
+					<div class="row">
+					
+						<div class="col-sm-2"></div>
+					
+						<div class="col-sm-8">
+						<div class="pull-right">
+							<h:commandButton styleClass="btn btn-primary btn-sm  "
+								value="Exibir Relatório" action="#{relatorioDespesasTotais.geraPdf()}">
+							</h:commandButton>
+						</div>	
+						</div>
+
+						<div class="col-lg-7">
+							<h:messages styleClass="swp-msg swp-msg-sm"
+								infoClass="alert alert-success" warnClass="alert alert-warning"
+								errorClass="alert alert-danger" showDetail="false" />
+						</div>
+					</div>
+										
+									</div>	
+									</div>
+		
+		</ui:define>
+	</ui:composition>
+</h:body>
+</html>

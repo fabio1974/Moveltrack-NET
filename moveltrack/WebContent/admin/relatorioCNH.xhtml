@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:b="http://bootsfaces.net/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head>
+</h:head>
+
+<h:body>
+	<ui:composition template="relatorioJuridica.xhtml">
+		<ui:define name="relatorioDaFrota">
+			<div class="ibox">
+				<div class="ibox title"><h3>Motoristas com Carteiras de Habilitação Expiradas ou Expirando</h3></div>
+				<div class="ibox-content">
+
+				
+							<div class="row">
+								<div class="col-sm-4">
+								</div>
+								<div class="col-sm-4">
+									<div class="form-group ">
+										<label for="fimEpiracao">CNH Expirada ou Expirando Até a Data Abaixo</label>
+										<div class='input-group input-group-sm date' id='fimEpiracao'>
+											<h:inputText id="inicio"
+												value="#{genericReportBean.fimExpiracao}"
+												styleClass="form-control ">
+												<f:convertDateTime pattern="dd/MM/yyyy" timeZone="GMT-3" />
+											</h:inputText>
+											<span  class="input-group-addon"> 
+												<span class="glyphicon glyphicon-calendar"></span>
+											</span>
+										</div>
+									</div>
+								</div>
+								
+								<div class="col-sm-4">
+								</div>
+							</div>
+							
+							<p/>
+							
+							<div class="row">
+								<div class="col-sm-4"></div>
+								<div class="col-sm-4">
+									<table class="table table-striped  table-hover">
+										<tfoot>
+											<tr>
+												<td class="customFooter">Gerar Relatório</td>
+												<td class="customFooter">
+												<center>
+													<h:panelGrid columns="6">
+
+														<h:commandLink style="width:80px" value="Pdf" 
+															action="#{relatorioCNHBean.pdf('PDF')}"
+															styleClass="btn btn-primary btn-xs" >
+														<i class="fa fa-file-pdf-o"/>
+														</h:commandLink>	
+															
+														&nbsp;&nbsp;&nbsp;&nbsp;
+														
+														<h:commandLink style="width:80px" value="Excel"
+															action="#{relatorioCNHBean.pdf('EXCEL')}"
+															styleClass="btn btn-primary btn-xs" >
+															<i class="fa fa-file-excel-o"/>
+														</h:commandLink>	
+
+													</h:panelGrid>
+													</center>
+													</td>
+											</tr>
+										</tfoot>
+									</table>
+								</div>
+							</div>				
+							
+						
+			
+				
+				
+				</div>
+			</div>
+
+		</ui:define>
+	</ui:composition>
+</h:body>
+</html>

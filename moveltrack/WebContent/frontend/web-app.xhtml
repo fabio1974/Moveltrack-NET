@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<body>
+	<ui:composition template="/template/main.xhtml">
+	    <ui:define name="content" >
+
+
+		<div class="wrapper">
+			<div class="page-header" style="background-image: url('#{request.contextPath}/frontend/assets/img/moveltrack/pc-landing.jpg');">
+		
+				<div class="container">
+					<div class="row">
+						<div class="col-md-8 text-left">
+							<h1 class="title">Conheça nosso sistema web!</h1>
+							<h3 style="margin-bottom: 0px;">Acesse já como visitante!</h3>
+							<br/>																				
+								<a href="#{request.contextPath}/login.xhtml" style="margin-bottom: 0px; margin-top: 0px;" class="btn btn-danger">
+									Acesse!
+								</a>										
+						</div>
+					</div>
+				</div>
+		    </div>	
+		
+		<div class="main main-raised">		
+		    	<div class="container">
+					
+					<div class="features-1">
+		
+						<div class="pricing-2" style="padding-top: 20px;">					
+		
+							<div class="row">
+								<div >
+									<br/>
+									<img src="#{request.contextPath}/frontend/assets/img/moveltrack/pc-web.jpg" alt="Raised Image" style="max-width: 50%;height: auto;"></img>
+									<h5 class="description">Nosso sistema tem todas as ferramentas que você precisa para ter certeza que seu veículo está seguro!</h5>
+									<br/>
+								</div>
+							</div>
+			    			
+			                <div class="row">	                
+		
+			                	<div class="col-lg-8 col-md-12 col-sm-12 col-xs-12">
+		
+		
+									<div class="card card-raised card-carousel">
+		
+										<div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+		
+											<div class="carousel slide" data-ride="carousel">
+		
+												<!-- Wrapper for slides -->
+												<div class="carousel-inner">
+													<div class="item active">
+														<img src="#{request.contextPath}/frontend/assets/img/moveltrack/web/mapa.png" alt="Awesome Image"></img>
+														
+													</div>
+													<div class="item">
+														<img src="#{request.contextPath}/frontend/assets/img/moveltrack/web/relatorios.png" alt="Awesome Image"></img>
+														
+													</div>
+													<div class="item">
+														<img src="#{request.contextPath}/frontend/assets/img/moveltrack/web/boletos.png" alt="Awesome Image"></img>
+															
+													</div>
+													<div class="item">
+														<img src="#{request.contextPath}/frontend/assets/img/moveltrack/web/bloqueio.png" alt="Awesome Image"></img>
+														
+													</div>
+													<div class="item">
+														<img src="#{request.contextPath}/frontend/assets/img/moveltrack/web/cerca.png" alt="Awesome Image"></img>
+														
+													</div>
+												</div>										
+											</div>
+										</div>
+									</div>
+		
+									
+								</div>
+		
+								<div class="col-lg-4 col-md-12 col-sm-12 col-xs-12">
+									
+					                <div class="card card-nav-tabs">
+										<div class="header header-primary">
+											<!-- colors: "header-primary", "header-info", "header-success", "header-warning", "header-danger" -->
+											<div class="nav-tabs-navigation">
+												<div class="nav-tabs-wrapper">
+													<ul class="nav nav-tabs" data-tabs="tabs">
+														<li data-target="#carousel-example-generic" data-slide-to="0" class="active">
+															<a href="#mapa" data-toggle="tab" aria-expanded="true">
+																<i class="material-icons">map</i>
+																Mapa
+															<div class="ripple-container"></div></a>
+														</li>
+														<li data-target="#carousel-example-generic" data-slide-to="1" class="">
+															<a href="#relatorios" data-toggle="tab" aria-expanded="false">
+																<i class="material-icons">assessment</i>
+																Relatórios
+															<div class="ripple-container"></div></a>
+														</li>
+														<li data-target="#carousel-example-generic" data-slide-to="2" class="">
+															<a href="#boletos" data-toggle="tab" aria-expanded="false">
+																<i class="material-icons">attach_money</i>
+																Pagamentos
+															<div class="ripple-container"></div></a>
+		
+														</li>
+														<li data-target="#carousel-example-generic" data-slide-to="3" class="">
+															<a href="#bloqueio" data-toggle="tab" aria-expanded="false">
+																<i class="material-icons">lock</i>
+																Bloqueio
+															<div class="ripple-container"></div></a>
+		
+														</li>
+														<li data-target="#carousel-example-generic" data-slide-to="4" class="">
+															<a href="#cerca" data-toggle="tab" aria-expanded="false">
+																<i class="material-icons">my_location</i>
+																Cerca Virtual
+															<div class="ripple-container"></div></a>
+		
+														</li>
+													</ul>
+												</div>
+											</div>
+										</div>
+										<div class="content">
+											<div class="tab-content text-center">
+												<div class="tab-pane active" id="mapa">
+													<p> Acesse o mapa que mostra em tempo real a posição do seu veículo, além da trejetória feita por ele durante o dia e informações adicionais sobre o rastreamento.</p>										
+												</div>
+												<div class="tab-pane" id="relatorios">
+													<p> Controle seu veículo ou sua frota com nossos relatórios!
+														<ul class="text-left">
+								                            <li>Relatório de Paradas</li>
+								                            <li>Tacógrafo Virtual </li>
+								                            <li>Relatórios de Viagens</li>   
+								                            <li>Frequência do Motorista</li>						                                                 
+								                        </ul>	
+													</p>										
+												</div>
+												<div class="tab-pane" id="boletos">
+													<p> Acompanhe a situação dos seus pagamentos e imprima seus boletos.</p>										
+												</div>
+												<div class="tab-pane" id="bloqueio">
+													<p> Tenha o poder de bloquear seu veículo instantâneamente, em casos de emergência!</p>										
+												</div>
+												<div class="tab-pane" id="cerca">
+													<p> Deixe seu veículo em qualquer lugar, tranquilamente. Nosso sistema avisa você e bloqueia seu veículo, caso ele tenha saído da área estabelecida!</p>										
+												</div>
+											</div>
+										</div>
+									</div>
+		
+								</div>
+								
+							</div>
+		
+		
+		            	</div>
+		
+				    </div>
+		
+		        </div>        
+		    </div>
+			          
+		    <footer class="footer">
+			    <div class="container">
+			        <nav class="pull-left">
+			            <!-- <ul>
+							<li>
+								<a href="#">
+									Link1
+								</a>
+							</li>
+							<li>
+								<a href="#">
+								    Link 2
+								</a>
+							</li>
+							<li>
+								<a href="#">
+								    Link3
+								</a>
+							</li>
+							
+			            </ul> -->
+			        </nav>
+			        <div class="copyright pull-right">
+			            &copy; 2016, Moveltrack | Segurança &amp; Tecnologia.
+			        </div>
+			    </div>
+			</footer>
+				
+		</div>
+
+    </ui:define>
+   </ui:composition>
+</body>
+</html>

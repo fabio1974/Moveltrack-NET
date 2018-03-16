@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      >
+    <body>
+    <ui:composition template="/template/main.xhtml">
+	    <ui:define name="content" >
+	    
+	
+			<div class="wrapper">
+				<!-- Carousel Card -->
+				<div class="card card-raised card-carousel">
+					<div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+						<div class="carousel slide" data-ride="carousel">
+		
+							<!-- Wrapper for slides -->
+							<div class="carousel-inner">
+								<div class="item">
+				    				<div class="page-header" style="background-image: url('#{request.contextPath}/frontend/assets/img/moveltrack/fleet-bigger-dark.jpg');">
+		
+										<div class="container">
+											<div class="row">
+												<div class="col-md-8 col-md-offset-2 text-center">
+													<h1 class="title">Rastreie seu veículo!</h1>
+													<h3>Saiba sempre onde seu veículo está, de qualquer lugar e a qualquer hora!</h3>
+													<br/>
+		
+													<div class="buttons">
+														<a href="prices.xhtml" class="btn btn-primary btn-lg">
+															Veja nossos preços!
+														</a>
+														
+													</div>
+		
+												</div>
+											</div>
+										</div>
+							        </div>
+		
+								</div>
+								<div class="item active">
+									<div class="page-header" style="background-image: url('#{request.contextPath}/frontend/assets/img/moveltrack/handshake-dark.jpg');">
+		
+										<div class="container">
+											<div class="row">
+												<div class="col-md-8 col-md-offset-2 text-center">
+													<h1 class="title">Bem-vindo à Moveltrack!</h1>
+													<h3>Não deixe a segurança do seu veículo para depois, deixe com a gente!</h3>
+													<br/>
+													<a href="#{request.contextPath}/frontend/contact.xhtml" class="btn btn-primary btn-lg">
+															Entre em Contato
+													</a>
+													<div class="buttons">
+														
+														<a href="https://www.facebook.com/moveltrack" class="btn btn-just-icon btn-white btn-simple btn-lg">
+															<i class="fa fa-facebook-square"></i>
+														</a>
+														
+														
+													</div>
+												</div>
+											</div>
+										</div>
+		
+							        </div>
+		
+								</div>
+		
+								<div class="item">
+									<div class="page-header" style="background-image: url('#{request.contextPath}/frontend/assets/img/moveltrack/smarttrack-dark.jpg');">
+		
+										<div class="container">
+											<div class="row">
+												<div class="col-md-8 text-left">
+													<h1 class="title">Mais tecnologia para sua segurança!</h1>
+													<h3 style="margin-bottom: 0px;">Monitore seu veículo 24 horas por dia com nosso aplicativo. Disponível para Android e iOS.</h3>																				
+														<a href="https://play.google.com/store/apps/details?id=com.moveltrackapp&amp;hl=pt_BR" style="margin-bottom: 0px; margin-top: 0px;" class="btn btn-primary btn-simple">
+															<img src="#{request.contextPath}/frontend/assets/img/moveltrack/android-button.png"></img>
+														</a>
+														<a href="https://itunes.apple.com/br/app/moveltrack/id894081045?mt=8" style="margin-bottom: 0px; margin-top: 0px;" class="btn btn-primary btn-simple">
+															<img src="#{request.contextPath}/frontend/assets/img/moveltrack/apple-button.png"></img>
+														</a>
+													
+												</div>
+											</div>
+										</div>
+		
+							        </div>
+		
+								</div>
+		
+							</div>
+		
+							<!-- Controls -->
+							<a class="left carousel-control" href="#carousel-example-generic" data-slide="prev">
+								<i class="material-icons">keyboard_arrow_left</i>
+							</a>
+							<a class="right carousel-control" href="#carousel-example-generic" data-slide="next">
+								<i class="material-icons">keyboard_arrow_right</i>
+							</a>
+						</div>
+					</div>
+			
+				<div class="main main-raised">		
+			    	<div class="container">
+						
+						<div class="features-1">
+							<div class="row">
+								<div class="col-md-8 col-md-offset-2">
+									<br/>
+									<img src="#{request.contextPath}/frontend/assets/img/moveltrack/quem_somos.jpg" class="img-responsive" alt=".."></img>
+									<h5 class="description">A Moveltrack é feita por um time de profissionais dedicados e preparados para proteger seu veículo, com tecnologia de ponta em rastreamento via satélite. Proporcionamos a você segurança do controle sobre a localização do seu veículo, a onde quer que esteja. Nossos serviços são feitos com transparência, qualidade e preços feitos especialmente para você!</h5>
+								</div>
+							</div>
+			
+							<div class="row">
+								<div class="col-md-4">
+									<div class="info">
+										<div class="icon icon-primary">
+										<i class="material-icons">check</i>
+										</div>
+										<h4 class="info-title">Qualidade</h4>
+										<p>Nossos rastreadores tem qualidade comprovada pela ANATEL e instalação feita por técnicos especializados, onde você precisar.</p>
+									</div>
+								</div>
+			
+								<div class="col-md-4">
+									<div class="info">
+										<div class="icon icon-primary">
+											<i class="material-icons">smartphone</i>
+										</div>
+										<h4 class="info-title">Conveniência</h4>
+										<p>Usamos tecnologia de rastreamento via satélite. Assim você pode acessar a localização do seu veículo remotamente, pelo seu computador ou smartphone. Temos aplicativos para as plataformas Android e iOS.</p>
+									</div>
+								</div>
+			
+								<div class="col-md-4">
+									<div class="info">
+										<div class="icon icon-primary">
+											<i class="material-icons">call</i>
+										</div>
+										<h4 class="info-title">Suporte</h4>
+										<p>Na Moveltrack você tem acesso aos nossos profissionais 24 horas por dia, estamos sempre prontos para atendê-lo na hora que você mais precisa.</p>
+									</div>
+								</div>
+							</div>
+			
+					    </div>
+			
+			        </div>        
+			    </div>
+				          
+			    <footer class="footer">
+				    <div class="container">
+				        <nav class="pull-left">
+				            <!-- <ul>
+								<li>
+									<a href="#">
+										Link1
+									</a>
+								</li>
+								<li>
+									<a href="#">
+									    Link 2
+									</a>
+								</li>
+								<li>
+									<a href="#">
+									    Link3
+									</a>
+								</li>
+								
+				            </ul> -->
+				        </nav>
+				        <div class="copyright pull-right">
+			           		&copy; 2016, Moveltrack | Segurança &amp; Tecnologia.
+				        </div>
+				    </div>
+				</footer>
+					
+			</div>
+		</div>    
+    </ui:define>
+   </ui:composition>
+</body>
+</html>

@@ -1,0 +1,382 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:body>
+
+	<ui:composition template="template/adminTemplate.xhtml">
+		<ui:define name="content">
+			
+			
+
+			<div class="wrapper wrapper-content">
+				<div class="row">
+					<div class="col-lg-12">
+						<div class="ibox">
+							<b><div class="inbox title">Despesas da Frota</div></b>
+							<div class="ibox-content">
+								<h:form onsubmit="document.body.style.cursor='wait'" id="form" role="form">
+									<div class="row ">
+
+										<div class="col-sm-12">
+											<div class="pull-right">
+												<div class="form-inline">
+													<div class="input-group input-group-xs">
+
+														<h:selectOneMenu styleClass="  form-control"
+															value="#{despesaFrotaTable.rowsPerPage}"
+															converter="#{selectIntegerConverter}">
+															<f:selectItem itemValue="5"  itemLabel="05 linhas" />
+															<f:selectItem itemValue="10" itemLabel="10 linhas" />
+															<f:selectItem itemValue="15" itemLabel="15 linhas" />
+															<f:selectItem itemValue="20" itemLabel="20 linhas" />
+															<f:selectItem itemValue="30" itemLabel="30 linhas" />
+														</h:selectOneMenu>
+
+														<span class="input-group-btn"> <h:commandButton
+																value="Ok" action="#{despesaFrotaTable.pageFirst}"
+																styleClass="btn btn-primary btn-xs  " />
+														</span>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+									
+									<p></p>
+
+									<div class="row">
+										<div class="col-lg-12">
+											<div class="table-responsive ">
+										<h:dataTable value="#{despesaFrotaTable.despesaFrotas}" id="table"
+											class="table table-striped table-bordered table-hover"
+											var="despesaFrota">
+
+
+
+													<h:column footerClass="customFooter">
+														<f:facet name="header">
+															<h:commandLink value="Categoria"
+																actionListener="#{despesaFrotaTable.sort}">
+																<f:attribute name="sortField" value="categoria" />
+															</h:commandLink>
+														</f:facet>
+														<f:facet name="header">
+															
+
+																<h:selectOneMenu id="categoria"
+																	value="#{despesaFrotaTable.categoria}"
+																	styleClass="form-control input-xs">
+																	<f:selectItem itemLabel="&nbsp;" noSelectionOption="yes" />
+																	<f:selectItems value="#{despesaFrotaForm.categorias}" />
+																</h:selectOneMenu>
+
+															
+														</f:facet>
+
+														<center>
+															<h:outputText value="#{despesaFrota.categoria.descricao}" />
+														</center>
+
+
+
+														<f:facet name="footer">
+															<h:outputText value="#{despesaFrotaTable.categoria.descricao}" />
+														</f:facet>
+													</h:column>
+
+
+													<h:column footerClass="customFooter">
+												<f:facet name="header">
+													<h:commandLink value="Espécie"
+														actionListener="#{despesaFrotaTable.sort}">
+														<f:attribute name="sortField" value="especie" />
+													</h:commandLink>
+												</f:facet>
+												<f:facet name="header">
+												
+														
+																<h:selectOneMenu id="especie"
+																	value="#{despesaFrotaTable.especie}"
+																	styleClass="form-control input-xs">
+																	<f:selectItem itemLabel="&nbsp;" noSelectionOption="yes" />
+																	<f:selectItems value="#{despesaFrotaTable.especies}" />
+																</h:selectOneMenu>
+														
+													
+												</f:facet>
+												
+												<center>
+												<h:outputText value="#{despesaFrota.especie.descricao}" />
+												</center>
+												
+												
+												<f:facet  name="footer">
+													<h:outputText  value="#{despesaFrotaTable.especie.descricao}"/>
+												</f:facet>													
+											</h:column>
+											
+											
+											<h:column footerClass="customFooter">
+												<f:facet name="header">
+													<h:commandLink value="Veículo"
+														actionListener="#{despesaFrotaTable.sort}">
+														<f:attribute name="sortField" value="veiculo" />
+													</h:commandLink>
+												</f:facet>
+												<f:facet name="header">
+												
+																<h:selectOneMenu id="veiculo"
+																	converter="#{veiculoConverter}"
+																	value="#{despesaFrotaTable.veiculo}"
+																	styleClass="form-control input-xs">
+																	<f:selectItem itemLabel="&nbsp;"  noSelectionOption="yes"/>
+																	<f:selectItems value="#{despesaFrotaForm.veiculos}"
+																		var="veiculo" itemLabel="#{veiculo.placa}"
+																		itemValue="#{veiculo}" />
+																</h:selectOneMenu>
+													
+												</f:facet>
+												<center>
+												<h:outputText value="#{despesaFrota.veiculo.placa}" title="#{despesaFrota.veiculo.marcaModelo}" />
+												</center>
+												<f:facet  name="footer">
+													<h:outputText  value="#{despesaFrotaTable.veiculo}"/>
+												</f:facet>													
+											</h:column>
+											
+											
+											<h:column footerClass="customFooter">
+												<f:facet name="header">
+
+													<h:commandLink value="Motorsita"
+														actionListener="#{despesaFrotaTable.sort}">
+														<f:attribute name="sortField" value="motorista" />
+													</h:commandLink>
+	
+												</f:facet>
+												<f:facet name="header">
+												
+																<h:selectOneMenu id="motorista"
+																	converter="#{motoristaConverter}"
+																	value="#{despesaFrotaTable.motorista}"
+																	styleClass="form-control input-xs">
+																	<f:selectItem itemLabel="&nbsp;"  noSelectionOption="yes"/>
+																	<f:selectItems value="#{despesaFrotaForm.motoristas}"
+																		var="motorista" itemLabel="#{motorista.nome}"
+																		itemValue="#{motorista}" />
+																</h:selectOneMenu>
+													
+												</f:facet>
+												<center>
+												<h:outputText value="#{despesaFrota.motorista}" />
+												</center>
+												<f:facet  name="footer">
+													<h:outputText  value="#{despesaFrotaTable.motorista}"/>
+												</f:facet>													
+											</h:column>
+
+
+													<h:column footerClass="customFooter">
+														<f:facet name="header">
+															<h:commandLink value="Viagem"
+																actionListener="#{despesaFrotaTable.sort}">
+																<f:attribute name="sortField" value="viagem" />
+															</h:commandLink>
+														</f:facet>
+														<f:facet name="header">
+															
+																<h:inputText id="viagem"
+																	value="#{despesaFrotaTable.viagem}"
+																	converter="#{viagem2Converter}"
+																	styleClass="form-control input-xs"
+																	style="#{component.valid?'':'border-color:red;'}"
+																	placeholder="Viagem" />
+															
+														</f:facet>
+														<center>
+														<h:outputText converter="#{viagem2Converter}" value="#{despesaFrota.viagem}" />
+														</center>
+														<f:facet name="footer">
+															<h:outputText converter="#{viagem2Converter}" value="#{despesaFrotaTable.viagem}" />
+														</f:facet>
+													</h:column>
+
+
+											<h:column footerClass="customFooter">
+												<f:facet name="header">
+													<h:commandLink value="Descrição"
+														actionListener="#{despesaFrotaTable.sort}">
+														<f:attribute name="sortField" value="descricao" />
+													</h:commandLink>
+												</f:facet>
+												
+												<f:facet name="header">
+												
+														<h:inputText  value="#{despesaFrotaTable.descricao}"  styleClass="input-xs form-control"  />
+													
+												</f:facet>
+												<center>
+												<h:outputText value="#{despesaFrota.descricao}" />
+												</center>
+												<f:facet  name="footer">
+													<h:outputText  value="#{despesaFrotaTable.descricao}"/>
+												</f:facet>													
+											</h:column>
+											
+											<h:column footerClass="customFooter">
+												<f:facet name="header">
+												<center>
+													<h:commandLink value="Valor"
+														actionListener="#{despesaFrotaTable.sort}">
+														<f:attribute name="sortField" value="valor" />
+													</h:commandLink>
+												</center>	
+												</f:facet>
+												
+												
+												<div style="text-align: right;">
+												<center>
+												<h:outputText  value="#{despesaFrota.valor}" converter="#{realConverter}" >
+												</h:outputText>
+												</center>
+												</div>
+											
+											</h:column>
+
+
+
+
+
+
+											<h:column footerClass="customFooter">
+												<f:facet name="header">
+												<center>
+													<h:commandButton styleClass="btn btn-primary btn-xs " value="Filtrar" 
+															action="#{despesaFrotaTable.refreshPage}">
+													</h:commandButton>
+													</center>
+												</f:facet>
+												<center>
+												<h:panelGrid   columns="5">
+														<h:commandLink 
+															styleClass="btn btn-primary btn-xs "
+															title="Visualizar" 
+															action="despesaFrotaForm">
+															<i class="fa fa-search "></i>
+															<f:setPropertyActionListener value="#{despesaFrota}"  target="#{despesaFrotaForm.despesaFrota}"/>
+															<f:setPropertyActionListener value="SHOW"  target="#{despesaFrotaForm.action}"/>
+														</h:commandLink>
+														&nbsp;
+														<h:commandLink 
+															styleClass="btn btn-warning btn-xs " 
+															title="Atualizar"
+															action="despesaFrotaForm">
+															<i class="fa fa-wrench "></i>
+															<f:setPropertyActionListener value="#{despesaFrota}"  target="#{despesaFrotaForm.despesaFrota}"/>
+															<f:setPropertyActionListener value="UPDATE"  target="#{despesaFrotaForm.action}"/>
+														</h:commandLink>
+														&nbsp;
+														<h:commandLink 
+															styleClass="btn btn-danger btn-xs " 
+															title="Excluir"
+															action="despesaFrotaForm">
+															<i class="fa fa-close "></i>
+															<f:setPropertyActionListener value="#{despesaFrota}"  target="#{despesaFrotaForm.despesaFrota}"/>
+															<f:setPropertyActionListener value="DELETE"  target="#{despesaFrotaForm.action}"/>
+														</h:commandLink>	
+															
+												</h:panelGrid>
+											</center>
+											</h:column>
+											
+											
+											
+											
+										</h:dataTable>
+									</div>
+										</div>
+								   </div>
+									<div class="row">
+										<div class="col-lg-5  col-md-5">
+													<h:commandButton id="button"
+														styleClass="btn btn-primary btn-xs " value="Adicionar Nova Despesa da Frota"    disabled="#{loginBean.hasPermission('CLIENTE_VER_TODOS')}"
+														action="despesaFrotaForm" >
+														<f:setPropertyActionListener value="#{despesaFrotaTable.lastDespesaFrota}"  target="#{despesaFrotaForm.despesaFrota}"/>
+														<f:setPropertyActionListener value="SMARTINSERT"  target="#{despesaFrotaForm.action}"/>
+													</h:commandButton>	
+										</div>
+										<div class="col-lg-2 col-md-2">
+												<div class="input-group input-group-xs">
+													<span class="input-group-btn">
+													<h:commandButton
+															id="pag" styleClass="btn btn-primary  " value="Ir para Página"
+															action="#{despesaFrotaTable.loadCurrentPage}" /> 
+													</span>	
+													<h:inputText id="currentPage"
+														styleClass="input-sm form-control" style="width: 40px"
+														value="#{despesaFrotaTable.currentPage}"
+														onkeypress="if (event.keyCode == 13) { onchange(); return false; }">
+														<f:ajax event="change" 	listener="#{despesaFrotaTable.loadCurrentPage}" />
+													</h:inputText>
+												</div>	
+										</div>			
+										<div class="col-lg-2  col-md-2">
+												<div class="input-group input-group-xs">
+													<span class="input-group-btn"> 
+														<h:commandLink
+															action="#{despesaFrotaTable.pageFirst}"
+															styleClass="btn btn-white" style="width: 40px"
+															disabled="#{despesaFrotaTable.currentPage == 1}">
+															<i class="glyphicon glyphicon-fast-backward"></i>
+														</h:commandLink> 
+														<h:commandLink action="#{despesaFrotaTable.pagePrevious}"
+															styleClass="btn btn-white" style="width: 40px"
+															disabled="#{despesaFrotaTable.currentPage == 1}">
+															<i class="glyphicon glyphicon-step-backward"></i>
+														</h:commandLink>
+														<h:commandLink
+															action="#{despesaFrotaTable.pageNext}" styleClass="btn btn-white"
+															style="width: 40px"
+															disabled="#{despesaFrotaTable.currentPage >= despesaFrotaTable.lastPage}">
+															<i class="glyphicon glyphicon-step-forward"></i>
+														</h:commandLink> 
+														<h:commandLink action="#{despesaFrotaTable.pageLast}"
+															styleClass="btn btn-white" style="width: 40px"
+															disabled="#{despesaFrotaTable.currentPage >= despesaFrotaTable.lastPage}">
+															<i class="glyphicon glyphicon-fast-forward"></i>
+														</h:commandLink>
+													</span>	
+												</div>
+										</div>
+										<div class="col-lg-3 col-md-3">
+										<div class="pull-right">
+												<b>
+													<h:outputText value="Pág.#{despesaFrotaTable.totalPages>0?despesaFrotaTable.currentPage:0}/#{despesaFrotaTable.totalPages}" />
+													&nbsp;&nbsp;&nbsp;&nbsp;Registros:	<h:outputText value="#{despesaFrotaTable.totalRows}" />
+												</b>
+										</div>		
+										</div>
+									</div>
+								</h:form>
+						</div>
+					</div>
+				</div>
+			</div>
+			</div>
+			
+		</ui:define>
+	</ui:composition>
+
+</h:body>
+
+</html>
+
+
+
+
+
+

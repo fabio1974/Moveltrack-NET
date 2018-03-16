@@ -1,0 +1,417 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      lang="en"
+      >
+
+<h:head>
+	<!-- base href="#{request.requestURL.substring(0, request.requestURL.length() - request.requestURI.length())}#{request.contextPath}/site/admin/" /-->
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<!-- Favicon -->
+	<link rel="shortcut icon"	href="../assets/img/moveltrack/simbolo_118_82.png" />
+
+	<title>MOVELTRACK RASTERAMENTO</title>
+	
+
+	
+	
+	
+	<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
+	<link href="css/bootstrap.min.css" rel="stylesheet" />
+	<link href="font-awesome/css/font-awesome.css" rel="stylesheet" />
+	<link href="css/animate.css" rel="stylesheet" />
+	<link href="css/style.css" rel="stylesheet" />
+	<link href="css/plugins/iCheck/custom.css" rel="stylesheet" />
+	<link href="css/tabelas.css" rel="stylesheet" type="text/css" />
+
+	<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
+	<link href="css/bootstrap.min.css" rel="stylesheet" />
+	<link href="font-awesome/css/font-awesome.css" rel="stylesheet" />
+	<link href="css/animate.css" rel="stylesheet" />
+	<link href="css/style.css" rel="stylesheet" />
+	<link href="css/plugins/iCheck/custom.css" rel="stylesheet" />
+	<link href="css/tabelas.css" rel="stylesheet" type="text/css" />
+	
+	
+	
+	
+	
+	<style type="text/css">
+			html {
+				height: 100%
+			}
+			
+			#map_canvas {
+				height: 100%
+			}
+			
+			#page-wrapper {
+				height: 100%
+			}
+			
+			#wrapper {
+				height: 100%
+			}
+			
+			body {
+				height: 100%;
+				margin: 0px;
+				padding: 0px
+			}
+			
+	</style>
+	
+	<!--*******************************************JAVA SCRIPT********************************************************-->	
+
+	<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?libraries=geometry&amp;key=AIzaSyCg5eE_buXJLsJZbnTZ7z3MnJBOV3_RoYc&amp;v=3."></script>
+	<script type="text/javascript" src="js/StyledMarker.js"></script>
+	<script charset="UTF-8" type="text/javascript"	src="js/mapa_ajax.js?n=1"></script>
+
+	<script src="js/jquery-2.1.1.js"></script>
+	<script src="js/jquery-ui-1.10.4.min.js"></script>
+	<script src="js/jquery-ui.custom.min.js"></script>
+	<script src="js/autocompleter.js"></script>
+
+	<script src="js/jquery.maskedinput.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+	<script src="js/plugins/metisMenu/jquery.metisMenu.js"></script>
+	<script src="js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+
+	<!-- Custom and plugin javascript -->
+	<script src="js/inspinia.js"></script>
+	<script src="js/plugins/pace/pace.min.js"></script>
+
+	<link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet"/>
+	<script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
+
+	<script src="js/cerca.js"></script>
+
+	<script type="text/javascript">
+	
+	//var geocoder = new google.maps.Geocoder();
+	var circle;
+	var rectangle;
+	var map;
+	var markerInfo;
+	var styleIcon;
+	var latlonCentro;
+	var zoom = 15;
+	var count = 0;
+	var distancia=0;
+	var polygon;
+	var placa = "#{poligonoBean.veiculo.placa}";
+	var ativo;
+	var bloqueia;
+	var enviaEmail; 
+	var veiculoMarker;
+	
+	$(document).ready(function(){
+
+		$("#enviaEmail").attr('checked',false);
+		$("#bloqueia").attr('checked',false);
+		$("#ativo").attr('checked',false);
+		
+		$("#enviaEmail").attr('disabled',true);
+		$("#bloqueia").attr('disabled',true);
+		$("#ativo").attr('disabled',true);
+
+	
+		$('#ativo').change(function() { //Atualiza a cerca ns dois sentidos do botão
+			
+			if(polygon!=null){
+				
+				if($(this).is(":checked"))
+					$("#enviaEmail").bootstrapToggle('on');
+			
+				polygon.setEditable(!$(this).is(":checked"));
+				polygon.setDraggable(!$(this).is(":checked"));
+				$("#enviaEmail").attr('disabled',$(this).is(":checked"));
+				$("#bloqueia").attr('disabled',$(this).is(":checked"));
+				$("#add").attr('disabled',$(this).is(":checked"));
+			
+				var poligono = {vertices:polygon.getPath().getArray(),placa:placa,ativo:$(this).is(":checked"),bloqueia:$("#bloqueia").is(":checked"),enviaEmail:$("#enviaEmail").is(":checked")}
+				var jsonString = JSON.stringify(poligono);
+		        $.ajax({
+			        	url : "#{request.contextPath}/SalvaPoligono",
+			            type: "POST",
+			            data: {poligono:jsonString},
+			            success:function(e){
+			                alert(e);
+			            }
+		        });
+
+			}    
+		});
+		
+		 
+		$("#add").click(function(){
+
+			if(polygon==null){   //Polígono não existe, então cria na tela!
+				latlonCentro = new google.maps.LatLng(#{poligonoBean.center.latitude},#{poligonoBean.center.longitude});
+	    		var vertices = [
+					{lat: latlonCentro.lat()+0.003, lng: latlonCentro.lng()+0.003},
+			        {lat: latlonCentro.lat()-0.003, lng: latlonCentro.lng()+0.003},
+			        {lat: latlonCentro.lat()-0.003, lng: latlonCentro.lng()-0.003},
+			        {lat: latlonCentro.lat()+0.003, lng: latlonCentro.lng()-0.003}
+				];
+	    		map.setZoom(15);
+	    		map.setCenter(latlonCentro);
+	    		desenhaPoligono(vertices);
+	    		
+	    		$(this).attr('value','Remover Cerca');
+	    		
+	    		$("#enviaEmail").attr('disabled',false);
+	    		$("#bloqueia").attr('disabled',false);
+	    		$("#ativo").attr('disabled',false);
+
+			}else{ //Poligono já existe, então remove
+				
+				polygon.setMap(null);
+				$.getJSON("#{request.contextPath}/SalvaPoligono?placa="+placa,function(){});
+				polygon=null;
+				
+				$(this).attr('value','Adicionar Cerca');
+				
+				$("#enviaEmail").bootstrapToggle('off');
+	    		$("#bloqueia").bootstrapToggle('off');
+	    		$("#ativo").bootstrapToggle('off');
+	    		
+	    		$("#enviaEmail").attr('disabled',true);
+	    		$("#bloqueia").attr('disabled',true);
+	    		$("#ativo").attr('disabled',true);
+			}
+		});
+   		setInterval(updateMap,45*1000);
+		
+	})	
+	
+	
+	var comeco = new Date();	
+
+	var updateMap = function(){
+	 	if(((new Date()).getTime()-comeco.getTime()) >= 20*60*1000){  //Pausa  a cada vinte minutos para economizar as consultas ao servidor 
+	 		alert("A atualização automática está pausada. Para retomá-la clique em 'OK'");
+			comeco = new Date();
+			desenhaVeiculo();
+	 	}else{
+	 		desenhaVeiculo();
+		}
+    };
+	
+
+    function desenhaVeiculo(){
+    	
+    	$.getJSON("#{request.contextPath}/GetLastLocation?placa="+placa,function(loc){
+    		var latLng = new google.maps.LatLng(loc.latitude,loc.longitude);
+    		if(veiculoMarker)
+    			veiculoMarker.setMap(null);
+    		veiculoMarker = new google.maps.Marker({
+    		      position: latLng,
+    		      map: map,
+    		      title:placa,
+    		      icon: getIcon("#{poligonoBean.veiculo.tipo.name()}"),
+    		      optimized: false
+    		});
+    	});
+    }
+    
+	
+	
+	function getIcon(object){
+		var size = '';
+		var offset = '';
+		var origin = new google.maps.Point(0,0);
+		if(object=='AUTOMOVEL'){
+			size = new google.maps.Size(48,25);
+			offset =new google.maps.Point(size.width/2,size.height/2);
+			return new google.maps.MarkerImage('images/carro.gif',size,origin,offset);
+		}else if(object=='MOTOCICLETA'){
+			size = new google.maps.Size(48,36);
+			offset =new google.maps.Point(size.width/2,size.height/2);
+			return  new google.maps.MarkerImage('images/moto.gif',size,origin,offset);
+		}else if(object=='TRATOR'){
+			size = new google.maps.Size(48,29);
+			offset =new google.maps.Point(size.width/2,size.height/2);
+			return new google.maps.MarkerImage('images/trator.gif',size,origin,offset);
+		}else if(object=='PICKUP'){
+			size = new google.maps.Size(48,31);
+			offset =new google.maps.Point(size.width/2,size.height/2);
+			return  new google.maps.MarkerImage('images/pickup.gif',size,origin,offset);
+		}else if(object=='CAMINHAO'){
+			size = new google.maps.Size(48,36);
+			offset =new google.maps.Point(size.width/2,size.height/2);
+			return  new google.maps.MarkerImage('images/truck.gif',size,origin,offset);
+		}
+	}
+	
+	
+	
+	
+	function initialize(){
+		latlonCentro = new google.maps.LatLng(#{poligonoBean.center.latitude},#{poligonoBean.center.longitude});		
+		var mapOptions = {zoom: zoom , center: latlonCentro,   mapTypeId: google.maps.MapTypeId.ROADMAP};
+		map = new google.maps.Map(document.getElementById("map_canvas"),mapOptions);	
+		getPoligono();
+		desenhaVeiculo();
+	}
+	
+	
+	function getPoligono(){
+		$.getJSON("#{request.contextPath}/GetPoligono?placa="+placa,function(vertices){
+	    	
+ 			if(vertices!=null &amp;&amp;  vertices.length>0){
+	    		var latMed = 0;
+	    		var lgnMed = 0;
+	    		var count=0;
+	    		
+		        $.each(vertices,function(i,vertice){
+		        	latMed += vertice.lat;
+		        	lgnMed += vertice.lng;
+		        	count++;
+		        	zoom = vertice.poligono.zoom;
+		        	ativo = vertice.poligono.ativo;
+		        	bloqueia = vertice.poligono.bloqueia;
+		        	enviaEmail = vertice.poligono.enviaEmail; 
+		        });
+		        latlonCentro = new google.maps.LatLng(latMed/count,lgnMed/count);
+				map.setCenter(latlonCentro);
+				map.setZoom(zoom);
+				desenhaPoligono(vertices);
+				
+				$("#enviaEmail").attr('disabled',false);
+	    		$("#bloqueia").attr('disabled',false);
+	    		$("#ativo").attr('disabled',false);
+				
+				$("#enviaEmail").bootstrapToggle(enviaEmail?'on':'off');
+	    		$("#bloqueia").bootstrapToggle(bloqueia?'on':'off');
+	    		$("#ativo").bootstrapToggle(ativo?'on':'off');
+	    		
+				$("#enviaEmail").attr('disabled',ativo);
+	    		$("#bloqueia").attr('disabled',ativo);
+				
+				$("#add").attr('value', 'Remover Cerca');
+	    	}else{
+	    		$("#add").attr('value', 'Adicionar Cerca');
+	    	}
+ 	    });
+	}
+	
+	
+	function desenhaPoligono(vertices){
+		polygon = new google.maps.Polygon({
+	        map: map,
+	        paths: vertices,
+	        strokeColor: '#0000FF',
+	        strokeOpacity: 0.8,
+	        strokeWeight: 2,
+	        fillColor: '#0000FF',
+	        fillOpacity: 0.35,
+	        draggable: true,
+	        editable: true,
+	        geodesic: false
+		});		
+	}
+	</script>	
+	
+
+
+</h:head>
+
+<body onload="initialize()">
+
+<div id="wrapper">
+
+  	<ui:insert name="nav" >
+		  <ui:include src="template/adminSidebar.xhtml" />
+	</ui:insert>
+
+    <div id="page-wrapper" class="gray-bg">
+    
+      	<ui:insert name="topbar" >
+		  <ui:include src="template/adminTopbar.xhtml" />
+		</ui:insert>
+		
+	
+
+	<div style="height: 90%;" class="wrapper wrapper-content ">
+		<div style="height: 100%;" class="ibox">
+			<div class="inbox title">
+				<b><h:outputText value=" Cerca Virtual&nbsp;&nbsp;-&nbsp;&nbsp;#{poligonoBean.veiculo.marcaModelo}&nbsp;&nbsp;-&nbsp;&nbsp;Placa:&nbsp;#{poligonoBean.veiculo.placa}" /></b>
+			</div>
+			<div style="height: 100%;" class="ibox-content">
+
+				<h:form style="height:100%;"	onsubmit="document.body.style.cursor='wait'" id="form" role="form">
+
+					<div class="row" style="height:100%;">
+					
+
+					<div class="col-sm-12" style="height:100%;" >
+
+					<div id="map_canvas" style="width: 100%; height: 90%"></div>
+					
+					<div class="table-responsive ">
+						<table class="table table-striped table-bordered  table-hover">
+											<tr>
+												<td><center>
+														<input type="button" style="width: 110px"
+															class=" btn btn-primary btn-xs" id="add"
+															value="Adicionar Cerca" />
+													</center></td>
+												<td><center>
+														<label for="enviaEmail">Ao sair e entrar na cerca,
+															enviar e-mail?&nbsp;&nbsp;</label> <input id="enviaEmail"
+															type="checkbox" data-toggle="toggle" data-size="mini"
+															data-on="Sim" data-off="Não" />
+													</center></td>
+												<td><center>
+														<label for="bloqueia">Ao sair da cerca,
+															bloquear?&nbsp;&nbsp;</label> <input id="bloqueia"
+															type="checkbox" data-toggle="toggle" data-size="mini"
+															data-on="Sim" data-off="Não" />
+													</center></td>
+												<td><center>
+														<label for="ativo">Ativar Cerca&nbsp;&nbsp;</label> <input
+															id="ativo" type="checkbox" data-toggle="toggle"
+															data-size="mini" data-on="Ativada" data-off="Inativa" />
+													</center></td>
+
+												<td><center>
+														<h:commandLink style="width:110px; vertical-align: middle; "
+															styleClass="btn btn-primary btn-xs " value="Rastrear"
+															action="mapaVeiculoCompleto">
+															<f:setPropertyActionListener value="#{poligonoBean.veiculo}"	target="#{mapaVeiculoBean.veiculo}" />
+														</h:commandLink>
+													</center></td>
+											</tr>
+										</table>
+					</div>
+				
+				</div>
+				</div>
+				
+				</h:form>
+			</div>
+		</div>
+	</div>
+	
+		<ui:insert name="footer" >
+		  <ui:include src="template/adminFooter.xhtml" />
+		</ui:insert>
+
+    </div>
+
+</div>
+
+<script>
+  $(function() {
+    $('#ativo').bootstrapToggle();
+  })
+</script>
+
+</body>
+</html>

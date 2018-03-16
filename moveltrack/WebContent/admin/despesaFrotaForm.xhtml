@@ -1,0 +1,288 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:b="http://bootsfaces.net/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core" 
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<h:body>
+
+
+
+	<ui:composition template="template/adminTemplate.xhtml">
+		<ui:define name="content">
+
+
+			<f:metadata>
+			    <f:event type="preRenderView" listener="#{despesaFrotaForm.updateEspecies}" />
+			</f:metadata>
+			
+
+			<div class="wrapper wrapper-content ">
+
+				<div class="ibox">
+					<div class="inbox title">
+						<b><h:outputText
+								value='#{despesaFrotaForm.action.contains("INSERT")?"Inserir Nova ":despesaFrotaForm.action.equals("UPDATE")?"Atualizar ":"Detalhes da "}Despesa de Frota' /></b>
+
+					</div>
+					<div class="ibox-content">
+						<h:form onsubmit="document.body.style.cursor='wait'" id="form" role="form">
+
+							<div class="row">
+
+								<div class="col-sm-3">
+									<div class="form-group">
+										<label for="categoria">Despesa Relacionada Com</label>
+										<h:selectOneMenu id="categoria"
+											value="#{despesaFrotaForm.despesaFrota.categoria}"
+											disabled='#{despesaFrotaForm.action.equals("SHOW") or despesaFrotaForm.action.equals("DELETE") or despesaFrotaForm.action.equals("SMARTINSERT")}'
+											styleClass="form-control input-sm"
+											style="#{component.valid?'':'border-color:red;'}">
+											<f:selectItem itemLabel="&nbsp;"  noSelectionOption="yes"/>
+											<f:selectItems value="#{despesaFrotaForm.categorias}" />
+											<f:ajax event="change" render="motorista viagemId especie veiculo" listener="#{despesaFrotaForm.updateEspecies}" />
+										</h:selectOneMenu>
+									</div>
+								</div>
+								
+								<div class="col-sm-3">
+									<div class="form-group">
+										<label for="especie">Espécie</label>
+										<h:selectOneMenu id="especie"
+										    value="#{despesaFrotaForm.despesaFrota.especie}"
+											disabled='#{despesaFrotaForm.action.equals("SHOW") or despesaFrotaForm.action.equals("DELETE") }'
+											styleClass="form-control input-sm"
+											style="#{component.valid?'':'border-color:red;'}">
+											<f:selectItem itemLabel="&nbsp;"  noSelectionOption="yes"/>
+											<f:selectItems value="#{despesaFrotaForm.especies}" />
+											<f:ajax event="change" render="descricao litros"  />
+										</h:selectOneMenu>
+									</div>
+								</div>
+								
+								
+									
+								<div class="col-sm-3">
+									<div class="form-group">
+										<label for="valor">Valor </label>
+										<h:inputText id="valor"
+											value="#{despesaFrotaForm.despesaFrota.valor}"
+											readonly='#{despesaFrotaForm.action.equals("SHOW") or despesaFrotaForm.action.equals("DELETE") }'
+											styleClass="form-control input-sm"
+											style="#{component.valid?'':'border-color:red;'}"
+											converter="#{realConverter}"
+											>
+												
+											</h:inputText>
+									</div>
+								</div>
+								
+				
+								
+									<div class="col-sm-3">
+									<div class="form-group">
+										<label for="dataDaDespesa">Data da Despesa</label>
+										
+										<div class='input-group date' id='dataDaDespesa'>
+										
+											<h:inputText id="dataDaDespesa"
+												value="#{despesaFrotaForm.despesaFrota.dataDaDespesa}"
+												readonly='#{despesaFrotaForm.action.equals("SHOW") or despesaFrotaForm.action.equals("DELETE") }'
+												styleClass="form-control input-sm"
+												style="#{component.valid?'':'border-color:red;'}">
+												<f:convertDateTime pattern="dd/MM/yyyy HH:mm" timeZone="GMT-3" />
+											</h:inputText>
+											
+											
+											<span  class="input-group-addon"> 
+												<span class="glyphicon glyphicon-calendar"></span>
+											</span>
+
+										</div>
+									</div>
+								</div>
+								
+								
+
+
+
+								
+
+							</div>
+
+
+
+
+							
+							
+							<div class="row">
+							
+																<div class="col-sm-3">
+									<div class="form-group">
+										<label for="viagemId">Viagem</label>
+										<h:inputText id="viagemId"
+											value="#{despesaFrotaForm.despesaFrota.viagem}"
+											converter="#{viagem2Converter}"
+											readonly='#{!despesaFrotaForm.despesaFrota.categoria.descricao.equals("VIAGEM") or despesaFrotaForm.action.equals("SHOW") or despesaFrotaForm.action.equals("DELETE") or despesaFrotaForm.action.equals("SMARTINSERT")}'
+											styleClass="form-control input-sm"
+											style="#{component.valid?'':'border-color:red;'}" 
+											placeholder="Viagem" />
+									</div>
+									</div>
+							
+											
+									<div class="col-sm-3">
+									<div class="form-group">
+										<label for="motorista">Motorista</label>
+										<h:selectOneMenu id="motorista"
+											converter="#{motoristaConverter}"
+											value="#{despesaFrotaForm.despesaFrota.motorista}"
+											disabled='#{!despesaFrotaForm.despesaFrota.categoria.descricao.equals("MOTORISTA") or despesaFrotaForm.action.equals("SHOW") or despesaFrotaForm.action.equals("DELETE")  or despesaFrotaForm.action.equals("SMARTINSERT")}'
+											styleClass="form-control input-sm"
+											style="#{component.valid?'':'border-color:red;'}" 
+											placeholder="Motorista">
+											<f:selectItem itemLabel="&nbsp;"  noSelectionOption="yes"/>
+											<f:selectItems value="#{despesaFrotaForm.motoristas}"
+												var="motorista" itemLabel="#{motorista.nome}"
+												itemValue="#{motorista}" />
+										</h:selectOneMenu>
+									</div>
+									</div>
+								
+									<div class="col-sm-3">
+									<div class="form-group">
+										<label  for="veiculo">Veiculo</label>
+										<h:selectOneMenu id="veiculo" converter="#{veiculoConverter}"
+											value="#{despesaFrotaForm.despesaFrota.veiculo}"
+											
+											disabled='#{!despesaFrotaForm.despesaFrota.categoria.name().equals("VEICULO") or despesaFrotaForm.action.equals("SHOW") or despesaFrotaForm.action.equals("DELETE") or despesaFrotaForm.action.equals("SMARTINSERT")}'
+											styleClass="form-control input-sm"
+											style="#{component.valid?'':'border-color:red;'}" 
+										 >
+										    <f:selectItem itemLabel="&nbsp;"  noSelectionOption="yes"/>
+											<f:selectItems value="#{despesaFrotaForm.veiculos}"
+												var="veiculo" itemLabel="#{veiculo.placa}"
+												itemValue="#{veiculo}" />
+										</h:selectOneMenu>
+									
+									</div>
+								</div>
+								
+																	<div class="col-sm-3">
+									<div class="form-group">
+										<label for="litros">Qtde. Combustível (litros)</label>
+										<h:inputText id="litros"
+											value="#{despesaFrotaForm.despesaFrota.litros}"
+											converter="#{litrosConverter}"
+											readonly='#{!despesaFrotaForm.despesaFrota.especie.name().equals("COMBUSTIVEL") or despesaFrotaForm.action.equals("SHOW") or despesaFrotaForm.action.equals("DELETE") }'
+											styleClass="form-control input-sm"
+											style="#{component.valid?'':'border-color:red;'}" 
+											placeholder="Litros" />
+									</div>
+									</div>
+
+							
+							
+								<div class="col-sm-6">
+									<div class="form-group">
+										<label for="descricao">Descricao</label>
+										<h:inputText id="descricao"
+											value="#{despesaFrotaForm.despesaFrota.descricao}"
+											readonly='#{despesaFrotaForm.action.equals("SHOW") or despesaFrotaForm.action.equals("DELETE") }'
+											styleClass="form-control input-sm"
+											style="#{component.valid?'':'border-color:red;'}" size="20"
+											placeholder="Descrição" />
+									</div>
+								</div>
+							
+
+
+							
+								
+								
+							
+
+								
+								
+
+							
+
+
+							</div>
+							
+							
+
+
+							<div class="row">
+								<div class="col-lg-5">
+
+									<h:panelGrid columns="5">
+										<h:commandButton id="voltar"
+											value='#{despesaFrotaForm.action.equals("INSERT")?"Listar Despesas da Frota":"Voltar"}'
+											action="#{despesaFrotaForm.sair()}"
+											styleClass="btn btn-primary btn-sm" />
+										&nbsp;&nbsp;
+										<h:commandLink id="salvar" value="Salvar"
+											action="#{despesaFrotaForm.salvar()}"
+											rendered='#{despesaFrotaForm.action.equals("INSERT") or despesaFrotaForm.action.equals("SMARTINSERT") or despesaFrotaForm.action.equals("UPDATE")}'
+											styleClass=" btn btn-primary btn-sm" />
+										&nbsp;&nbsp;											
+										<h:commandLink id="excluir" value="Excluir"
+											action="#{despesaFrotaForm.excluir()}"
+											rendered='#{despesaFrotaForm.action.equals("DELETE")}'
+											styleClass=" btn btn-primary btn-sm" />
+											
+											
+									</h:panelGrid>
+
+								</div>
+								<div class="col-lg-7">
+									<h:messages styleClass="swp-msg swp-msg-sm"
+										infoClass="alert alert-success"
+										warnClass="alert alert-warning"
+										errorClass="alert alert-danger" showDetail="false" />
+								</div>
+							</div>
+
+
+						</h:form>
+
+					</div>
+				</div>
+
+			</div>
+
+		</ui:define>
+		
+		<ui:define name="javascript">
+
+			<script type="text/javascript">
+				jQuery(function($) {
+					$("#form\\:litros")
+							.priceFormat({
+								prefix : '',
+								centsSeparator : ',',
+								thousandsSeparator : '.'
+							});
+				});
+			</script>
+
+
+
+		</ui:define>
+		
+	</ui:composition>
+
+</h:body>
+
+</html>
+
+
+
+
+
+

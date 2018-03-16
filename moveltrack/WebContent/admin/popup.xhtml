@@ -1,0 +1,56 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+xmlns:ui="http://java.sun.com/jsf/facelets"
+xmlns:h="http://java.sun.com/jsf/html"
+xmlns:f="http://java.sun.com/jsf/core">
+<f:view>
+    <h:head>
+        <script language="javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+        <script language="javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js"></script>
+        <script language="javascript" src="scripts.js"></script>
+        <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/themes/ui-lightness/jquery-ui.css" type="text/css" media="all" />
+    </h:head>
+    <h:body>
+        
+        <h:panelGroup id="idOfDialogPlaceHolder" style="display:none">
+            <h:form prependId="false">
+                <h:outputText value="Some Text"></h:outputText>
+                <h:commandButton id="justAButton" onclick="alert('wow')" style="display:none"></h:commandButton>
+                
+                	<iframe  frameborder="0" marginheight="0" marginwidth="0" scrolling="yes" width="100%" height="100%"  src="statusCorte.xhtml" name="veiculoFrame" id="veiculoFrame">
+   						<p>iframes are not supported by your browser.</p>
+					</iframe>
+                
+            </h:form>
+        </h:panelGroup>
+        
+        
+        <h:form prependId="false">
+               <h:commandButton id="dialogClickBtn" value="Chamador" onclick="initDialog(); return false;"></h:commandButton>
+        </h:form>
+
+    </h:body>
+</f:view>
+
+<script>
+
+function initDialog() {
+	 $("#idOfDialogPlaceHolder").dialog({
+	     modal: true,
+	     buttons: {
+	            SomeButton: function () {
+	                $("#justAButton").click();
+	            },
+	            Close: function () {
+	                $(this).dialog("close");
+	            }
+	     },
+	 });
+	}
+
+
+</script>
+
+</html>

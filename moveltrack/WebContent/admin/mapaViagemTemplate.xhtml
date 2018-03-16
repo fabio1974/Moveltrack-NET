@@ -1,0 +1,720 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"  
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+	
+<h:head>
+	<!-- base href="#{request.requestURL.substring(0, request.requestURL.length() - request.requestURI.length())}#{request.contextPath}/site/admin/" /-->
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta name="viewport" content="width=device-width" />
+
+	<title>MOVELTRACK RASTERAMENTO</title>
+
+	<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
+	<link href="css/bootstrap.css" rel="stylesheet" />
+	<link href="font-awesome/css/font-awesome.css" rel="stylesheet" />
+	<link href="css/animate.css" rel="stylesheet" />
+	<link href="css/style.css" rel="stylesheet" />
+	<link href="css/plugins/iCheck/custom.css" rel="stylesheet" />
+	<link href="css/tabelas.css" rel="stylesheet" type="text/css" />
+	<link href="css/bootstrap-datetimepicker.css" rel="stylesheet"/>
+
+
+<style type="text/css">
+html,body,table,td {
+	height: 100%;
+	background-color: #FFF
+}
+</style>
+
+	<style type="text/css">
+			html {
+				height: 100%
+			}
+			
+			#map_canvas {
+				height: 100%
+			}
+			
+			#page-wrapper {
+				height: 100%
+			}
+			
+			#wrapper {
+				height: 100%
+			}
+			
+			body {
+				height: 100%;
+				margin: 0px;
+				padding: 0px
+			}
+			
+			input.btn {
+				font: Verdana, Geneva, Arial, Helvetica, sans-serif;
+				font-size: 10px;
+				font-weight: bold;
+				border-width: 1px 1px 1px 1px;
+				color: #000000;
+				margin: 0;
+			}
+	</style>
+
+
+			<!-- Mainly scripts -->
+<script src="js/jquery-2.1.1.js"></script>
+<script src="js/jquery-ui-1.10.4.min.js"></script>
+<script src="js/jquery-ui.custom.min.js"></script>
+<script src="js/datepicker-pt-BR.js"></script>
+<script src="js/autocompleter.js"></script>   
+
+
+
+<script src="js/jquery.maskedinput.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/plugins/metisMenu/jquery.metisMenu.js"></script>
+<script src="js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+
+<!-- Custom and plugin javascript -->
+<script src="js/inspinia.js"></script>
+<script src="js/plugins/pace/pace.min.js"></script>
+
+<!-- Peity -->
+<script src="js/plugins/peity/jquery.peity.min.js"></script>
+<script src="js/demo/peity-demo.js"></script>
+    
+<!-- iCheck -->
+	<script src="js/plugins/iCheck/icheck.min.js"></script>
+	<script src="js/moment-with-locales.js"></script>
+	<script src="js/bootstrap-datetimepicker.js"></script>
+
+	<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?libraries=geometry&amp;key=AIzaSyCH5pr8LnQYDRsXOtH9RAs08vtPk7_BF6I&amp;v=3."/>
+	
+	<script type="text/javascript" src="js/StyledMarker.js"></script>
+	<script src="js/date.format.js" type="text/javascript"></script>
+	<script charset="UTF-8" type="text/javascript"	src="js/mapa_ajax.js?n=1"></script>
+	<script src="js/cerca.js"></script>
+			
+<script>
+
+var map;
+var seta;
+var infoWindow;
+var pontosCaminho= new Array();
+var pontosDeVelocidade= new Array();
+var pontosDeParada= new Array();
+var veiculosArray = new Array();
+var caminho;
+var geocoder = new google.maps.Geocoder();
+var circle;
+var rectangle;
+var markerInfo;
+var styleIcon;
+var latlonCentro;
+var count = 0;
+var distancia=0;
+var centro;
+var raio;
+
+var imei =  '#{mapaViagemBean.viagem.veiculo.equipamento.imei}';
+var inicio = '#{mapaViagemBean.viagem.partida.time}';
+var fim = '#{mapaViagemBean.fim.time}';
+var placa = '#{mapaViagemBean.viagem.veiculo.placa}';
+var marcaModelo = '#{mapaViagemBean.viagem.veiculo.marcaModelo}';
+var veiculoTipo =  '#{mapaViagemBean.viagem.veiculo.tipo}';
+
+var sLoc;
+var lastLoc;
+var firstLoc;
+var comeco = new Date();		
+var retomada = false;
+					
+$(document).ready(function(){
+ 	var updateMap = function(){
+ 		if(#{mapaViagemBean.viagem.status!='ENCERRADA'}){
+	 		if(((new Date()).getTime()-comeco.getTime()) >= 20*60*1000){  //Pausa  a cada vinte minutos para economizar as consultas ao servidor 
+	 			alert("A atualização automática está pausada. Para retomá-la clique em 'OK'");
+				comeco = new Date();
+				retomada = true;
+				atualizaMapa();
+	 		}else{
+				atualizaMapa();
+			}
+ 		}
+    };
+    if(#{mapaViagemBean.viagem.status!='ENCERRADA'}){
+    	setInterval(updateMap,30*1000);  //atualiza o mapa a cada 30 segundos 
+    }	
+});
+
+
+function atualizaMapa(){
+	$.getJSON("#{request.contextPath}/PontosMapa?imei="+imei+"&amp;inicio="+inicio+"&amp;fim="+fim,function(locs){
+    	clearAll();
+    	pontosDeVelocidade = new Array();
+    	pontosCaminho = new Array();
+    	pontosDeParada = new Array();
+    	var k=0;
+    	var loc;
+
+    	if(locs.length>0){
+        	firstLoc = locs[0];
+        	desenhaPartida(firstLoc);
+
+	        $.each(locs,function(i,loc){
+	        	pontosCaminho.push(new google.maps.LatLng(loc.latitude,loc.longitude));
+	        	//desenhaPontoDeVelocidade(loc);  //retirado por questão de performance
+	        	if(isParada(loc) &amp;&amp; !(loc.latitude==firstLoc.latitude &amp;&amp; loc.longitude==firstLoc.longitude)){
+	        		desenhaParada(loc,k);
+	        		k++;
+	        	}
+	        	if(loc.gsm)
+	        		sLoc = loc;
+	         	lastLoc = loc;
+	        });
+
+	        
+	        if(count==0 || lastLoc.velocidade==0 || retomada){
+	        	map.setCenter(new google.maps.LatLng(lastLoc.latitude,lastLoc.longitude));
+	        	map.setZoom(13);
+	        }
+	        retomada = false;	
+	        count++;
+			distancia = desenhaCaminho();
+	        clearVeiculos();
+	        desenhaVeiculo(lastLoc);
+	        
+	        
+	        if(sLoc &amp;&amp; sLoc.gsm)
+	        	printStatus(sLoc);
+    	}else 
+        	if(#{mapaViagemBean.viagem.veiculo.equipamento.imei!=null})
+       			alert("Ainda sem rastreamento para esta viagem.");
+    });
+}
+
+
+
+function initialize() {
+
+			latlonCentro = new google.maps.LatLng(#{mapaViagemBean.viagem.cliente.cerca.lat1},#{mapaViagemBean.viagem.cliente.cerca.lon1});
+ 		    seta = {
+				    path: google.maps.SymbolPath.FORWARD_OPEN_ARROW
+		    };
+		    var mapOptions = {
+		      center: latlonCentro,
+		      zoom: 11,
+		      mapTypeId: google.maps.MapTypeId.ROADMAP  
+		    };
+		    map = new google.maps.Map(document.getElementById("map_canvas"),mapOptions);
+		    infowindow = new google.maps.InfoWindow();
+		    atualizaMapa();
+
+		    centro = latlonCentro;
+		    raio = #{mapaViagemBean.viagem.cliente.cerca.raio};
+		    drawCircle(centro,raio);    
+}
+</script>
+
+</h:head>		
+	
+<h:body onload="initialize()"  >
+
+
+
+
+
+	<table class="white-bg" border="0"
+		style="height: 6%; width: 100%; margin-left: 10px; margin-right: 10px">
+		<tr>
+			<td align="left" ><h:form>
+					<h:commandLink  class=" btn btn-primary btn-xs " value="Voltar" action="viagemTable">
+						<i class="fa fa-undo "></i>
+					</h:commandLink>
+				</h:form>
+				</td>
+
+			<td width="25%" align="right">
+
+			</td>
+
+
+
+			<td width="60%" align="center">Usuário: <h:outputText
+					value="#{loginBean.usuarioNome}" /></td>
+			<td align="center" width="10%"><h:form>
+					<h:commandLink action="#{loginBean.logout}"
+						style="color: #999C9E;font-size:12px;font-weight:bold"
+						value="Sair">
+						<i class="fa fa-sign-out  "></i>
+					</h:commandLink>
+				</h:form></td>
+		</tr>
+	</table>
+
+
+
+	<table  border="1" style="height: 94%;width: 100%;" >
+			
+			
+			<tr style="vertical-align: top;" >
+			<td width="20%" style="margin-left: 5px" >
+			
+				    
+						<h:form style="margin: 10px;" onsubmit="document.body.style.cursor='wait'" id="viagemForm" role="form">
+
+
+					<div class="row">
+						<div class="col-sm-12">
+							<h:outputText id="placa1"
+								value="#{mapaViagemBean.viagem.numeroViagem}" class="placa"
+								styleClass="  placa " >
+							<f:convertNumber  pattern="#00000"/>
+							</h:outputText>	
+						</div>
+					</div>
+
+								
+								<div class="row">
+								
+								<div class="col-sm-6">
+									<div class="form-group-xs">
+									
+										<label for="cidadeOrigem">Origem</label>
+										<h:inputText id="cidadeOrigem"
+											value="#{mapaViagemBean.viagem.cidadeOrigem}"
+											readonly="true"
+											converter="#{municipioConverter}"
+											styleClass="form-control input-xs "
+											style="#{component.valid?'':'border-color:red;'}" 
+											placeholder="cidadeOrigem" />
+									
+									</div>
+								</div>
+								
+								
+								
+								<div class="col-sm-6">
+									<div class="form-group-xs">
+										<label for="cidadeDestino">Destino</label>
+										<h:inputText id="cidadeDestino"
+											value="#{mapaViagemBean.viagem.cidadeDestino}"
+											readonly='true'
+											converter="#{municipioConverter}"
+											styleClass="form-control input-xs"
+											style="#{component.valid?'':'border-color:red;'}" 
+											placeholder="Cidade de Destino" />
+									</div>
+								</div>
+								
+							</div>
+							<div class="row">
+								
+								
+									<div class="col-sm-6">
+									<div class="form-group-xs">
+										<label  for="veiculo">Veiculo</label>
+										<h:selectOneMenu id="veiculo" converter="#{veiculoConverter}"
+											value="#{mapaViagemBean.viagem.veiculo}"
+											disabled='true'
+											styleClass="form-control input-xs"
+											style="#{component.valid?'':'border-color:red;'}" 
+										 >
+										    <f:selectItem itemLabel="&nbsp;"  noSelectionOption="yes"/>
+											<f:selectItems value="#{mapaViagemBean.veiculos}"
+												var="veiculo" itemLabel="#{veiculo.placa}"
+												itemValue="#{veiculo}" />
+										</h:selectOneMenu>
+									</div>
+									</div>
+								
+								
+								
+									<div class="col-sm-6">
+									<div class="form-group-xs">
+										<label for="motorista">Motorista</label>
+										<h:selectOneMenu id="motorista"
+											converter="#{motoristaConverter}"
+											value="#{mapaViagemBean.viagem.motorista}"
+											disabled='true'
+											styleClass="form-control input-xs"
+											style="#{component.valid?'':'border-color:red;'}" 
+											placeholder="Motorista">
+											<f:selectItem itemLabel="&nbsp;"  noSelectionOption="yes"/>
+											<f:selectItems value="#{mapaViagemBean.motoristas}" 
+												var="motorista" itemLabel="#{motorista.nome}"
+												itemValue="#{motorista}" />
+										</h:selectOneMenu>
+									</div>
+									</div>
+									
+							</div>
+							<div class="row">
+
+
+
+
+									<div class="col-sm-6">
+										<div class="form-group-xs">
+											<label for="partida">Prev. Partida</label>
+			
+											
+			
+												<h:inputText id="partida" value="#{mapaViagemBean.viagem.partida}"
+													readonly='true'
+													styleClass="form-control input-xs"
+													style="#{component.valid?'':'border-color:red;'}">
+													<f:convertDateTime pattern="dd/MM/yyyy HH:mm" timeZone="GMT-3" />
+												</h:inputText>
+			
+			
+											
+										</div>
+									</div>
+
+
+
+						<div class="col-sm-6">
+							<div class="form-group-xs">
+								<label for="chegadaPrevista">Prev. Chegada</label>
+								
+									<h:inputText id="chegadaPrevista"
+										value="#{mapaViagemBean.viagem.chegadaPrevista}"
+										readonly='true'
+										styleClass="form-control input-xs"
+										style="#{component.valid?'':'border-color:red;'}">
+										<f:convertDateTime pattern="dd/MM/yyyy HH:mm" timeZone="GMT-3" />
+									</h:inputText>
+
+								
+
+							</div>
+						</div>
+
+					</div>
+							
+							<div class="row">
+								
+								<div class="col-sm-6">
+									<div class="form-group-xs">
+										<label for="qtdCidades">Qtd. Cidades</label>
+										<h:inputText id="qtdCidades"
+											value="#{mapaViagemBean.viagem.qtdCidades}"
+											readonly='true'
+											styleClass="form-control input-xs"
+											style="#{component.valid?'':'border-color:red;'}"
+											 />
+									</div>
+								</div>
+								
+								<div class="col-sm-6">
+									<div class="form-group-xs">
+										<label for="qtdClientes">Qtd. Clientes</label>
+										<h:inputText id="qtdClientes"
+											value="#{mapaViagemBean.viagem.qtdClientes}"
+											readonly='true'
+											styleClass="form-control input-xs "
+											style="#{component.valid?'':'border-color:red;'}"
+											 />
+									</div>
+								</div>
+								
+							</div>
+							<div class="row">
+								
+								
+								<div class="col-sm-6">
+									<div class="form-group-xs">
+										<label for="valorDaCarga">Valor da Carga</label>
+										<h:inputText id="valorDaCarga"
+											value="#{mapaViagemBean.viagem.valorDaCarga}"
+											readonly='true'
+											styleClass="form-control input-xs"
+											style="#{component.valid?'':'border-color:red;'}"
+											converter="#{realConverter}"
+											 >
+										</h:inputText>	 
+									</div>
+								</div>
+								
+								
+								<div class="col-sm-6">
+									<div class="form-group-xs">
+										<label for="valorDevolucao">Devolução</label>
+										<h:inputText id="valorDevolucao"
+											value="#{mapaViagemBean.viagem.valorDevolucao}"
+											readonly='true'
+											styleClass="form-control input-xs"
+											style="#{component.valid?'':'border-color:red;'}"
+											converter="#{realConverter}"
+											 >
+											 
+										</h:inputText>
+									</div>
+								</div>
+
+							</div>
+
+
+							<div class="row">
+							
+									<div class="col-sm-12">
+									<div class="form-group-xs">
+										<label for="descricao">Descricao da Carga</label>
+										<h:inputText id="descricao"
+											value="#{mapaViagemBean.viagem.descricao}"
+											readonly='true'
+											styleClass="form-control input-xs"
+											style="#{component.valid?'':'border-color:red;'}" 
+											placeholder="Descrição" />
+									</div>
+								</div>
+							</div>	
+
+						
+								
+								<div class="row">
+								
+								
+								<div class="col-sm-6">
+									<div class="form-group-xs">
+										<label for="chegadaReal">Chegada</label>
+										<h:outputText id="chegadaReal"
+													value="#{viagemRequest.viagem.chegadaReal}"
+													styleClass="form-control input-xs "
+													style="background-color:#eee; opacity:1;"
+										 >
+										 <f:convertDateTime pattern="dd/MM/yy HH:mm" timeZone="GMT-3" />
+										 </h:outputText>
+									</div>
+								</div>
+								
+								
+								<div class="col-sm-6">
+									<div class="form-group-xs">
+										<label for="distanciaPercorrida">km Percorrido</label>
+										<h:outputText id="distanciaPercorrida"
+													value="#{viagemRequest.viagem.distanciaPercorrida}"
+													styleClass="form-control input-xs "
+													style="background-color:#eee; opacity:1;"
+										 >
+										 
+										 	<f:convertNumber pattern="#0.000"   />
+										 
+										 </h:outputText>
+											 
+										<p:poll 
+												immediate="true" 
+												delay="0"
+												stop="#{viagemRequest.stop()}"
+												listener="#{viagemRequest.updateDistanciaPercorrida}"
+												autoStart="true" 
+												interval="30" 
+												update="distanciaPercorrida,status,chegadaReal" 
+										 />
+
+
+
+
+									</div>
+								</div>
+								
+							</div>
+							<div class="row">
+								
+								
+								
+								<div class="col-sm-12">
+									<div class="form-group-xs">
+										<label for="status">Status</label>
+										<center>
+										<h:outputText id="status"
+													value="#{viagemRequest.viagem.status.descricao}"
+													styleClass="form-control input-xs "
+													style="background-color:#eee; opacity:1;"
+										 />
+										 </center>
+									</div>
+								</div>
+								
+								
+
+							</div>		
+							
+
+												
+							
+							
+
+
+
+
+						</h:form>
+					
+			
+			
+			
+			</td>
+
+			<td width="76%">
+				<div class="pace  pace-inactive">
+					<div data-progress="99" data-progress-text="100%"
+						style="transform: translate3d(100%, 10px, 10px);"
+						class="pace-progress">
+						<div class="pace-progress-inner"></div>
+					</div>
+					<div class="pace-activity"></div>
+				</div>
+
+				<div id="map_canvas" style="width: 100%; height: 100%" />
+			</td>
+			
+			<td width="4%" style="margin-top: 20px">
+
+				<h:form id="sinal" style="margin:10px 10px 20px 10px;">
+					<div class="row">
+
+						<div class="col-sm-12">
+							<div class="form-group-xs">
+								<label for="bateria">Bateria</label>
+								<center>
+									<h:outputText id="bateria"
+										styleClass="form-control input-xs "
+										style="background-color:#eee; opacity:1;" />
+								</center>
+							</div>
+						</div>
+						
+						<div class="col-sm-12">
+							<div class="form-group-xs">
+								<label for="voltagem">Voltagem</label>
+								<center>
+									<h:outputText id="voltagem"
+										styleClass="form-control input-xs "
+										style="background-color:#eee; opacity:1;" />
+								</center>
+							</div>
+						</div>
+						
+						<div class="col-sm-12">
+							<div class="form-group-xs">
+								<label for="gsm">Gsm</label>
+								<center>
+									<h:outputText id="gsm"
+										styleClass="form-control input-xs "
+										style="background-color:#eee; opacity:1;" />
+								</center>
+							</div>
+						</div>
+
+
+						<div class="col-sm-12">
+							<div class="form-group-xs">
+								<label for="gps">Gps</label>
+								<center>
+									<h:outputText id="gps"
+										styleClass="form-control input-xs "
+										style="background-color:#eee; opacity:1;" />
+								</center>
+							</div>
+						</div>
+
+
+						<div class="col-sm-12">
+							<div class="form-group-xs">
+								<label for="satelites">Satélites</label>
+								<center>
+									<h:outputText id="satelites"
+										styleClass="form-control input-xs "
+										style="background-color:#eee; opacity:1;" />
+								</center>
+							</div>
+						</div>
+
+
+						<div class="col-sm-12">
+							<div class="form-group-xs">
+								<label for="bloqueio">Bloqueio</label>
+								<center>
+									<h:outputText id="bloqueio"
+										styleClass="form-control input-xs "
+										style="background-color:#eee; opacity:1;" />
+								</center>
+							</div>
+						</div>
+
+
+						<div class="col-sm-12">
+							<div class="form-group-xs">
+								<label for="ignicao">Ignição</label>
+								<center>
+									<h:outputText id="ignicao"
+										styleClass="form-control input-xs "
+										style="background-color:#eee; opacity:1;" />
+								</center>
+							</div>
+						</div>
+
+
+						<div class="col-sm-12">
+							<div class="form-group-xs">
+								<label for="alarme">Alarme</label>
+								<center>
+									<h:outputText id="alarme"
+										styleClass="form-control input-xs "
+										style="background-color:#eee; opacity:1;" />
+								</center>
+							</div>
+						</div>
+						
+						<div class="col-sm-12">
+							<div class="form-group-xs">
+								<label for="dataStatus">Leitura</label>
+								<center>
+								<h:outputText id="dataStatus"
+									styleClass="form-control input-xs "
+									style="background-color:#eee; opacity:1;color:#000">
+								</h:outputText>
+								</center>
+							</div>
+						</div>
+
+					</div>
+				</h:form>
+			</td>
+			
+
+		</tr>
+			
+			
+			</table>
+			
+<script type="text/javascript"> 
+ jQuery(function($){
+
+
+   $("#inicio,#fim,#dataDaDespesa,#partida,#chegadaPrevista,#dataInstalacao,#dataDesinstalacao,#dataCadastro").datetimepicker({
+       locale: 'pt',
+       format: 'DD/MM/YYYY HH:mm',
+       showClose: true,
+   });
+ 
+});
+
+
+</script>			
+
+
+</h:body>
+
+</html>
+
+
+
+
+
+

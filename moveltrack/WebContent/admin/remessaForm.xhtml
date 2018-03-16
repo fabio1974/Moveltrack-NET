@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:b="http://bootsfaces.net/ui"
+    xmlns:p="http://primefaces.org/ui"  
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<h:body>
+
+	<ui:composition template="template/adminTemplate.xhtml">
+		<ui:define name="content">
+		
+			
+			
+			
+			<div class="wrapper wrapper-content ">
+
+				<div class="ibox">
+					<div class="inbox title">
+						<b><h:outputText
+								value='#{remessaForm.action.equals("INSERT")?"Inserir ":remessaForm.action.equals("UPDATE")?"Atualizar ":"Detalhes da "}Remessa' /></b>
+					</div>
+					<div class="ibox-content">
+						<h:form onsubmit="document.body.style.cursor='wait'" id="form" role="form">
+
+							<div class="row">
+							
+								<div class="col-sm-4">
+									<div class="form-group">
+										<label for="numero">Nosso Número</label>
+										<h:inputText name="numero" id="numero"
+											value="#{remessaForm.remessa.numero}"
+											class="input-sm form-control input-s-sm "
+											style="#{component.valid?'':'border-color:red;'}"
+											readonly='true' />
+									</div>
+								</div>
+							
+								
+																<div class="col-sm-4">
+									<div class="form-group">
+										<label for="abertura">Abertura</label>
+										<div class='input-group input-group-sm date' id='abertura'>
+										<h:inputText id="abertura"
+											value="#{remessaForm.remessa.abertura}"
+											readonly="true"
+											styleClass="form-control"
+											style="#{component.valid?'':'border-color:red;'}">
+											<f:convertDateTime pattern="dd/MM/yyyy HH:mm" timeZone="GMT-3" />
+										</h:inputText>
+										<span  class="input-group-addon"> 
+											<span class="glyphicon glyphicon-calendar"></span>
+										</span>
+										
+										</div>
+									</div>
+								</div>
+								
+								
+								<div class="col-sm-4">
+									<div class="form-group">
+										<label for="fechamento">Fechamento</label>
+										<div class='input-group input-group-sm date' id='fechamento'>
+										<h:inputText id="fechamento"
+											value="#{remessaForm.remessa.fechamento}"
+											readonly='#{remessaForm.action.equals("SHOW")}'
+											styleClass="form-control"
+											style="#{component.valid?'':'border-color:red;'}">
+											<f:convertDateTime pattern="dd/MM/yyyy HH:mm" timeZone="GMT-3" />
+										</h:inputText>
+										<span  class="input-group-addon"> 
+											<span class="glyphicon glyphicon-calendar"></span>
+										</span>
+										
+										</div>
+									</div>
+								</div>
+								
+								
+								
+								
+							</div>
+
+
+
+
+
+							<div class="row">
+								<div class="col-lg-5">
+
+									<h:panelGrid columns="3">
+										<h:commandButton id="voltar"
+											value='#{remessaForm.action.equals("INSERT")?"Listar Remessas":"Voltar"}'
+											action="#{remessaForm.sair()}"
+											styleClass="btn btn-primary btn-sm" />
+										&nbsp;&nbsp;
+										<h:commandLink id="salvar" value="Salvar"
+											action="#{remessaForm.salvar()}"
+											rendered='#{!remessaForm.action.equals("SHOW")}'
+											styleClass=" btn btn-primary btn-sm" />
+									</h:panelGrid>
+
+								</div>
+								<div class="col-lg-7">
+									<h:messages styleClass="swp-msg swp-msg-sm"
+										infoClass="alert alert-success"
+										warnClass="alert alert-warning"
+										errorClass="alert alert-danger" showDetail="false" />
+								</div>
+							</div>
+
+
+						</h:form>
+
+					</div>
+				</div>
+
+			</div>
+
+
+
+
+
+
+
+		</ui:define>
+	</ui:composition>
+
+</h:body>
+
+</html>
+
+
+

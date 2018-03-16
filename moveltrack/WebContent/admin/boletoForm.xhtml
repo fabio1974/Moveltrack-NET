@@ -1,0 +1,269 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:p="http://primefaces.org/ui"  
+	xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:c="http://java.sun.com/jsp/jstl/core" 
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<h:body>
+
+	<ui:composition template="template/adminTemplate.xhtml">
+		<ui:define name="content">
+		
+			
+			
+			
+			<div class="wrapper wrapper-content ">
+
+				<div class="ibox">
+					<div class="inbox title">
+						<b><h:outputText
+								value='#{boletoForm.action.equals("INSERT")?"Inserir ":boletoForm.action.equals("UPDATE")?"Atualizar ":"Detalhes do "}Boleto' /></b>
+					</div>
+					<div class="ibox-content">
+						<h:form onsubmit="document.body.style.cursor='wait'" id="form" role="form">
+
+							<div class="row">
+
+								<div class="col-sm-4">
+									<div class="form-group">
+										<label for="cliente">Cliente</label>
+										<h:inputText name="cliente" id="cliente"
+											value="#{boletoForm.cliente}"
+											class="input-sm form-control input-s-sm "
+											converter="#{clienteConverter}"
+											style="#{component.valid?'':'border-color:red;'}"
+											readonly='#{!boletoForm.action.equals("INSERT")}' />
+									</div>
+								</div>
+								
+								<div class="col-sm-4">
+									<div class="form-group">
+										<label for="valor">Valor </label>
+										<h:inputText name="valor" id="valor"
+											value="#{boletoForm.boleto.valor}"
+											class="input-sm form-control input-s-sm "
+											converter="#{realConverter}"
+											style="#{component.valid?'':'border-color:red;'}"
+											readonly="#{!boletoForm.action.equals('INSERT')}"
+											>
+												
+											</h:inputText>
+									</div>
+								</div>
+								
+								<div class="col-sm-4">
+									<div class="form-group">
+										<label for="situacao">Status</label>
+										<h:selectOneMenu id="situacao" name="situacao" 
+											value="#{boletoForm.boleto.situacao}"
+											disabled='#{!boletoForm.action.equals("UPDATE")}'
+											styleClass="form-control input-sm"
+											style="#{component.valid?'':'border-color:red;'}">
+											<f:selectItems value="#{boletoTable.situacoes}" />
+											<f:ajax event="change" render="dataRegistroPagamento" />
+										</h:selectOneMenu>
+									</div>
+								</div>
+
+							
+							
+								
+								
+							</div>
+
+
+							<div class="row">
+							
+							
+							
+								
+
+							<div class="col-sm-4">
+								<div class="form-group">
+										<label for="dataEmissao">Emissão</label>
+										<div class='input-group date' id='dataEmissao'>
+										<h:inputText id="dataEmissao" name="dataEmissao"
+											value="#{boletoForm.boleto.dataEmissao}"
+											readonly='true'
+											styleClass="form-control input-sm"
+											style="#{component.valid?'':'border-color:red;'}">
+											<f:convertDateTime  pattern="dd/MM/yyyy" timeZone="GMT-3" />
+										</h:inputText>
+										<span  class="input-group-addon"> 
+											<span class="glyphicon glyphicon-calendar"></span>
+										</span>
+										</div>
+									</div>
+								</div>
+								
+								
+								
+							<div class="col-sm-4">
+								<div class="form-group">
+										<label for="dataVencimento">Vencimento</label>
+										<div class='input-group date' id='dataVencimento'>
+										<h:inputText id="dataVencimento" name="dataVencimento"
+											value="#{boletoForm.boleto.dataVencimento}"
+											readonly="#{!boletoForm.action.equals('INSERT')}"
+											styleClass="form-control input-sm"
+											style="#{component.valid?'':'border-color:red;'}">
+											<f:convertDateTime  pattern="dd/MM/yyyy" timeZone="GMT-3" />
+										</h:inputText>
+										<span  class="input-group-addon"> 
+											<span class="glyphicon glyphicon-calendar"></span>
+										</span>
+										</div>
+									</div>
+								</div>
+								
+							<div class="col-sm-4">
+								<div class="form-group">
+										<label for="dataRegistroPagamento">Baixa</label>
+										<div class='input-group date' id='dataRegistroPagamento'>
+										<h:inputText id="dataRegistroPagamento" name="dataRegistroPagamento"
+											value="#{boletoForm.boleto.dataRegistroPagamento}"
+											readonly="#{!(boletoForm.boleto.situacao=='PAGAMENTO_EFETUADO')}"
+											styleClass="form-control input-sm"
+											style="#{component.valid?'':'border-color:red;'}">
+											<f:convertDateTime  pattern="dd/MM/yyyy HH:mm" timeZone="GMT-3" />
+										</h:inputText>
+										<span  class="input-group-addon"> 
+											<span class="glyphicon glyphicon-calendar"></span>
+										</span>
+										</div>
+									</div>
+								</div>
+								
+
+
+							</div>
+							
+							<div class="row">
+															<div class="col-sm-8">
+									<div class="form-group">
+										<label for="mensagem34">Mensagem Impressa no Boleto</label>
+										<h:inputText name="mensagem34" id="mensagem34"
+											value="#{boletoForm.boleto.mensagem34}"
+											class="input-sm form-control input-s-sm "
+											readonly='#{!boletoForm.action.equals("INSERT")}'											
+											style="#{component.valid?'':'border-color:red;'}"
+											/>
+									</div>
+								</div>
+							
+								
+								<div class="col-sm-4">
+									<div class="form-group">
+										<label for="tipo">Tipo</label>
+										<h:selectOneMenu id="tipo" name="tipo" 
+											value="#{boletoForm.boleto.tipo}"
+											disabled='true'
+											styleClass="form-control input-sm"
+											style="#{component.valid?'':'border-color:red;'}">
+											<f:selectItems value="#{boletoTable.tipos}" />
+										</h:selectOneMenu>
+									</div>
+								</div>
+
+							
+							</div>
+							
+							<div class="row">
+								<div class="col-sm-4">
+									<div class="form-group">
+										<label for="nossoNumero">Nosso Número</label>
+										<h:inputText name="nossoNumero" id="nossoNumero"
+											value="#{boletoForm.boleto.nossoNumero}"
+											class="input-sm form-control input-s-sm "
+											style="#{component.valid?'':'border-color:red;'}"
+											readonly='true' />
+									</div>
+								</div>
+
+
+								<div class="col-sm-4">
+									<div class="form-group">
+										<label for="tipoDeCobranca">Tipo de Cobrança</label>
+										<h:selectOneMenu id="tipoDeCobranca" name="tipoDeCobranca" 
+											value="#{boletoForm.boleto.tipoDeCobranca}"
+											disabled='true'
+											styleClass="form-control input-sm"
+											style="#{component.valid?'':'border-color:red;'}">
+											<f:selectItems value="#{boletoTable.tipoDeCobrancas}" />
+										</h:selectOneMenu>
+									</div>
+								</div>
+
+							
+							
+								<c:if test="#{boletoForm.boleto.remessa!=null}">	
+								<div  class="col-sm-4">
+									<div class="form-group">
+										<label for="remessa">Remessa</label>
+										<h:inputText name="remessa" id="remessa"
+											value="#{boletoForm.boleto.remessa.numero} - #{boletoForm.boleto.remessa.fechamento==null?'ABERTA':'FECHADA'}"
+											class="input-sm form-control input-s-sm "
+											style="#{component.valid?'':'border-color:red;'}"
+											readonly='true' />
+									</div>
+								</div>
+								</c:if>
+								
+								
+								
+							
+
+							</div>	
+
+
+							<div class="row">
+								<div class="col-lg-5">
+
+									<h:panelGrid columns="3">
+										<h:commandButton id="voltar"
+											value='#{boletoForm.action.equals("INSERT")?"Listar Boletos":"Voltar"}'
+											action="#{boletoForm.sair()}"
+											styleClass="btn btn-primary btn-sm" />
+										&nbsp;&nbsp;
+										<h:commandLink id="salvar" value="Salvar"
+											action="#{boletoForm.salvar()}"
+											rendered='#{!boletoForm.action.equals("SHOW")}'
+											styleClass=" btn btn-primary btn-sm" />
+									</h:panelGrid>
+
+								</div>
+								<div class="col-lg-7">
+									<h:messages styleClass="swp-msg swp-msg-sm"
+										infoClass="alert alert-success"
+										warnClass="alert alert-warning"
+										errorClass="alert alert-danger" showDetail="false" />
+								</div>
+							</div>
+
+
+						</h:form>
+
+					</div>
+				</div>
+
+			</div>
+
+
+
+
+
+
+
+		</ui:define>
+	</ui:composition>
+
+</h:body>
+
+</html>
+
+
+

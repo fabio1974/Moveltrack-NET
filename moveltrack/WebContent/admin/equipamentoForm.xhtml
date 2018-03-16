@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:b="http://bootsfaces.net/ui"
+    xmlns:p="http://primefaces.org/ui"  
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<h:body>
+
+	<ui:composition template="template/adminTemplate.xhtml">
+		<ui:define name="content">
+
+			
+			
+
+			<div class="wrapper wrapper-content ">
+
+				<div class="ibox">
+					<div class="inbox title">
+						<b><h:outputText
+								value='#{equipamentoForm.action.equals("INSERT")?"Inserir Novo ":equipamentoForm.action.equals("UPDATE")?"Atualizar ":"Detalhes do "}Rastreador' /></b>
+					</div>
+					<div class="ibox-content">
+						<h:form onsubmit="document.body.style.cursor='wait'" id="form" role="form">
+
+							<div class="row">
+								<div class="col-sm-6">
+									<div class="form-group">
+										<label for="imei">Imei</label>
+										<h:inputText name="numero" id="imei"
+											value="#{equipamentoForm.equipamento.imei}"
+											class="input-sm form-control input-s-sm "
+											style="#{component.valid?'':'border-color:red;'}"
+											readonly='#{equipamentoForm.action.equals("SHOW")}' />
+									</div>
+								</div>
+								
+								
+								<div class="col-sm-6">
+									<div class="form-group">
+										<label for="chip">Chip</label>
+										<h:inputText   id="chip" 
+											class="input-sm form-control input-s-sm " 
+											readonly='#{equipamentoForm.action.equals("SHOW")}'
+											converter="#{chipConverter}" 
+											style="#{component.valid?'':'border-color:red;'}"
+											value="#{equipamentoForm.equipamento.chip}"
+										 /> 
+									</div>
+								</div>
+							</div>
+
+
+							<div class="row">
+								<div class="col-sm-6">
+									<div class="form-group">
+										<label for="modelo">Modelo</label>
+										<h:selectOneMenu id="modelo" 
+											value="#{equipamentoForm.equipamento.modelo}"
+											disabled='#{equipamentoForm.action.equals("SHOW")}'
+											styleClass="form-control input-sm"
+											style="#{component.valid?'':'border-color:red;'}">
+											<f:selectItem itemLabel="&nbsp;" noSelectionOption="yes" />
+											<f:selectItems value="#{equipamentoForm.modelos}" />
+										</h:selectOneMenu>
+									</div>
+								</div>
+								
+								<div class="col-sm-6">
+									<div class="form-group">
+										<label for="situacao">Situação</label>
+										<h:selectOneMenu id="situacao" 
+											value="#{equipamentoForm.equipamento.situacao}"
+											disabled='#{equipamentoForm.action.equals("SHOW")}'
+											styleClass="form-control input-sm"
+											style="#{component.valid?'':'border-color:red;'}">
+											<f:selectItem itemLabel="&nbsp;" noSelectionOption="yes" />
+											<f:selectItems value="#{equipamentoForm.situacoes}" />
+										</h:selectOneMenu>
+									</div>
+								</div>
+							
+							</div>
+							<div class="row">	
+								<div class="col-sm-6">
+									<div class="form-group">
+										<label for="dataCadastro">Data do Cadastro</label>
+										<div class='input-group date' id='dataCadastro'>
+										<h:inputText id="dataCadastro"
+											value="#{equipamentoForm.equipamento.dataCadastro}"
+											readonly='#{equipamentoForm.action.equals("SHOW")}'
+											styleClass="form-control input-sm"
+											style="#{component.valid?'':'border-color:red;'}">
+											<f:convertDateTime pattern="dd/MM/yyyy HH:mm" timeZone="GMT-3" />
+										</h:inputText>
+										<span  class="input-group-addon"> 
+											<span class="glyphicon glyphicon-calendar"></span>
+										</span>
+
+										</div>
+									</div>
+								</div>
+								
+								
+								<div class="col-sm-6">
+									<div class="form-group">
+										<label for="possuidor">Possuidor</label>
+										<h:inputText name="possuidor" id="possuidor"
+											value="#{equipamentoForm.equipamento.possuidor}"
+											class="input-sm form-control input-s-sm "
+											converter="#{empregadoConverter}"
+											style="#{component.valid?'':'border-color:red;'}"
+											readonly='#{equipamentoForm.action.equals("SHOW")}' />
+									</div>
+								</div>
+								
+								
+								
+							</div>
+							
+							
+							<div class="row">	
+								<div class="col-sm-6">
+									<div class="form-group">
+										<label for="observacao">Observação</label>
+										<h:inputTextarea id="observacao" rows="3"
+											value="#{equipamentoForm.equipamento.observacao}"
+											readonly='#{equipamentoForm.action.equals("SHOW")}'
+											styleClass="form-control input-sm"
+											style="#{component.valid?'':'border-color:red;'}">
+
+										</h:inputTextarea>
+									</div>
+								</div>
+								
+								
+								<div class="col-sm-3">
+									<div class="form-group">
+										<label for="senha">Senha</label>
+										<h:inputText name="numero" id="senha"
+											value="#{equipamentoForm.equipamento.senha}"
+											readonly='#{equipamentoForm.action.equals("SHOW")}'
+											class="input-sm form-control input-s-sm "
+											style="#{component.valid?'':'border-color:red;'}"
+											 />
+									</div>
+								</div>
+								
+								
+								<div class="col-sm-3">
+									<div class="form-group">
+										<label for="atrasoGmt">Correção GMT</label>
+										<h:inputText name="atrasoGmt" id="atrasoGmt" converter="#{selectIntegerConverter}"
+											value="#{equipamentoForm.equipamento.atrasoGmt}"
+											readonly='#{equipamentoForm.action.equals("SHOW") or (!loginBean.isEmpregadoAdministrador() &amp;&amp; !loginBean.isEmpregadoGerenteGeral()) }'
+											class="input-sm form-control input-s-sm "
+											style="#{component.valid?'':'border-color:red;'}"
+											 />
+									</div>
+								</div>
+								
+								
+								
+							</div>
+							
+							
+							
+							
+							
+
+
+							<div class="row">
+								<div class="col-lg-5">
+
+									<h:panelGrid columns="3">
+										<h:commandLink id="voltar"
+											value='#{equipamentoForm.action.equals("INSERT")?"Listar Rastreadores":"Voltar"}'
+											action="#{equipamentoForm.sair()}"
+											styleClass="btn btn-primary btn-sm" >
+										
+
+										
+										</h:commandLink>	
+											
+										&nbsp;&nbsp;
+										<h:commandButton id="salvar" value="Salvar"
+											action="#{equipamentoForm.salvar()}"
+											rendered='#{!equipamentoForm.action.equals("SHOW")}'
+											styleClass=" btn btn-primary btn-sm" />
+									</h:panelGrid>
+
+								</div>
+								<div class="col-lg-7">
+									<h:messages styleClass="swp-msg swp-msg-sm"
+										infoClass="alert alert-success"
+										warnClass="alert alert-warning"
+										errorClass="alert alert-danger" showDetail="false" />
+								</div>
+							</div>
+
+
+						</h:form>
+
+					</div>
+				</div>
+
+			</div>
+
+
+<script type="text/javascript"> 
+ jQuery(function($){
+   $("#form\\:imei").mask("999999999999999");
+});
+
+</script>
+
+
+
+
+		</ui:define>
+	</ui:composition>
+
+</h:body>
+
+</html>
+
+
+

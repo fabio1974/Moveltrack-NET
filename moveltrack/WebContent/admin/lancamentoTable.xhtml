@@ -1,0 +1,312 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:body>
+
+	<ui:composition template="template/adminTemplate.xhtml">
+		<ui:define name="content">
+
+			<div class="wrapper wrapper-content">
+				<div class="row">
+					<div class="col-lg-12">
+						<div class="ibox">
+							<b><div class="inbox title">Lancamento de Valores (Recebimentos, Gastos com Material, Vales e Devoluções)</div></b>
+							<div class="ibox-content">
+								<h:form  id="form" role="form">
+									<div class="row ">
+
+										<div class="col-sm-12">
+											<div class="pull-right">
+												<label class="form-inline">
+													<div class="input-group input-group-xs">
+
+
+														<h:selectOneMenu styleClass="  form-control inline"
+															value="#{lancamentoTable.rowsPerPage}"
+															converter="#{selectIntegerConverter}">
+															<f:selectItem itemValue="5"  itemLabel="05 linhas" />
+															<f:selectItem itemValue="10" itemLabel="10 linhas" />
+															<f:selectItem itemValue="15" itemLabel="15 linhas" />
+															<f:selectItem itemValue="20" itemLabel="20 linhas" />
+															<f:selectItem itemValue="30" itemLabel="30 linhas" />
+														</h:selectOneMenu>
+
+
+														<span class="input-group-btn"> <h:commandButton
+																value="Ok" action="#{lancamentoTable.pageFirst}"
+																styleClass="btn btn-primary   " />
+														</span>
+
+													</div>
+												</label>
+											</div>
+										</div>
+									</div>
+									
+									<p></p>
+
+									<div class="row">
+										<div class="col-lg-12">
+											<div class="table-responsive ">
+													<h:dataTable value="#{lancamentoTable.lancamentos}" id="table"
+														class="table table-striped table-bordered table-hover"
+														var="lancamento">
+														
+														
+													<h:column footerClass="customFooter">
+														<f:facet name="header">
+															<h:commandLink value="Tipo de Lançamento"
+																actionListener="#{lancamentoTable.sort}">
+																<f:attribute name="sortField" value="operacao" />
+															</h:commandLink>
+														</f:facet>
+														<f:facet name="header">
+															<h:selectOneMenu id="operacao"
+																value="#{lancamentoTable.operacao}"
+																styleClass="form-control input-xs">
+																<f:selectItem  itemLabel="&nbsp;" noSelectionOption="yes" />
+																<f:selectItems value="#{lancamentoTable.operacoes}" />
+															</h:selectOneMenu>
+														</f:facet>
+														<center>
+														<b><h:outputText style="font-size: 10px;" value="#{lancamento.operacao}" /></b>
+														</center>
+														<f:facet name="footer">
+															<h:outputText style="font-size: 10px;" value="#{lancamentoTable.operacao}" />
+														</f:facet>
+													</h:column>
+													
+													
+													<h:column footerClass="customFooter">
+														<f:facet name="header">
+															<h:commandLink value="Titular"
+																actionListener="#{lancamentoTable.sort}">
+																<f:attribute name="sortField" value="solicitante.nome" />
+															</h:commandLink>
+														</f:facet>
+														<f:facet name="header">
+														
+																<h:inputText name="solicitante" id="solicitante" 
+																	value="#{lancamentoTable.solicitante}"
+																	class="input-xs form-control "
+																	converter="#{empregadoConverter}" />
+
+														</f:facet>
+														<h:outputText style="font-size: 10px;" value="#{lancamento.solicitante.nome}" />
+														<f:facet name="footer">
+															<h:outputText value="#{lancamentoTable.solicitante}" />
+														</f:facet>
+													</h:column>
+													
+													
+													
+													
+													
+															
+													<h:column footerClass="customFooter">
+															<f:facet name="header">
+															<center>
+																<h:commandLink value="Valor"
+																	actionListener="#{lancamentoTable.sort}">
+																	<f:attribute name="sortField" value="valor" />
+																</h:commandLink>
+															</center>	
+															</f:facet>
+															<center>
+															<h:outputText value="#{lancamento.valor}"
+																converter="#{realConverter}">
+															</h:outputText>
+														</center>
+													</h:column>
+													
+													
+													
+													
+													<h:column footerClass="customFooter" >
+															<f:facet name="header">
+															<center>
+																<h:commandLink value="Data de Ocorrência"
+																	actionListener="#{lancamentoTable.sort}">
+																	<f:attribute name="sortField" value="data" />
+																</h:commandLink>
+															</center>	
+															</f:facet>
+															<center>
+																<h:outputText value="#{lancamento.data}" >
+																	<f:convertDateTime pattern="dd/MM/yyyy HH:mm" timeZone="GMT-3" />
+																</h:outputText>
+															</center>	
+													</h:column>
+													
+													
+													<h:column footerClass="customFooter">
+														<f:facet name="header">
+															<center>Ordem de Servico</center>
+														</f:facet>
+														<h:outputText style="font-size: 10px;" value="#{lancamento.ordemDeServico.numero}#{lancamento.ordemDeServico.numero!=null?' - ':''}#{lancamento.ordemDeServico.cliente.nome}" />
+														<f:facet name="footer">
+														<center>
+															<h:outputText value="#{lancamentoTable.ordemDeServico.numero}" />
+														</center>	
+														</f:facet>
+													</h:column>
+													
+													
+													
+													<h:column footerClass="customFooter">
+														<f:facet name="header">
+															<h:commandLink value="Status do Lançamento"
+																actionListener="#{lancamentoTable.sort}">
+																<f:attribute name="sortField" value="status" />
+															</h:commandLink>
+														</f:facet>
+														<f:facet name="header">
+															<h:selectOneMenu id="status"
+																value="#{lancamentoTable.status}"
+																styleClass="form-control input-xs">
+																<f:selectItem  itemLabel="&nbsp;" noSelectionOption="yes" />
+																<f:selectItems value="#{lancamentoTable.statuses}" />
+															</h:selectOneMenu>
+														</f:facet>
+														<center>
+														<b><h:outputText style="font-size: 10px;" value="#{lancamento.status}" /></b>
+														</center>
+														<f:facet name="footer">
+															<h:outputText style="font-size: 10px;" value="#{lancamentoTable.status}" />
+														</f:facet>
+													</h:column>
+													
+												
+
+
+													<h:column footerClass="customFooter">
+															<f:facet name="header">
+															<center>
+																<h:commandButton styleClass="btn btn-primary btn-xs " value="Filtrar" action="#{lancamentoTable.refreshPage}"										>
+																</h:commandButton>
+															</center>	
+															</f:facet>
+															<center>
+															<h:panelGrid   columns="5">
+																	<h:commandLink 
+																		styleClass="btn btn-primary btn-xs "
+																		title="Visualizar" 
+																		action="lancamentoForm">
+																		<i class="fa fa-search "></i>
+																		<f:setPropertyActionListener value="#{lancamento}"  target="#{lancamentoForm.lancamento}"/>
+																		<f:setPropertyActionListener value="SHOW"  target="#{lancamentoForm.action}"/>
+																	</h:commandLink>
+																	&nbsp;
+																	<h:commandLink 
+																		styleClass="btn btn-warning btn-xs " 
+																		title="Atualizar"
+																		action="lancamentoForm">
+																		<i class="fa fa-wrench "></i>
+																		<f:setPropertyActionListener value="#{lancamento}"  target="#{lancamentoForm.lancamento}"/>
+																		<f:setPropertyActionListener value="UPDATE"  target="#{lancamentoForm.action}"/>
+																	</h:commandLink>
+																	
+																	&nbsp;
+																	<h:commandLink 
+																		styleClass="btn btn-primary btn-xs " 
+																		title="Imprimir Vale"
+																		rendered="#{false and lancamento.operacao=='VALE'}"
+																		action="#{lancamentoTable.geraPdf(lancamento)}">
+																		<i class="	fa fa-file-pdf-o "></i>
+																	</h:commandLink>	
+																	
+																		
+															</h:panelGrid>
+															</center>
+													</h:column>
+												</h:dataTable>
+									</div>
+										</div>
+								   </div>
+
+									<div class="row">
+										<div class="col-lg-5  col-md-5">
+													<h:commandButton id="button"
+														styleClass="btn btn-primary btn-xs " value="Adicionar Novo Lancamento"
+														action="lancamentoForm" >
+														<f:setPropertyActionListener value="INSERT"  target="#{lancamentoForm.action}"/>
+													</h:commandButton>	
+										</div>
+										<div class="col-lg-2 col-md-2">
+												<div class="input-group input-group-xs">
+													<span class="input-group-btn">
+													<h:commandButton
+															id="pag" styleClass="btn btn-primary btn-xs " value="Ir para Página"
+															action="#{lancamentoTable.loadCurrentPage}" /> 
+													</span>	
+													<h:inputText id="currentPage"
+														styleClass="input-xs form-control" style="width: 40px"
+														value="#{lancamentoTable.currentPage}"
+														onkeypress="if (event.keyCode == 13) { onchange(); return false; }">
+														<f:ajax event="change" 	listener="#{lancamentoTable.loadCurrentPage}" />
+													</h:inputText>
+												</div>	
+										</div>			
+										<div class="col-lg-2  col-md-2">
+												<div class="input-group input-group-xs">
+													<span class="input-group-btn"> 
+														<h:commandLink
+															action="#{lancamentoTable.pageFirst}"
+															styleClass="btn btn-white" style="width: 40px"
+															disabled="#{lancamentoTable.currentPage == 1}">
+															<i class="glyphicon glyphicon-fast-backward"></i>
+														</h:commandLink> 
+														<h:commandLink action="#{lancamentoTable.pagePrevious}"
+															styleClass="btn btn-white" style="width: 40px"
+															disabled="#{lancamentoTable.currentPage == 1}">
+															<i class="glyphicon glyphicon-step-backward"></i>
+														</h:commandLink>
+														<h:commandLink
+															action="#{lancamentoTable.pageNext}" styleClass="btn btn-white"
+															style="width: 40px"
+															disabled="#{lancamentoTable.currentPage >= lancamentoTable.lastPage}">
+															<i class="glyphicon glyphicon-step-forward"></i>
+														</h:commandLink> 
+														<h:commandLink action="#{lancamentoTable.pageLast}"
+															styleClass="btn btn-white" style="width: 40px"
+															disabled="#{lancamentoTable.currentPage >= lancamentoTable.lastPage}">
+															<i class="glyphicon glyphicon-fast-forward"></i>
+														</h:commandLink>
+													</span>	
+												</div>
+										</div>
+										<div class="col-lg-3 col-md-3">
+										<div class="pull-right">
+												<b>
+													<h:outputText value="Pág.#{lancamentoTable.totalPages>0?lancamentoTable.currentPage:0}/#{lancamentoTable.totalPages}" />
+													&nbsp;&nbsp;&nbsp;&nbsp;Registros:	<h:outputText value="#{lancamentoTable.totalRows}" />
+												</b>
+										</div>		
+										</div>
+									</div>
+
+
+
+								</h:form>
+						</div>
+					</div>
+				</div>
+			</div>
+			</div>
+			
+		</ui:define>
+	</ui:composition>
+
+</h:body>
+
+</html>
+
+
+
+
+
+

@@ -1,0 +1,434 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:body>
+
+	<ui:composition template="template/adminTemplate.xhtml">
+		<ui:define name="content">
+
+
+			<div class="wrapper wrapper-content">
+				<div class="row">
+					<div class="col-lg-12">
+						<div class="ibox">
+							<b><div class="inbox title">Contrato</div></b>
+							<div class="ibox-content">
+								<h:form onsubmit="document.body.style.cursor='wait'" id="form"
+									role="form">
+									<div class="row "
+										style="loginBean .hasPermission('CONTRATO_VER_PROPRIO')?'display: none ':' display:'">
+
+										<div class="col-sm-12">
+											<div class="pull-right">
+												<div class="form-inline">
+													<div class="input-group input-group-xs">
+
+
+														<h:selectOneMenu styleClass="  form-control"
+															value="#{contratoTable.rowsPerPage}"
+															converter="#{selectIntegerConverter}">
+															<f:selectItem itemValue="5" itemLabel="05 linhas" />
+															<f:selectItem itemValue="10" itemLabel="10 linhas" />
+															<f:selectItem itemValue="15" itemLabel="15 linhas" />
+															<f:selectItem itemValue="20" itemLabel="20 linhas" />
+															<f:selectItem itemValue="30" itemLabel="30 linhas" />
+														</h:selectOneMenu>
+
+
+														<span class="input-group-btn"> <h:commandButton
+																value="Ok" action="#{contratoTable.pageFirst}"
+																styleClass="btn btn-primary   " />
+														</span>
+
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+
+									<p></p>
+
+									<div class="row">
+										<div class="col-lg-12">
+											<div class="table-responsive ">
+												<h:dataTable value="#{contratoTable.contratos}" id="table"
+													class="table table-striped table-bordered table-hover"
+													var="contrato">
+
+													<h:column footerClass="customFooter">
+														<f:facet name="header">
+															<h:commandLink value="Número do Contrato"
+																actionListener="#{contratoTable.sort}">
+																<f:attribute name="sortField" value="id" />
+															</h:commandLink>
+														</f:facet>
+
+														<f:facet name="header">
+															<h:inputText
+																rendered="#{!loginBean.hasPermission('CONTRATO_VER_PROPRIO')}"
+																value="#{contratoTable.numeroContrato}"
+																styleClass="input-xs form-control" />
+														</f:facet>
+
+														<center>
+															<h:outputText value="#{contrato.numeroContrato}" />
+														</center>
+
+
+														<f:facet name="footer">
+															<center>
+																<h:outputText
+																	rendered="#{!loginBean.hasPermission('CONTRATO_VER_PROPRIO')}"
+																	value="#{contratoTable.numeroContrato}" />
+															</center>
+														</f:facet>
+
+
+													</h:column>
+
+													<h:column rendered="#{loginBean.isEmpregado()}"
+														footerClass="customFooter">
+														<f:facet name="header">
+															<h:commandLink value="Cliente"
+																actionListener="#{contratoTable.sort}">
+																<f:attribute name="sortField" value="cliente" />
+															</h:commandLink>
+														</f:facet>
+
+														<f:facet name="header">
+															<h:inputText name="cliente" id="cliente"
+																value="#{contratoTable.cliente}"
+																class="input-xs form-control  "
+																converter="#{clienteConverter}" />
+														</f:facet>
+
+														<h:commandLink action="clienteTable"
+															title="#{contrato.cliente.usuario.perfil.tipo=='CLIENTE_PJ'?contrato.cliente.nome:null}"
+															value="#{contrato.cliente}">
+															<f:setPropertyActionListener value="#{contrato.cliente.nome}" target="#{clienteTable.nome}" />
+															<f:setPropertyActionListener value="cliente" target="#{navigator.topico}" />
+															<f:actionListener binding="#{clienteTable.refreshPage()}" />
+														</h:commandLink>
+
+
+
+														<f:facet name="footer">
+															<h:outputText value="#{contratoTable.cliente}" />
+														</f:facet>
+													</h:column>
+
+													<h:column footerClass="customFooter">
+
+														<f:facet name="header">
+															<h:commandLink value="Status"
+																actionListener="#{contratoTable.sort}">
+																<f:attribute name="sortField" value="status" />
+															</h:commandLink>
+														</f:facet>
+
+
+														<f:facet name="header">
+															<center>
+																<h:selectOneMenu id="status"
+																	rendered="#{!loginBean.hasPermission('CONTRATO_VER_PROPRIO')}"
+																	value="#{contratoTable.status}"
+																	styleClass="form-control input-xs">
+																	<f:selectItem itemLabel="&nbsp;" />
+																	<f:selectItems value="#{contratoForm.statuses}" />
+																</h:selectOneMenu>
+															</center>
+														</f:facet>
+														<center>
+															<h:outputText value="#{contrato.status}" />
+														</center>
+														<f:facet name="footer">
+															<h:outputText
+																rendered="#{!loginBean.hasPermission('CONTRATO_VER_PROPRIO')}"
+																value="#{contratoTable.status}" />
+														</f:facet>
+													</h:column>
+
+
+													<h:column footerClass="customFooter">
+														<f:facet name="header">
+															<center>
+																<h:commandLink value="Data de Inicio"
+																	actionListener="#{contratoTable.sort}">
+																	<f:attribute name="sortField" value="inicio" />
+																</h:commandLink>
+															</center>
+														</f:facet>
+														<center>
+															<h:outputText value="#{contrato.inicio}">
+																<f:convertDateTime pattern="dd/MM/yyyy HH:mm"
+																	timeZone="GMT-3" />
+															</h:outputText>
+														</center>
+														<f:facet name="footer">
+															<h:outputText
+																rendered="#{!loginBean.hasPermission('CONTRATO_VER_PROPRIO')}"
+																value="#{contratoTable.inicio}" />
+														</f:facet>
+													</h:column>
+
+
+													<h:column rendered="#{loginBean.isEmpregado()}"
+														footerClass="customFooter">
+														<f:facet name="header">
+															<h:commandLink value="Vendedor/Ind."
+																actionListener="#{contratoTable.sort}">
+																<f:attribute name="sortField" value="vendedor" />
+															</h:commandLink>
+														</f:facet>
+
+														<f:facet name="header">
+															<h:inputText name="vendedor" id="vendedor"
+																value="#{contratoTable.vendedor}"
+																class="input-xs form-control  "
+																converter="#{pessoaConverter}" />
+														</f:facet>
+
+														<h:outputText value="#{contrato.vendedor.nome}" />
+
+
+														<f:facet name="footer">
+															<h:outputText value="#{contratoTable.vendedor}" />
+														</f:facet>
+													</h:column>
+
+
+													<h:column footerClass="customFooter">
+														<f:facet name="header">
+															<center>
+																<h:commandLink value="Mensal por Veículo"
+																	actionListener="#{contratoTable.sort}">
+																	<f:attribute name="sortField" value="mensalidade" />
+																</h:commandLink>
+															</center>
+														</f:facet>
+														<center>
+															<h:outputText value="#{contrato.mensalidade}"
+																converter="#{realConverter}">
+															</h:outputText>
+														</center>
+													</h:column>
+
+
+													<h:column
+														rendered="#{loginBean.hasPermission('CARNE_INSERIR')}"
+														footerClass="customFooter">
+														<f:facet name="header">
+															<h:commandLink value="Carnês"
+																actionListener="#{contratoTable.sort}">
+																<f:attribute name="sortField" value="contratoGeraCarne" />
+															</h:commandLink>
+														</f:facet>
+														<f:facet name="header">
+															<h:selectOneMenu id="contratoGeraCarne"
+																value="#{contratoTable.contratoGeraCarne}"
+																styleClass="form-control input-xs">
+																<f:selectItem itemLabel="&nbsp;" />
+																<f:selectItems
+																	value="#{contratoTable.contratoGeraCarnes}" />
+															</h:selectOneMenu>
+														</f:facet>
+
+														<center>
+															<h:commandButton
+																rendered="#{contrato.contratoGeraCarne=='PENDENTE' }"
+																disabled="#{contrato.status !='ATIVO'}"
+																style="width:70px;" styleClass="btn btn-danger  btn-xs "
+																value="#{contrato.contratoGeraCarne}" action="carneForm">
+																<f:setPropertyActionListener value="#{contrato.cliente}" target="#{carneForm.cliente}" />
+																<f:setPropertyActionListener value="carne" target="#{navigator.topico}" />
+																<f:setPropertyActionListener value="#{contrato.mensalidade}" target="#{carneForm.mensalidade}" />
+																<f:setPropertyActionListener value="INSERT" target="#{carneForm.action}" />
+															</h:commandButton>
+
+															<h:outputText
+																rendered="#{contrato.contratoGeraCarne=='GERADO'}"
+																style="width:70px;" styleClass="btn btn-default  btn-xs"
+																value="#{contrato.contratoGeraCarne}" action="carneForm">
+															</h:outputText>
+
+														</center>
+
+														<f:facet name="footer">
+															<h:outputText value="#{contratoTable.contratoGeraCarne}" />
+														</f:facet>
+													</h:column>
+
+
+
+													<h:column footerClass="customFooter">
+														<f:facet name="header">
+															<center>
+																<h:commandLink
+																	rendered="#{!loginBean.hasPermission('CONTRATO_VER_PROPRIO')}"
+																	styleClass="btn btn-primary btn-xs " value="Filtrar"
+																	action="#{contratoTable.refreshPage}">
+																</h:commandLink>
+															</center>
+														</f:facet>
+
+														<center>
+															<h:panelGrid columns="9">
+																<h:commandLink styleClass="btn btn-primary btn-xs "
+																	title="Visualizar Contrato" action="contratoForm">
+																	<i class="fa fa-search "></i>
+																	<f:setPropertyActionListener value="#{contrato}"
+																		target="#{contratoForm.contrato}" />
+																	<f:setPropertyActionListener value="SHOW"
+																		target="#{contratoForm.action}" />
+																</h:commandLink>
+																	&nbsp;
+																	<h:commandLink styleClass="btn btn-warning btn-xs "
+																	rendered="#{!loginBean.hasPermission('CONTRATO_VER_PROPRIO')}"
+																	title="Atualizar Contrato" action="contratoForm">
+																	<i class="fa fa-wrench "></i>
+																	<f:setPropertyActionListener value="#{contrato}"
+																		target="#{contratoForm.contrato}" />
+																	<f:setPropertyActionListener value="UPDATE"
+																		target="#{contratoForm.action}" />
+																</h:commandLink>	
+																	&nbsp;
+																	<h:commandLink styleClass="btn btn-danger btn-xs "
+																	title="Visualizar Veículos do Contrato"
+																	rendered="#{!loginBean.hasPermission('CONTRATO_VER_PROPRIO')}"
+																	action="veiculoTable">
+
+																	<i class="fa fa-search "></i>
+																	<i class="fa fa-car "></i>
+																	<f:setPropertyActionListener value="cadastro" target="#{navigator.topico}" />
+																	<f:setPropertyActionListener value="veiculo" target="#{navigator.pagina}" />
+																	<f:setPropertyActionListener value="#{contrato.cliente}" target="#{veiculoTable.cliente}" />
+																	<f:actionListener binding="#{veiculoTable.refreshPage()}" />
+
+																</h:commandLink>	
+																	
+																&nbsp;
+
+																<h:commandLink styleClass="btn btn-danger btn-xs "
+																	title="Adicionar Veículo ao Contrato"
+																	rendered="#{!loginBean.hasPermission('CONTRATO_VER_PROPRIO')}"
+																	action="veiculoForm">
+
+																	<i class="fa fa-plus-circle "></i>
+																	<i class="fa fa-car "></i>
+
+																	<f:setPropertyActionListener value="cadastro" target="#{navigator.topico}" />
+																	<f:setPropertyActionListener value="veiculo"  target="#{navigator.pagina}" />
+																	<f:setPropertyActionListener value="#{contrato}" target="#{veiculoForm.veiculo.contrato}" />
+																	<f:setPropertyActionListener value="#{'SMARTINSERT'}" target="#{veiculoForm.action}" />
+																	
+																</h:commandLink>
+																
+																&nbsp;
+
+																<h:commandLink styleClass="btn btn-primary btn-xs "
+																	rendered="#{loginBean.isEmpregado()}"
+																	title="Mapa da Frota"
+																	action="mapaFrota">
+												
+																	<i class="glyphicon glyphicon-globe"></i>
+																	
+
+																	<f:setPropertyActionListener value="#{contrato}" target="#{mapaFrotaBean.contrato}" />
+																	<f:setPropertyActionListener value="#{'SMARTINSERT'}" target="#{veiculoForm.action}" />
+																	
+																</h:commandLink>
+																
+																
+																
+
+															</h:panelGrid>
+														</center>
+													</h:column>
+
+												</h:dataTable>
+											</div>
+										</div>
+									</div>
+
+									<div class="row"
+										style="loginBean .hasPermission('CONTRATO_VER_PROPRIO')?'display: none ':' display:'">
+										<div class="col-lg-5  col-md-5">
+											<h:commandButton id="button"
+												styleClass="btn btn-primary btn-xs "
+												value="Adicionar Novo Contrato" action="contratoForm">
+												<f:setPropertyActionListener value="INSERT"
+													target="#{contratoForm.action}" />
+											</h:commandButton>
+										</div>
+										<div class="col-lg-2 col-md-2">
+											<div class="input-group input-group-xs">
+												<span class="input-group-btn"> <h:commandButton
+														id="pag" styleClass="btn btn-primary "
+														value="Ir para Página"
+														action="#{contratoTable.loadCurrentPage}" />
+												</span>
+												<h:inputText id="currentPage" styleClass="form-control"
+													style="width: 40px" value="#{contratoTable.currentPage}"
+													onkeypress="if (event.keyCode == 13) { onchange(); return false; }">
+													<f:ajax event="change"
+														listener="#{contratoTable.loadCurrentPage}" />
+												</h:inputText>
+											</div>
+										</div>
+										<div class="col-lg-2  col-md-2">
+											<div class="input-group input-group-xs">
+												<span class="input-group-btn"> <h:commandLink
+														action="#{contratoTable.pageFirst}"
+														styleClass="btn btn-white" style="width: 40px"
+														disabled="#{contratoTable.currentPage == 1}">
+														<i class="glyphicon glyphicon-fast-backward"></i>
+													</h:commandLink> <h:commandLink action="#{contratoTable.pagePrevious}"
+														styleClass="btn btn-white" style="width: 40px"
+														disabled="#{contratoTable.currentPage == 1}">
+														<i class="glyphicon glyphicon-step-backward"></i>
+													</h:commandLink> <h:commandLink action="#{contratoTable.pageNext}"
+														styleClass="btn btn-white" style="width: 40px"
+														disabled="#{contratoTable.currentPage >= contratoTable.lastPage}">
+														<i class="glyphicon glyphicon-step-forward"></i>
+													</h:commandLink> <h:commandLink action="#{contratoTable.pageLast}"
+														styleClass="btn btn-white" style="width: 40px"
+														disabled="#{contratoTable.currentPage >= contratoTable.lastPage}">
+														<i class="glyphicon glyphicon-fast-forward"></i>
+													</h:commandLink>
+												</span>
+											</div>
+										</div>
+										<div class="col-lg-3 col-md-3">
+											<div class="pull-right">
+												<b> <h:outputText
+														value="Pág.#{contratoTable.totalPages>0?contratoTable.currentPage:0}/#{contratoTable.totalPages}" />
+													&nbsp;&nbsp;&nbsp;&nbsp;Registros: <h:outputText
+														value="#{contratoTable.totalRows}" />
+												</b>
+											</div>
+										</div>
+									</div>
+
+								</h:form>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</ui:define>
+	</ui:composition>
+
+</h:body>
+
+</html>
+
+
+
+
+
+

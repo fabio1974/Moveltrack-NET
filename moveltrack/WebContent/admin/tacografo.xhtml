@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:body>
+							<link href="css/bootstrap.css" rel="stylesheet" />
+							<script src="js/loader.js"></script>
+							<script src="js/jquery-2.1.1.js"></script>
+							<script src="js/date.format.js" type="text/javascript"></script>
+
+							<script type="text/javascript">
+							
+								
+								var imei =  '#{mapaVeiculoBean.veiculo.equipamento.imei}';
+								var inicio = '#{mapaVeiculoBean.inicio.time}';
+								var fim = '#{mapaVeiculoBean.fim.time}';
+								var placa = '#{mapaVeiculoBean.veiculo.placa}';
+								var marcaModelo = '#{mapaVeiculoBean.veiculo.marcaModelo}';
+								var veiculoTipo =  '#{mapaVeiculoBean.veiculo.tipo}';
+								var pontosCaminho= new Array();
+	
+								
+							    google.charts.load('current', {'packages':['corechart']});
+							    google.charts.setOnLoadCallback(drawChart);
+	
+							    function drawChart() {
+	
+							      var data = new google.visualization.DataTable();
+							      data.addColumn('date', 'Tempo');
+							      data.addColumn('number', 'Velocidade (km/h)');
+							      data.addColumn({type: 'string', role: 'tooltip'});
+							      
+							      var options = {
+									      
+							    		  title: 'Tacógrafo Virtual&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'+
+							    		  		 'Placa: '+placa+'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'+
+							    		  		 'Modelo: '+marcaModelo +'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'+
+							    		  		 'Período:&nbsp;&nbsp;'+ dateFormat(new Date(#{mapaVeiculoBean.inicio.time}),"dd/mm/yy HH'h':MM") +'&nbsp;&nbsp;&nbsp;'+
+							    		  		 'até&nbsp;&nbsp;&nbsp;'+ dateFormat(new Date(#{mapaVeiculoBean.fim.time}),"dd/mm/yy HH'h':MM")
+							    		  ,
+							    		  
+							    		 
+							    		  
+							    		  pointSize: 5,
+									        height: 600,
+									        legend: 'none',
+									        hAxis: {
+									            format: 'dd/MM/yy HH:mm',
+									            title: 'Tempo',
+									            gridlines: {count: 10}
+									          },
+									          vAxis: {
+										            title: 'Velocidade (km/h)'
+										          }  
+									      };
+	
+							      
+							      $.getJSON("#{request.contextPath}/PontosMapa?imei="+imei+"&amp;inicio="+inicio+"&amp;fim="+fim,function(locs){
+								    	pontosCaminho = new Array();
+								    	var loc;
+								    	if(locs.length>0){
+									        $.each(locs,function(i,loc){
+									        	var info = (loc.velocidade).toFixed(1)+"km/h em " + dateFormat(loc.dateLocation,"dd/mm/yyyy HH:MM");
+									        	data.addRow([new Date(loc.dateLocation),loc.velocidade,info]);
+									        });
+									        var chart = new google.visualization.LineChart(document.getElementById('linechart_material'));
+									      	chart.draw(data, options);
+								    	}	
+								  });
+							    }
+							    
+							    function myFunction() {
+								    window.print();
+								}
+						  </script>			
+
+				<div class="row">
+					<div class="col-lg-12">
+							<button class="btn btn-primary btn-xs" style="margin:5px; "  onclick="myFunction()">Imprimir</button>
+							<div id="linechart_material"/>
+					</div>
+				</div>
+</h:body>
+</html>

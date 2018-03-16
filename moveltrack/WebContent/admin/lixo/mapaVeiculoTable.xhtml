@@ -1,0 +1,452 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"  
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<h:head>
+	<!-- base href="#{request.requestURL.substring(0, request.requestURL.length() - request.requestURI.length())}#{request.contextPath}/site/admin/" /-->
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+	<title>MOVELTRACK RASTERAMENTO</title>
+
+	<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
+	<link href="css/bootstrap.css" rel="stylesheet" />
+	<link href="font-awesome/css/font-awesome.css" rel="stylesheet" />
+	<link href="css/animate.css" rel="stylesheet" />
+	<link href="css/style.css" rel="stylesheet" />
+	<link href="css/plugins/iCheck/custom.css" rel="stylesheet" />
+	<link href="css/tabelas.css" rel="stylesheet" type="text/css" />
+	<link href="css/bootstrap-datetimepicker.css" rel="stylesheet"/>
+
+
+<style type="text/css">
+html,body,table,td {
+	height: 100%;
+	background-color: #FFF
+}
+</style>
+
+	
+
+
+			<!-- Mainly scripts -->
+<script src="js/jquery-2.1.1.js"></script>
+<script src="js/jquery-ui-1.10.4.min.js"></script>
+<script src="js/jquery-ui.custom.min.js"></script>
+<script src="js/datepicker-pt-BR.js"></script>
+<script src="js/autocompleter.js"></script>   
+
+
+
+<script src="js/jquery.maskedinput.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/plugins/metisMenu/jquery.metisMenu.js"></script>
+<script src="js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+
+<!-- Custom and plugin javascript -->
+<script src="js/inspinia.js"></script>
+<script src="js/plugins/pace/pace.min.js"></script>
+
+<!-- Peity -->
+<script src="js/plugins/peity/jquery.peity.min.js"></script>
+<script src="js/demo/peity-demo.js"></script>
+    
+<!-- iCheck -->
+<script src="js/plugins/iCheck/icheck.min.js"></script>
+    	<script src="js/moment-with-locales.js"></script>
+			<script src="js/bootstrap-datetimepicker.js"></script>
+
+
+
+</h:head>
+
+<h:body>
+ 
+ 	
+		
+
+ 
+	<div class="table-responsive " style="padding: 10px">
+		<div style="border-color: #0F0">
+
+			
+			<h:form id="form"   role="form">
+
+			
+			  <div class="row">
+					<div class="col-sm-12 col-md-12 col-xs-12 col-lg-12">
+					<table style="margin-bottom:10px">
+					<tr><td>
+							
+						<label for="inicio">De:&nbsp;</label>
+						</td><td>
+							<div class='input-group input-group-xs  date' id="inicio" style="width:120px">
+								<h:inputText id="inicio" value="#{mapaBean.inicio}"
+									styleClass="form-control "
+									style="#{component.valid?'':'border-color:red;'}">
+									<f:convertDateTime pattern="dd/MM/yy HH:mm"  timeZone="GMT-3" />
+								</h:inputText>
+								<span class="input-group-addon"> <span
+									class="glyphicon glyphicon-calendar"></span>
+								</span>
+							</div>
+							
+						</td><td>	
+								<label for="inicio">&nbsp;&nbsp;a&nbsp;&nbsp;</label>
+						</td><td>
+							<div class='input-group input-group-xs date' id="fim" style="width:120px">
+							
+								<h:inputText id="fim" value="#{mapaBean.fim}"
+									styleClass="form-control"
+									style="#{component.valid?'':'border-color:red;'}">
+									<f:convertDateTime pattern="dd/MM/yy HH:mm"  timeZone="GMT-3" />
+								</h:inputText>
+								<span class="input-group-addon"> <span
+									class="glyphicon glyphicon-calendar"></span>
+								</span>
+							</div>
+									
+					</td>
+					<td align="right">&nbsp;&nbsp;
+					
+					</td>
+					
+					</tr>
+					
+					</table>
+
+					</div>
+				</div>
+				
+				
+				<div class="row">
+					<div class="col-lg-12">
+						<h:dataTable value="#{mapaVeiculoTable.veiculosAtivos}" id="table"
+							class="table table-striped table-condensed table-bordered table-hover table-scrollable  "
+							var="veiculo">
+	
+
+							<h:column
+								rendered="#{!loginBean.hasPermission('VEICULO_VER_PROPRIO')}"
+								footerClass="customFooter">
+								<f:facet name="header">
+									<h:commandLink value="Contrato"
+										actionListener="#{mapaVeiculoTable.sort}">
+										<f:attribute name="sortField" value="contrato" />
+									</h:commandLink>
+								</f:facet>
+
+								<f:facet name="header">
+									<div class="input-group">
+										<h:inputText name="contrato" id="contrato"
+											value="#{mapaVeiculoTable.contrato}"
+											class="form-control input-xs"
+											converter="#{contratoConverter}" />
+									</div>
+								</f:facet>
+
+								<h:outputText value="#{veiculo.contrato.cliente}"
+									title="#{veiculo.contrato.cliente.pessoaJuridica?veiculo.contrato.cliente.nome:null}" />
+								<f:facet name="footer">
+									<h:outputText value="#{mapaVeiculoTable.contrato.cliente.nome}" />
+								</f:facet>
+							</h:column>
+
+
+							<h:column  footerClass="customFooter">
+								<f:facet name="header">
+									<h:commandLink value="Placa"
+										actionListener="#{mapaVeiculoTable.sort}">
+										<f:attribute name="sortField" value="placa" />
+									</h:commandLink>
+								</f:facet>
+								<f:facet name="header">
+									<div class="input-group">
+										<h:inputText  value="#{mapaVeiculoTable.placa}" style="width:70px;"
+											styleClass="input-xs form-control" />
+									</div>
+								</f:facet>
+
+								<center>
+								<h:commandLink style="width:70px;" 
+									disabled="#{!bloqueioBean.conteudo1.equals('---')}"
+									styleClass="btn btn-danger btn-xs " value="#{veiculo.placa}"
+									title="#{veiculo.marcaModelo}" action="mapaVeiculo"
+									target="mapaFrame">
+									
+									<f:setPropertyActionListener value="#{veiculo}"
+										target="#{mapaBean.veiculo}" />
+								</h:commandLink>
+
+
+								<f:facet name="footer">
+									<h:outputText value="#{mapaVeiculoTable.placa}" />
+								</f:facet>
+								</center>
+							</h:column>
+
+
+
+					
+
+
+							<h:column footerClass="customFooter">
+								<f:facet name="header">
+									<h:commandLink value="Marca/Modelo"
+										actionListener="#{mapaVeiculoTable.sort}">
+										<f:attribute name="sortField" value="marcaModelo" />
+									</h:commandLink>
+								</f:facet>
+								<f:facet name="header">
+									<div class="input-group ">
+										<h:inputText value="#{mapaVeiculoTable.marcaModelo}"
+											styleClass="input-xs form-control" />
+									</div>
+								</f:facet>
+								<h:outputText value="#{veiculo.marcaModelo}" title="#{veiculo.cor}" />
+								<f:facet name="footer">
+									<h:outputText value="#{mapaVeiculoTable.marcaModelo}" />
+								</f:facet>
+							</h:column>
+
+
+
+
+							
+							
+
+
+							
+							<h:column rendered="#{!loginBean.hasPermission('VEICULO_VER_PROPRIO')}"
+								footerClass="customFooter">
+								<f:facet name="header">
+									<h:commandLink value="Rastreador"
+										actionListener="#{mapaVeiculoTable.sort}">
+										<f:attribute name="sortField" value="equipamento" />
+									</h:commandLink>
+								</f:facet>
+								<f:facet name="header">
+									<div class="input-group ">
+
+										<h:inputText name="equipamento" id="equipamento"
+											value="#{mapaVeiculoTable.equipamento}"
+											class="input-xs form-control "
+											converter="#{equipamentoConverter}" />
+									</div>
+								</f:facet>
+								<h:outputText value="#{veiculo.equipamento}" />
+								<f:facet name="footer">
+									<h:outputText value="#{mapaVeiculoTable.equipamento}" />
+								</f:facet>
+							</h:column>
+							
+
+							<h:column footerClass="customFooter">
+								<f:facet name="header">
+								
+								
+								<center style="vertical-align: middle;" >
+											<h:commandButton
+												disabled="#{!bloqueioBean.conteudo1.equals('---')}"
+												styleClass="btn btn-primary btn-xs" value="Filtrar"
+												actionListener="#{mapaVeiculoTable.refreshPage}">
+											</h:commandButton>
+								</center>
+
+								
+									
+								
+
+									
+								
+								</f:facet>
+								<center>
+											<h:commandLink 
+													value="B" action="#{bloqueioBean.bloquear(veiculo)}"
+													disabled="#{!bloqueioBean.conteudo1.equals('---')}"
+													title="Bloquear Veículo"
+													class="btn btn-danger btn-xs">
+													<f:ajax render="@form" />
+											</h:commandLink>
+											&nbsp;
+											<h:commandLink 
+													value="D" action="#{bloqueioBean.desbloquear(veiculo)}"
+													disabled="#{!bloqueioBean.conteudo1.equals('---')}"
+													title="Desbloquear Veículo"
+													class="btn btn-info btn-xs">
+													<f:ajax  render="@form" />
+											</h:commandLink>
+									</center>
+									
+									<f:facet name="footer">
+									Bloqueio
+								</f:facet>
+											
+							</h:column>
+
+
+						</h:dataTable>
+					</div>
+				</div>
+				<div class="row">
+
+					<div class="col-lg-8  col-md-8 col-sm-6 ">
+						<div class="input-group input-group-xs ">
+							<span class="input-group-btn"> 
+							
+							<h:commandLink	action="#{mapaVeiculoTable.pageFirst}" styleClass="btn btn-white" 	style="width: 40px" disabled="#{mapaVeiculoTable.currentPage == 1 or !bloqueioBean.conteudo1.equals('---')}">
+									<i class="glyphicon glyphicon-fast-backward"></i>
+							</h:commandLink> 
+							
+							
+							<h:commandLink action="#{mapaVeiculoTable.pagePrevious}" styleClass="btn btn-white"  style="width: 40px" disabled="#{mapaVeiculoTable.currentPage == 1 or !bloqueioBean.conteudo1.equals('---')}" >
+									<i class="glyphicon glyphicon-step-backward"></i>
+							</h:commandLink> 
+							
+							
+							<h:commandLink action="#{mapaVeiculoTable.pageNext}"  styleClass="btn btn-white"  style="width: 40px"  disabled="#{mapaVeiculoTable.currentPage >= mapaVeiculoTable.lastPage or !bloqueioBean.conteudo1.equals('---')}">
+									<i class="glyphicon glyphicon-step-forward"></i>
+							</h:commandLink> 
+							
+							
+							<h:commandLink action="#{mapaVeiculoTable.pageLast}"	styleClass="btn btn-white"  style="width: 40px"	disabled="#{mapaVeiculoTable.currentPage >= mapaVeiculoTable.lastPage or !bloqueioBean.conteudo1.equals('---')}">
+									<i class="glyphicon glyphicon-fast-forward"></i>
+							</h:commandLink>
+							
+							
+							</span>
+						</div>
+					</div>
+					<div class="col-lg-4 col-md-4 col-sm-6 ">
+						<b> <h:outputText
+								value="Pág. #{mapaVeiculoTable.totalPages>0?mapaVeiculoTable.currentPage:0}/#{mapaVeiculoTable.totalPages}" />
+							&nbsp;&nbsp;&nbsp;Registros: <h:outputText value="#{mapaVeiculoTable.totalRows}" />
+						</b>
+					</div>
+				</div>
+				
+				<div class="row">
+						<div class="col-lg-12  col-md-12">
+										<p/>
+										
+										<h:panelGroup id="statusPanel" >
+										
+										<h:panelGroup  rendered="#{!bloqueioBean.conteudo1.equals('---')}" >
+
+												<div id="tabela1">
+													<table width="100%" border="1"  >
+														<tr>
+															<td class="titulo">#{bloqueioBean.titulo1}</td>
+															<td class="titulo">Status</td>
+														</tr>
+														<tr>
+															<td class="#{bloqueioBean.classe1}">#{bloqueioBean.conteudo1}</td>
+															<td class="#{bloqueioBean.classe2}">#{bloqueioBean.conteudo2}</td>
+														</tr>
+													</table>
+												</div>
+												
+												
+										</h:panelGroup>
+										</h:panelGroup>
+
+										<p:poll stop="#{bloqueioBean.stop}" 
+														immediate="true"
+														delay="0"
+														autoStart="true"
+														interval="3" 
+														listener="#{bloqueioBean.updateStatus()}" 
+														update="statusPanel" />
+				
+				
+						</div>
+				</div>
+				
+			</h:form>
+
+		</div>
+
+
+
+
+
+	</div>
+	
+	<script type="text/javascript"> 
+	 jQuery(function($){
+	   $("#inicio,#fim").datetimepicker({
+	       locale: 'pt',
+	       format: 'DD/MM/YY HH:mm',
+	       showClose: true,
+	   });
+	 
+	});
+	</script>	
+	
+
+
+	<script type='text/javascript'>
+        
+        $(document).ready(function() {
+            $('#openBtn').click(function(){
+				$('#main').modal({show:true})
+			});
+
+
+			$('.modal').on('hidden.bs.modal', function( event ) {
+                $(this).removeClass( 'fv-modal-stack' );
+                $('body').data( 'fv_open_modals', $('body').data( 'fv_open_modals' ) - 1 );
+            });
+
+
+			$( '.modal' ).on( 'shown.bs.modal', function ( event ) {
+                   
+                   // keep track of the number of open modals
+                   
+                   if ( typeof( $('body').data( 'fv_open_modals' ) ) == 'undefined' )
+                   {
+                     $('body').data( 'fv_open_modals', 0 );
+                   }
+                   
+                     
+                   // if the z-index of this modal has been set, ignore.
+                        
+                if ( $(this).hasClass( 'fv-modal-stack' ) )
+                        {
+                        return;
+                        }
+                   
+                $(this).addClass( 'fv-modal-stack' );
+
+                $('body').data( 'fv_open_modals', $('body').data( 'fv_open_modals' ) + 1 );
+
+                $(this).css('z-index', 1040 + (10 * $('body').data( 'fv_open_modals' )));
+
+                $( '.modal-backdrop' ).not( '.fv-modal-stack' )
+                        .css( 'z-index', 1039 + (10 * $('body').data( 'fv_open_modals' )));
+
+
+                $( '.modal-backdrop' ).not( 'fv-modal-stack' )
+                        .addClass( 'fv-modal-stack' ); 
+
+                 });
+        });
+        
+        </script>
+
+
+
+</h:body>
+
+</html>
+
+
+
+
+
+

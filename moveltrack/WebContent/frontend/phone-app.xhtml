@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<body>
+	<ui:composition template="/template/main.xhtml">
+	    <ui:define name="content" >
+
+		<div class="wrapper">
+			<div class="page-header"
+				style="background-image: url('#{request.contextPath}/frontend/assets/img/moveltrack/phone-resize-dark.png');">
+
+				<div class="container">
+					<div class="row">
+						<div class="col-md-8 text-left">
+							<h1 class="title">Baixe já nosso aplicativo!</h1>
+							<h3 style="margin-bottom: 0px;">Disponível para Android e
+								iOS.</h3>
+							<a
+								href="https://play.google.com/store/apps/details?id=com.moveltrackapp&amp;hl=pt_BR"
+								style="margin-bottom: 0px; margin-top: 0px;"
+								class="btn btn-primary btn-simple"> <img
+								src="#{request.contextPath}/frontend/assets/img/moveltrack/android-button.png"></img>
+							</a> <a
+								href="https://itunes.apple.com/br/app/moveltrack/id894081045?mt=8"
+								style="margin-bottom: 0px; margin-top: 0px;"
+								class="btn btn-primary btn-simple"> <img
+								src="#{request.contextPath}/frontend/assets/img/moveltrack/apple-button.png"></img>
+							</a>
+
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="main main-raised">
+				<div class="container">
+
+					<div class="features-1">
+
+						<div class="pricing-2" style="padding-top: 20px;">
+
+							<div class="row">
+								<div>
+									<br/> <img src="#{request.contextPath}/frontend/assets/img/moveltrack/app-screens.png"
+										alt="Raised Image" style="max-width: 100%; height: auto;"></img>
+									<h5 class="description">Nosso aplicativo móvel garante
+										acesso ao sistema de rasteamento de forma prática e eficiênte.
+										Com ele, é possível usufluir de todas as funcionalidades que
+										oferecemos, de qualquer lugar!</h5>
+									<br/>
+								</div>
+							</div>
+
+							<div class="row">
+
+								<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+
+
+									<div class="cardSecond card-raised card-carousel">
+
+										<div id="carousel-example-generic" class="carousel slide"
+											data-ride="carousel">
+
+											<div class="carousel slide" data-ride="carousel">
+
+												<!-- Wrapper for slides -->
+												<div class="carousel-inner">
+													<div class="item active">
+														<img src="#{request.contextPath}/frontend/assets/img/moveltrack/app/way.jpeg"
+															alt="Awesome Image"></img>
+													</div>
+													<div class="item">
+														<img src="#{request.contextPath}/frontend/assets/img/moveltrack/app/list.jpeg"
+															alt="Awesome Image"></img>
+													</div>
+													<div class="item">
+														<img src="#{request.contextPath}/frontend/assets/img/moveltrack/app/maps.jpeg"
+															alt="Awesome Image"></img>
+													</div>
+													<div class="item">
+														<img src="#{request.contextPath}/frontend/assets/img/moveltrack/app/block.jpeg"
+															alt="Awesome Image"></img>
+													</div>
+													<div class="item">
+														<img src="#{request.contextPath}/frontend/assets/img/moveltrack/app/history.jpeg"
+															alt="Awesome Image"></img>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+
+
+								</div>
+
+								<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+
+									<div class="card card-nav-tabs">
+										<div class="header header-primary">
+											<!-- colors: "header-primary", "header-info", "header-success", "header-warning", "header-danger" -->
+											<div class="nav-tabs-navigation">
+												<div class="nav-tabs-wrapper">
+													<ul class="nav nav-tabs" data-tabs="tabs">
+														<li data-target="#carousel-example-generic"
+															data-slide-to="0" class="active"><a
+															href="#trajetoria" data-toggle="tab" aria-expanded="true">
+																<i class="material-icons">timeline</i> Trajetória
+																<div class="ripple-container"></div>
+														</a></li>
+														<li data-target="#carousel-example-generic"
+															data-slide-to="1" class=""><a href="#frota"
+															data-toggle="tab" aria-expanded="false"> <i
+																class="material-icons">local_shipping</i> Frota
+																<div class="ripple-container"></div></a></li>
+														<li data-target="#carousel-example-generic"
+															data-slide-to="2" class=""><a href="#satelite"
+															data-toggle="tab" aria-expanded="false"> <i
+																class="material-icons">satellite</i> Satélite
+																<div class="ripple-container"></div></a></li>
+														<li data-target="#carousel-example-generic"
+															data-slide-to="3" class=""><a href="#bloqueio"
+															data-toggle="tab" aria-expanded="false"> <i
+																class="material-icons">lock</i> Bloqueio
+																<div class="ripple-container"></div></a></li>
+														<li data-target="#carousel-example-generic"
+															data-slide-to="4" class=""><a href="#histórico"
+															data-toggle="tab" aria-expanded="false"> <i
+																class="material-icons">event</i> Histórico
+																<div class="ripple-container"></div></a></li>
+													</ul>
+												</div>
+											</div>
+										</div>
+										<div class="content">
+											<div class="tab-content text-center">
+												<div class="tab-pane active" id="trajetoria">
+													<p>Dentro do nosso aplicativo, é possível verificar
+														todas as paradas que seu veículo fez, dentro de uma
+														trajetória que é registrada no mapa. Com isso, você sempre
+														sabe por onde seu veículo trafega, em tempo real.</p>
+												</div>
+												<div class="tab-pane" id="frota">
+													<p>Tenha controle sobre todos os seus veículos ao mesmo
+														tempo, com o conforto e praticidade mobile!</p>
+												</div>
+												<div class="tab-pane" id="satelite">
+													<p>Veja com precisão a localização do seu veículo,
+														através de imagens reais do local!</p>
+												</div>
+												<div class="tab-pane" id="bloqueio">
+													<p>Tenha o poder de bloquear seu veículo
+														instantâneamente, em casos de emergência!</p>
+												</div>
+												<div class="tab-pane" id="histórico">
+													<p>Saiba por onde seu veículo viajou nos dias
+														anteriores, através do seu histórico!</p>
+												</div>
+											</div>
+										</div>
+									</div>
+
+								</div>
+
+							</div>
+
+						</div>
+
+					</div>
+
+				</div>
+			</div>
+
+			<footer class="footer">
+			<div class="container">
+				<nav class="pull-left"> <!-- <ul>
+								<li>
+									<a href="#">
+										Link1
+									</a>
+								</li>
+								<li>
+									<a href="#">
+									    Link 2
+									</a>
+								</li>
+								<li>
+									<a href="#">
+									    Link3
+									</a>
+								</li>
+								
+				            </ul> --> </nav>
+				<div class="copyright pull-right">&copy; 2016, Moveltrack |
+					Segurança &amp; Tecnologia.</div>
+			</div>
+			</footer>
+
+		</div>
+
+	</ui:define>
+   </ui:composition>
+</body>
+</html>

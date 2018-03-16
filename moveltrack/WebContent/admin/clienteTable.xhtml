@@ -1,0 +1,381 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:body>
+
+	<ui:composition template="template/adminTemplate.xhtml">
+		<ui:define name="content">
+
+
+			
+
+
+			<div class="wrapper wrapper-content">
+				<div class="row">
+					<div class="col-lg-12">
+						<div class="ibox">
+							<b><div class="inbox title">Cliente</div></b>
+							<div class="ibox-content">
+								<h:form onsubmit="document.body.style.cursor='wait'" id="form" role="form">
+								
+									
+									
+								
+									<div class="row " style="#{loginBean.hasPermission('CLIENTE_VER_PROPRIO')?'display:none':'display:'}">
+
+										<div class="col-sm-12">
+											<div class="pull-right">
+												<label class="form-inline">
+													<div  class="input-group input-group-xs">
+
+
+														<h:selectOneMenu styleClass="  form-control inline"
+															value="#{clienteTable.rowsPerPage}"
+															converter="#{selectIntegerConverter}">
+															<f:selectItem itemValue="5"  itemLabel="05 linhas" />
+															<f:selectItem itemValue="10" itemLabel="10 linhas" />
+															<f:selectItem itemValue="15" itemLabel="15 linhas" />
+															<f:selectItem itemValue="20" itemLabel="20 linhas" />
+															<f:selectItem itemValue="30" itemLabel="30 linhas" />
+														</h:selectOneMenu>
+
+
+														<span class="input-group-btn"> <h:commandButton
+																value="Ok" action="#{clienteTable.pageFirst}"
+																styleClass="btn btn-primary  " />
+														</span>
+
+													</div>
+												</label>
+											</div>
+										</div>
+									</div>
+									
+									<p></p>
+
+									<div class="row">
+										<div class="col-lg-12">
+											<div class="table-responsive ">
+										<h:dataTable value="#{clienteTable.clientes}" id="table"
+											class="table table-striped table-bordered table-hover"
+											var="cliente">
+											
+
+											<h:column  footerClass="customFooter">
+												<f:facet  name="header">
+													<h:commandLink  value="Nome"
+														actionListener="#{clienteTable.sort}">
+														<f:attribute name="sortField" value="nome" />
+													</h:commandLink>
+												</f:facet>
+												
+												<f:facet name="header">
+
+														<h:inputText rendered="#{!loginBean.hasPermission('CLIENTE_VER_PROPRIO')}"  value="#{clienteTable.nome}"  styleClass="input-xs form-control"  />
+	
+												</f:facet>
+												<h:outputText value="#{cliente.nome}" />
+												<f:facet  name="footer">
+													<h:outputText rendered="#{!loginBean.hasPermission('CLIENTE_VER_PROPRIO')}" value="#{clienteTable.nome}"/>
+												</f:facet>													
+											</h:column>
+											
+											<h:column  footerClass="customFooter">
+												<f:facet  name="header">
+													<h:commandLink  value="Nome Fantasia"
+														actionListener="#{clienteTable.sort}">
+														<f:attribute name="sortField" value="nomeFantasia" />
+													</h:commandLink>
+												</f:facet>
+												
+												<f:facet name="header">
+												
+														<h:inputText rendered="#{!loginBean.hasPermission('CLIENTE_VER_PROPRIO')}"  value="#{clienteTable.nomeFantasia}"  styleClass="input-xs form-control"  />
+													
+												</f:facet>
+												<center>
+												<h:outputText value="#{cliente.nomeFantasia}" />
+												</center>
+												<f:facet  name="footer">
+												<center>
+													<h:outputText rendered="#{!loginBean.hasPermission('CLIENTE_VER_PROPRIO')}" value="#{clienteTable.nomeFantasia}"/>
+												</center>	
+												</f:facet>													
+											</h:column>
+											
+											
+											<h:column footerClass="customFooter">
+												<f:facet name="header">
+													<h:commandLink value="CPF"
+														actionListener="#{clienteTable.sort}">
+														<f:attribute name="sortField" value="cpf" />
+													</h:commandLink>
+												</f:facet>
+												<f:facet name="header">
+												
+														<h:inputText rendered="#{!loginBean.hasPermission('CLIENTE_VER_PROPRIO')}"  value="#{clienteTable.cpf}"  styleClass="input-xs form-control"  />
+													
+												</f:facet>
+												<center>												
+													<h:outputText value="#{cliente.cpf}" />
+													</center>
+												<f:facet  name="footer">
+												<center>
+													<h:outputText rendered="#{!loginBean.hasPermission('CLIENTE_VER_PROPRIO')}"  value="#{clienteTable.cpf}"/>
+												</center>	
+												</f:facet>	
+											</h:column>
+											
+											<h:column footerClass="customFooter" >
+												<f:facet name="header">
+													<h:commandLink value="Endereco"
+														actionListener="#{clienteTable.sort}">
+														<f:attribute name="sortField" value="endereco" />
+													</h:commandLink>
+												</f:facet>
+												<f:facet name="header">
+													
+														<h:inputText rendered="#{!loginBean.hasPermission('CLIENTE_VER_PROPRIO')}"  value="#{clienteTable.endereco}"  styleClass="input-xs form-control"  />
+														
+												</f:facet>
+												<center>												
+													<h:outputText value="#{cliente.endereco}" />
+												</center>	
+												<f:facet  name="footer">
+												<center>
+													<h:outputText rendered="#{!loginBean.hasPermission('CLIENTE_VER_PROPRIO')}"  value="#{clienteTable.endereco}"/>
+												</center>	
+												</f:facet>	
+											</h:column>
+
+													<h:column footerClass="customFooter">
+														<f:facet name="header">
+															<h:commandLink value="Cidade"
+																actionListener="#{clienteTable.sort}">
+																<f:attribute name="sortField" value="municipio" />
+															</h:commandLink>
+														</f:facet>
+														<f:facet name="header">
+												
+																<h:inputText name="municipio" id="municipio" rendered="#{!loginBean.hasPermission('CLIENTE_VER_PROPRIO')}"
+																	value="#{clienteTable.municipio}"
+																	class="input-xs form-control  "
+																	converter="#{municipioConverter}" />
+												
+														</f:facet>
+											<center>
+														<h:outputText value="#{cliente.municipio}" />
+														</center>
+														<f:facet name="footer">
+														<center>
+															<h:outputText rendered="#{!loginBean.hasPermission('CLIENTE_VER_PROPRIO')}" value="#{clienteTable.municipio}" />
+														</center>	
+														</f:facet>
+													</h:column>
+
+
+											<h:column footerClass="customFooter">
+												<f:facet name="header">
+													<h:commandLink value="Celular"
+														actionListener="#{clienteTable.sort}">
+														<f:attribute name="sortField" value="celular1" />
+													</h:commandLink>
+												</f:facet>
+												<f:facet name="header">
+													
+														<h:inputText rendered="#{!loginBean.hasPermission('CLIENTE_VER_PROPRIO')}" value="#{clienteTable.celular1}"  styleClass="input-xs form-control"  />
+														
+												</f:facet>
+												<center>												
+													<h:outputText value="#{cliente.celular1}" />
+												</center>	
+												<f:facet  name="footer">
+												<center>
+													<h:outputText rendered="#{!loginBean.hasPermission('CLIENTE_VER_PROPRIO')}" value="#{clienteTable.celular1}"/>
+												</center>	
+												</f:facet>		
+											</h:column>
+											
+											
+											<h:column footerClass="customFooter">
+												<f:facet name="header">
+												<center>
+													<h:outputText value="Contrato"/>
+												</center>	
+												</f:facet>
+												
+												<center>
+												
+												<h:commandLink 
+
+															styleClass="#{cliente.contrato!=null?'btn btn-default btn-xs':'btn btn-danger btn-xs'}"
+															action="#{clienteTable.smartAction(cliente)}"
+															title="#{cliente.contrato!=null?cliente.contrato.numeroContrato:'Incluir'}"
+															value="#{cliente.contrato!=null?cliente.contrato.numeroContrato:'Incluir'}">
+															
+															<i class="#{cliente.contrato!=null?'fa fa-search':'fa fa-plus-circle'}"></i>
+															<f:setPropertyActionListener value="#{cliente}"  target="#{cliente.contrato!=null?contratoTable.cliente:contratoForm.contrato.cliente}"/>
+															<f:setPropertyActionListener value="cadastro" target="#{navigator.topico}" />
+															<f:setPropertyActionListener value="contrato" target="#{navigator.pagina}" />
+															<f:setPropertyActionListener value="#{cliente.contrato!=null?'SHOW':'SMARTINSERT'}"  target="#{contratoForm.action}"/>
+															<f:actionListener binding="#{contratoTable.refreshPage()}" />
+												</h:commandLink>
+												</center>
+												
+											</h:column>
+											
+
+											
+											<h:column footerClass="customFooter">
+												<f:facet name="header">
+												<center>
+													<h:commandButton rendered="#{!loginBean.hasPermission('CLIENTE_VER_PROPRIO')}" styleClass="btn btn-primary btn-xs " value="Filtrar" 
+															action="#{clienteTable.refreshPage}">
+													</h:commandButton>
+												</center>	
+												</f:facet>
+												<center>
+												<h:panelGrid   columns="7">
+												
+														<h:commandLink 
+															styleClass="btn btn-primary btn-xs "
+															title="Visualizar" 
+															action="clienteForm">
+															<i class="fa fa-search "></i>
+															<f:setPropertyActionListener value="#{cliente}"  target="#{clienteForm.cliente}"/>
+															<f:setPropertyActionListener value="#{cliente.usuario.perfil.tipo}"  target="#{clienteForm.tipo}"/>
+															<f:setPropertyActionListener value="SHOW"  target="#{clienteForm.action}"/>
+														</h:commandLink>
+														&nbsp;
+														<h:commandLink rendered="#{!loginBean.hasPermission('CLIENTE_VER_PROPRIO')}"
+															styleClass="btn btn-warning btn-xs " 
+															title="Atualizar"
+															action="clienteForm">
+															<i class="fa fa-wrench "></i>
+															<f:setPropertyActionListener value="#{cliente}"  target="#{clienteForm.cliente}"/>
+															<f:setPropertyActionListener value="#{cliente.usuario.perfil.tipo}"  target="#{clienteForm.tipo}"/>															
+															<f:setPropertyActionListener value="UPDATE"  target="#{clienteForm.action}"/>
+														</h:commandLink>
+														&nbsp;
+														
+														<h:commandLink rendered="#{loginBean.isEmpregado()}"
+															styleClass="btn btn-warning btn-xs " 
+															title="Atualizar Cerca"
+															action="cercaTemplate">
+															<i class="glyphicon glyphicon-globe"/>
+															<f:setPropertyActionListener value="#{cliente}"  target="#{clienteForm.cliente}"/>
+															<f:setPropertyActionListener value="#{cliente.usuario.perfil.tipo}"  target="#{clienteForm.tipo}"/>															
+															<f:setPropertyActionListener value="UPDATE"  target="#{clienteForm.action}"/>
+														</h:commandLink>	
+															
+														&nbsp;&nbsp;
+														<h:commandLink 
+															styleClass="btn btn-danger btn-xs " 
+															title="Atualizar Senha"
+															action="clienteSenha">
+															<i style="width:12px;" class="fa fa-lock"/>
+															<f:setPropertyActionListener value="#{cliente}"  target="#{clienteForm.cliente}"/>
+															<f:setPropertyActionListener value="#{cliente.usuario.perfil.tipo}"  target="#{clienteForm.tipo}"/>															
+															<f:setPropertyActionListener value="UPDATE"  target="#{clienteForm.action}"/>
+														</h:commandLink>
+														
+														
+														
+														
+															
+												</h:panelGrid>
+												</center>
+											</h:column>
+											
+											
+											
+											
+										</h:dataTable>
+									</div>
+										</div>
+								   </div>
+								   
+								<div class="row" style="#{loginBean.hasPermission('CLIENTE_VER_PROPRIO')?'display:none':'display:'}">
+										<div class="col-lg-5  col-md-5">
+													<h:commandButton id="button"
+														styleClass="btn btn-primary btn-xs " value="Adicionar Novo Cliente"
+														action="clienteForm" >
+														<f:setPropertyActionListener value="INSERT"  target="#{clienteForm.action}"/>
+													</h:commandButton>	
+										</div>
+										<div class="col-lg-2 col-md-2">
+												<div class="input-group input-group-xs">
+													<span class="input-group-btn">
+													<h:commandButton
+															id="pag" styleClass="btn btn-primary  " value="Ir para Página"
+															action="#{clienteTable.loadCurrentPage}" /> 
+													</span>	
+													<h:inputText id="currentPage"
+														styleClass="form-control" style="width: 40px"
+														value="#{clienteTable.currentPage}"
+														onkeypress="if (event.keyCode == 13) { onchange(); return false; }">
+														<f:ajax event="change" 	listener="#{clienteTable.loadCurrentPage}" />
+													</h:inputText>
+												</div>	
+										</div>			
+										<div class="col-lg-2  col-md-2">
+												<div class="input-group input-group-xs">
+													<span class="input-group-btn"> 
+														<h:commandLink
+															action="#{clienteTable.pageFirst}"
+															styleClass="btn btn-white" style="width: 40px"
+															disabled="#{clienteTable.currentPage == 1}">
+															<i class="glyphicon glyphicon-fast-backward"></i>
+														</h:commandLink> 
+														<h:commandLink action="#{clienteTable.pagePrevious}"
+															styleClass="btn btn-white" style="width: 40px"
+															disabled="#{clienteTable.currentPage == 1}">
+															<i class="glyphicon glyphicon-step-backward"></i>
+														</h:commandLink>
+														<h:commandLink
+															action="#{clienteTable.pageNext}" styleClass="btn btn-white"
+															style="width: 40px"
+															disabled="#{clienteTable.currentPage >= clienteTable.lastPage}">
+															<i class="glyphicon glyphicon-step-forward"></i>
+														</h:commandLink> 
+														<h:commandLink action="#{clienteTable.pageLast}"
+															styleClass="btn btn-white" style="width: 40px"
+															disabled="#{clienteTable.currentPage >= clienteTable.lastPage}">
+															<i class="glyphicon glyphicon-fast-forward"></i>
+														</h:commandLink>
+													</span>	
+												</div>
+										</div>
+										<div class="col-lg-3 col-md-3">
+										<div class="pull-right">
+												<b>
+													<h:outputText value="Pág.#{clienteTable.totalPages>0?clienteTable.currentPage:0}/#{clienteTable.totalPages}" />
+													&nbsp;&nbsp;&nbsp;&nbsp;Registros:	<h:outputText value="#{clienteTable.totalRows}" />
+												</b>
+										</div>		
+										</div>
+									</div>
+								   
+								   </h:form>
+						</div>
+					</div>
+				</div>
+			</div>
+			</div>
+			
+		</ui:define>
+	</ui:composition>
+
+</h:body>
+
+</html>
+
+
+
+
+
+
