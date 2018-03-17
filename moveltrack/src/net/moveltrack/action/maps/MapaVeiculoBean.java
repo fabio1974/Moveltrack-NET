@@ -204,6 +204,14 @@ public class MapaVeiculoBean extends BaseAction implements Serializable {
 	public void setVeiculo(Veiculo veiculo) {
 		this.veiculo = veiculo;
 	}
+	
+	 
+	public void setVeiculoById(Integer id) {
+		if(id!=null) {
+			Veiculo vei = veiculoDao.findById(id);
+			setVeiculo(vei);
+		}
+	}
 
 
 	public Sinal getSinal() {

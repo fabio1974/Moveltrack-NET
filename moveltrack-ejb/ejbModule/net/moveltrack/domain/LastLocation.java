@@ -5,6 +5,7 @@ import net.moveltrack.domain.Location;
 public class LastLocation{
 	private Location location;
 	private String placa;
+	private Integer veiculoId;
 	private String endereco;
 	private String veiculoTipo;
 	private String marcaModelo;
@@ -45,9 +46,11 @@ public class LastLocation{
 	public void setDistancia(double distancia) {
 		this.distancia = distancia;
 	}
-	
-	
-	
-	
+	public Integer getVeiculoId() {
+		return veiculoId;
+	}
+	public void setVeiculoId(Integer veiculoId) {
+		this.veiculoId = veiculoId;
+	}
 	
 }

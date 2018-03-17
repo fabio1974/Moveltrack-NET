@@ -75,6 +75,7 @@ public class PontosFrota extends HttpServlet {
 				Veiculo veiculo = veiculoDao.findByEquipamento(loc.getImei());
 				ll.setPlaca(veiculo.getPlaca());
 				ll.setMarcaModelo(veiculo.getMarcaModelo());
+				ll.setVeiculoId(veiculo.getId());
 				ll.setVeiculoTipo(veiculo.getTipo().name());
 				lastLocations.add(ll);
 			}
