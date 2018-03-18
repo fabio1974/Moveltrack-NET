@@ -102,10 +102,8 @@
 																	converter="#{veiculoConverter}"
 																	value="#{relatorioUsoIndevidoBean.veiculo}"
 																	styleClass="form-control">
-																	<f:selectItem itemLabel="&nbsp;"  noSelectionOption="yes"/>
-																	<f:selectItems value="#{viagemForm.veiculos}"
-																		var="veiculo" itemLabel="#{veiculo.placa}"
-																		itemValue="#{veiculo}" />
+																	<f:selectItem itemLabel="Todos"  noSelectionOption="yes"/>
+																	<f:selectItems value="#{viagemForm.veiculos}" var="veiculo" itemLabel="#{veiculo.placa}" itemValue="#{veiculo}" />
 																</h:selectOneMenu>
 										</div>
 									</div>							
@@ -368,19 +366,19 @@
 							<div class="row">&nbsp;</div>
 							
 							<div class="row">
-								<div class="col-sm-2">
+								<div class="col-sm-3">
 								<div class="form-group">
 										<h:commandButton  style="width:100%" value="Salvar Expedientes" disabled="#{relatorioUsoIndevidoBean.disabled or loginBean.hasPermission('CLIENTE_VER_TODOS')}" action="#{relatorioUsoIndevidoBean.salvar}"	 styleClass="btn btn-danger btn-sm" />
 								</div>		
 								</div>
 								
-								<div class="col-sm-2">
+								<div class="col-sm-3">
 								<div class="form-group">
 										<h:commandButton  style="width:100%" value="Editar Expedientes"  disabled="#{loginBean.hasPermission('CLIENTE_VER_TODOS') or !relatorioUsoIndevidoBean.disabled}"	action="#{relatorioUsoIndevidoBean.enableFields}" styleClass="btn btn-danger btn-sm" />
 								</div>		
 								</div>
 								
-								<div class="col-lg-6">
+								<div class="col-lg-4">
 									<h:messages styleClass="swp-msg swp-msg-sm"
 										infoClass="alert alert-success"
 										warnClass="alert alert-warning"

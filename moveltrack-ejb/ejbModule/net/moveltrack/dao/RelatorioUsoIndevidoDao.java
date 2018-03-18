@@ -33,7 +33,7 @@ public class RelatorioUsoIndevidoDao extends DaoBean<RelatorioUsoIndevido>{
 		" inner join contrato c on v.contrato_id = c.id"+
 		" inner join pessoa p on c.cliente_id = p.id"+
 		
-		" where l.velocidade > :velocidade and ("+
+		" where l.velocidade > :velocidade and l.ignition = 1 and ("+
 			" (weekday(l.dateLocation)=0 and (time(l.dateLocation) < :segundaInicio or time(l.dateLocation) > :segundaFim)) or"+
 			" (weekday(l.dateLocation)=1 and (time(l.dateLocation) < :tercaInicio or   time(l.dateLocation) > :tercaFim)) or"+
 			" (weekday(l.dateLocation)=2 and (time(l.dateLocation) < :quartaInicio or  time(l.dateLocation) > :quartaFim)) or"+
