@@ -36,7 +36,8 @@ public class RelatorioExcessoVelocidadeBean extends Report implements Serializab
 	public void init() {
 		Calendar c = Calendar.getInstance();
 		setFim(c.getTime());
-		c.add(Calendar.DAY_OF_YEAR, -7);
+		//c.add(Calendar.DAY_OF_YEAR, -7);
+		c.set(Calendar.DAY_OF_MONTH, 1);
 		c.set(Calendar.HOUR_OF_DAY,0);
 		c.set(Calendar.MINUTE,0);
 		c.set(Calendar.SECOND,0);
@@ -111,8 +112,11 @@ public class RelatorioExcessoVelocidadeBean extends Report implements Serializab
 
 	@Override
 	protected void setTotalParameters() {
+		int i = 0;
 		for (RelatorioExcessoVelocidade rev : list) {
-			rev.setEndereco(geoEnderecoDao.getAddressFromLocation(rev.getLatitude(),rev.getLongitude(),true));
+			i++;
+			if(i<1000)
+				rev.setEndereco(geoEnderecoDao.getAddressFromLocation(rev.getLatitude(),rev.getLongitude(),true));
 		}
 		beanCollectionDataSource = new JRBeanCollectionDataSource(list);
 	}

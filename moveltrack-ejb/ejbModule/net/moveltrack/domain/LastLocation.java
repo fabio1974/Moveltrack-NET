@@ -9,6 +9,7 @@ public class LastLocation{
 	private String endereco;
 	private String veiculoTipo;
 	private String marcaModelo;
+	private String modeloRastreador;
 	private double distancia;
 	public Location getLocation() {
 		return location;
@@ -51,6 +52,12 @@ public class LastLocation{
 	}
 	public void setVeiculoId(Integer veiculoId) {
 		this.veiculoId = veiculoId;
+	}
+	public String getModeloRastreador() {
+		return modeloRastreador;
+	}
+	public void setModeloRastreador(String modeloRastreador) {
+		this.modeloRastreador = modeloRastreador;
 	}
 	
 }

@@ -28,10 +28,12 @@
 																	value="#{relatorioExcessoVelocidadeBean.velocidade}"
 																	styleClass="form-control input-sm">
 																	
+																	<f:selectItem itemValue="60"  itemLabel="&nbsp;&nbsp;&nbsp;&nbsp;> 60km/h " />
 																	<f:selectItem itemValue="80"  itemLabel="&nbsp;&nbsp;&nbsp;&nbsp;> 80km/h " />
 																	<f:selectItem itemValue="90"  itemLabel="&nbsp;&nbsp;&nbsp;&nbsp;> 90km/h " />
 																	<f:selectItem itemValue="100" itemLabel="&nbsp;&nbsp;&nbsp;&nbsp;> 100km/h " />
 																	<f:selectItem itemValue="110" itemLabel="&nbsp;&nbsp;&nbsp;&nbsp;> 110km/h " />
+																	<f:selectItem itemValue="120" itemLabel="&nbsp;&nbsp;&nbsp;&nbsp;> 120km/h " />
 															
 																</h:selectOneMenu>
 
@@ -132,8 +134,8 @@ function validateReport(){
 	var inicio = moment(inicioStr,"DD/MM/YYYY HH:mm");
 	var fim = moment(fimStr,"DD/MM/YYYY HH:mm");
 
-	if(fim.valueOf() - inicio.valueOf() > 86400 * 1000){
-		alert("O período do relatório deve ser menor do que 24h!");
+	if(fim.valueOf() - inicio.valueOf() > 31 * 86400 * 1000){
+		alert("O período do relatório deve ser menor do que um mês!");
 		return false; 
 	}
 

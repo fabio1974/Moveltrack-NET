@@ -77,6 +77,7 @@ public class PontosFrota extends HttpServlet {
 				ll.setMarcaModelo(veiculo.getMarcaModelo());
 				ll.setVeiculoId(veiculo.getId());
 				ll.setVeiculoTipo(veiculo.getTipo().name());
+				ll.setModeloRastreador(veiculo.getEquipamento().getModelo().name());
 				lastLocations.add(ll);
 			}
 			

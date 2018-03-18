@@ -150,23 +150,20 @@
 								</div>
 								<div class="col-sm-1">
 								</div>
-								
-								<div class="col-sm-3">
-									<div class="form-group ">
-										<label for="inicio">Início do Relatorio</label>
-										<div class='input-group input-group-sm date' id='inicio'>
-											<h:inputText id="inicio"
-												value="#{relatorioUsoIndevidoBean.inicio}"
-												style="#{component.valid?'':'border-color:red;'}"
-												styleClass="form-control ">
-												<f:convertDateTime pattern="dd/MM/yyyy HH:mm" timeZone="GMT-3" />
-											</h:inputText>
-											<span  class="input-group-addon"> 
-												<span class="glyphicon glyphicon-calendar"></span>
-											</span>
+
+									<div class="col-sm-3">
+										<div class="form-group ">
+										<label for="ordem">Ordenar por</label>
+																<h:selectOneMenu id="ordem"
+																	value="#{relatorioUsoIndevidoBean.ordem}"
+																	styleClass="form-control">
+																	<f:selectItem itemLabel="Data"  itemValue="DATA" noSelectionOption="yes"/>
+																	<f:selectItem itemLabel="Veículo" itemValue="VEICULO" />
+																</h:selectOneMenu>
 										</div>
-									</div>
-								</div>
+									</div>							
+
+								
 							</div>
 							
 							<div class="row">
@@ -210,13 +207,12 @@
 								</div>
 								
 								<div class="col-sm-1"></div>
-								
 								<div class="col-sm-3">
-									<div class="form-group">
-										<label for="fim">Fim do Relatorio</label>
-										<div class='input-group input-group-sm date' id='fim'>
-											<h:inputText id="fim"
-												value="#{relatorioUsoIndevidoBean.fim}"
+									<div class="form-group ">
+										<label for="inicio">Início do Relatorio</label>
+										<div class='input-group input-group-sm date' id='inicio'>
+											<h:inputText id="inicio"
+												value="#{relatorioUsoIndevidoBean.inicio}"
 												style="#{component.valid?'':'border-color:red;'}"
 												styleClass="form-control ">
 												<f:convertDateTime pattern="dd/MM/yyyy HH:mm" timeZone="GMT-3" />
@@ -227,6 +223,7 @@
 										</div>
 									</div>
 								</div>
+								
 							</div>
 							
 							<div class="row">
@@ -269,11 +266,25 @@
 									</div>
 								</div>
 								<div class="col-sm-1"/>
+								
 								<div class="col-sm-3">
 									<div class="form-group">
-										<h:commandButton disabled="#{loginBean.hasPermission('CLIENTE_VER_TODOS') or !relatorioUsoIndevidoBean.disabled}" style="margin-top: 21px;width:100%" value="Emitir Relatório" action="#{relatorioUsoIndevidoBean.pdf('PDF')}"	 styleClass="btn btn-danger btn-sm" />
-									</div>		
+										<label for="fim">Fim do Relatorio</label>
+										<div class='input-group input-group-sm date' id='fim'>
+											<h:inputText id="fim"
+												value="#{relatorioUsoIndevidoBean.fim}"
+												style="#{component.valid?'':'border-color:red;'}"
+												styleClass="form-control ">
+												<f:convertDateTime pattern="dd/MM/yyyy HH:mm" timeZone="GMT-3" />
+											</h:inputText>
+											<span  class="input-group-addon"> 
+												<span class="glyphicon glyphicon-calendar"></span>
+											</span>
+										</div>
+									</div>
 								</div>
+								
+								
 							</div>
 							
 							<div class="row">
@@ -316,8 +327,17 @@
 										</div>
 									</div>
 								</div>
-								<div class="col-sm-3">
+
+								<div class="col-sm-1">
 								</div>
+								
+								<div class="col-sm-3">
+									<div class="form-group">
+										<h:commandButton disabled="#{loginBean.hasPermission('CLIENTE_VER_TODOS') or !relatorioUsoIndevidoBean.disabled}" style="margin-top: 21px;width:100%" value="Emitir Relatório" action="#{relatorioUsoIndevidoBean.pdf('PDF')}"	 styleClass="btn btn-danger btn-sm" />
+									</div>		
+								</div>
+								
+								
 							</div>
 							
 							<div class="row">

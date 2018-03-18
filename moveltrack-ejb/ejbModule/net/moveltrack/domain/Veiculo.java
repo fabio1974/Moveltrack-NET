@@ -44,6 +44,8 @@ public class Veiculo extends BaseEntity {
 
     private String descricao;
     
+    private double velocidadeMaxima;
+    
 
     @NotNull
     @Enumerated(EnumType.STRING)
@@ -273,12 +275,15 @@ public class Veiculo extends BaseEntity {
 	}
 
 
-
-
+	public double getVelocidadeMaxima() {
+		return velocidadeMaxima;
+	}
+	public void setVelocidadeMaxima(double velocidadeMaxima) {
+		this.velocidadeMaxima = velocidadeMaxima;
+	}
 	public void setStatus(VeiculoStatus status) {
 		this.status = status;
 	}
-
 
 	public String getMotorista() {
 		return motorista;

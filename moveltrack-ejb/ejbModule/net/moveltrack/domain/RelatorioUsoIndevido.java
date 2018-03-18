@@ -32,6 +32,7 @@ public class RelatorioUsoIndevido extends BaseEntity {
 	private int dia;
 	private int hora;
 	private String placa;
+	private String marcaModelo;
 	private String nomeMotorista;
 	private String diaSemana;
 	private Date data;
@@ -85,6 +86,12 @@ public class RelatorioUsoIndevido extends BaseEntity {
 	}
 	public void setData(Date data) {
 		this.data = data;
+	}
+	public String getMarcaModelo() {
+		return marcaModelo;
+	}
+	public void setMarcaModelo(String marcaModelo) {
+		this.marcaModelo = marcaModelo;
 	}
 	
 	

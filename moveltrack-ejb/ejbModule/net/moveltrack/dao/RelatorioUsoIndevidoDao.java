@@ -18,12 +18,12 @@ public class RelatorioUsoIndevidoDao extends DaoBean<RelatorioUsoIndevido>{
 	public RelatorioUsoIndevidoDao() { }
 
 	@SuppressWarnings("unchecked")
-	public List<RelatorioUsoIndevido> getRelatorio(RelatorioUsoIndevidoParam ruip, Date inicio, Date fim, Veiculo veiculo) {
+	public List<RelatorioUsoIndevido> getRelatorio(RelatorioUsoIndevidoParam ruip, Date inicio, Date fim, Veiculo veiculo, String ordem) {
 		
 		String filtroVeiculo = veiculo==null?" ":" and v.placa='"+veiculo.getPlaca()+"' ";
+		String orderBy = ordem.equals("DATA")? " order by ano,mes,dia,hora,placa,id;": " order by placa,ano,mes,dia,hora,id;";
 		
-		
-		String sql = "select null as nomeMotorista, null as diaSemana, null as data, year(l.dateLocation) as ano,month(l.dateLocation) as mes, day(l.dateLocation) as dia,hour(l.dateLocation) as hora,v.placa as placa,concat(day(l.dateLocation),hour(l.dateLocation),v.id) as id "+ 
+		String sql = "select null as nomeMotorista, null as diaSemana, null as data, year(l.dateLocation) as ano,month(l.dateLocation) as mes, day(l.dateLocation) as dia,hour(l.dateLocation) as hora,v.placa as placa, v.marcaModelo as marcaModelo, concat(day(l.dateLocation),hour(l.dateLocation),v.id) as id "+ 
 				
 		" from location l" +
 		" inner join equipamento e on l.imei = e.imei"+
@@ -45,8 +45,8 @@ public class RelatorioUsoIndevidoDao extends DaoBean<RelatorioUsoIndevido>{
 		" and l.dateLocation > :inicio and l.dateLocation < :fim"+
 		filtroVeiculo+
 		" and p.id = :clienteId"+
-		" group by ano,mes,dia,hora,placa,id"+
-		" order by ano,mes,dia,hora,placa,id;";
+		" group by ano,mes,dia,hora,placa,marcaModelo,id"+
+		orderBy;
 		
 		Query query = getEm().createNativeQuery(sql,RelatorioUsoIndevido.class);
 		query.setParameter("velocidade",ruip.getVelocidade());

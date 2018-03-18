@@ -37,6 +37,7 @@ public class RelatorioUsoIndevidoBean extends Report implements Serializable {
 	
 	Cliente cliente;
 	Veiculo veiculo;
+	String ordem;
 	
 	@PostConstruct
 	public void init() {
@@ -44,7 +45,8 @@ public class RelatorioUsoIndevidoBean extends Report implements Serializable {
 		Calendar c = Calendar.getInstance();
 		setFim(c.getTime());
 		
-		c.add(Calendar.DAY_OF_YEAR,-15);
+		//c.add(Calendar.DAY_OF_YEAR,-15);
+		c.set(Calendar.DAY_OF_MONTH, 1);
 		setInicio(c.getTime());
 		
 		if(loginBean.getPessoaLogada() instanceof Cliente){
@@ -202,7 +204,7 @@ public class RelatorioUsoIndevidoBean extends Report implements Serializable {
 			Cliente cliente  = (Cliente)loginBean.getPessoaLogada();
 			ruip.setCliente(cliente);
 			ruip.setVelocidade(10);
-			list = relatorioUsoIndevidoDao.getRelatorio(ruip,inicio,fim,veiculo);
+			list = relatorioUsoIndevidoDao.getRelatorio(ruip,inicio,fim,veiculo,ordem);
 		}
 	}
 	
@@ -294,6 +296,18 @@ public class RelatorioUsoIndevidoBean extends Report implements Serializable {
 
 	public void setDisabled(Boolean disabled) {
 		this.disabled = disabled;
+	}
+
+
+
+	public String getOrdem() {
+		return ordem;
+	}
+
+
+
+	public void setOrdem(String ordem) {
+		this.ordem = ordem;
 	}
 	
 

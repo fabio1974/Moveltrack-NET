@@ -54,12 +54,18 @@ function desenhaLastLoc(lastLoc){
 
 
 function desenhaLastLocXs(lastLoc){
+	
+	var link = lastLoc.modeloRastreador === 'SPOT_TRACE'? "<tr><td colspan='2' class='titimpressao01'><a href='"+webroot+"/admin/mapaVeiculoSpot.xhtml?id="+lastLoc.veiculoId+"'>RASTREAR VEÍCULO</a></td></tr>":
+														 "<tr><td colspan='2' class='titimpressao01'><a href='"+webroot+"/admin/mapaVeiculoCompleto.xhtml?id="+lastLoc.veiculoId+"'>RASTREAR VEÍCULO</a></td></tr>"
+	
 	var htmlContent = "<div id='apl_tabela_impressao_01'><table  border='1'>"
 						+"<tr><td class='titimpressao01'>Placa</td><td class='dados'>"+lastLoc.placa+"</td></tr>"
 						+"<tr><td class='titimpressao01'>Marca/Modelo</td><td class='dados'>"+lastLoc.marcaModelo+"</td></tr>"
 						+"<tr><td class='titimpressao01'>Velocidade</td><td class='dados'>"+(lastLoc.location.velocidade).toFixed(2)+"km/h</td></tr>"
 						+"<tr><td class='titimpressao01'>Última Leitura</td><td class='titimpressao01'>"+dateFormat(lastLoc.location.dateLocation,"dd/mm/yyyy HH:MM")+"</td></tr>"
-						+"<tr><td colspan='2' class='titimpressao01'><a href='"+webroot+"/admin/mapaVeiculoCompleto.xhtml?id="+lastLoc.veiculoId+"'>RASTREAR VEÍCULO</a></td></tr>"
+						
+						+link
+						
 						+"</table></div>" ;
 	var title = lastLoc.location.velocidade+"Km/h" + " em "+lastLoc.location.dateLocation;
 	addVeiculoXs(lastLoc.location.latitude,lastLoc.location.longitude,lastLoc.veiculoTipo,htmlContent,title);	

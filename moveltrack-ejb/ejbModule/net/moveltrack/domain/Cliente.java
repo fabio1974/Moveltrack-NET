@@ -35,6 +35,11 @@ public class Cliente extends Pessoa {
     
     @ManyToOne
     private Cerca cerca;
+    
+    
+    @ManyToOne
+    private ClienteConfig clienteConfig;
+    
  
     @Transient
     private Contrato contrato;
