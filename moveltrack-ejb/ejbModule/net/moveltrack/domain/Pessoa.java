@@ -51,6 +51,9 @@ public class Pessoa extends BaseEntity{
     private String email;    
     
     private String logoFile;    
+    
+    @Transient
+    private String logoFileInvertido;
 
 
     @Temporal(TemporalType.TIMESTAMP)
@@ -300,6 +303,16 @@ public class Pessoa extends BaseEntity{
 	}
 	
 	
+	
+	
+	public String getLogoFileInvertido() {
+		if(logoFile!=null)
+			logoFileInvertido = logoFile.substring(0,logoFile.indexOf(".png"))+"_invertido.png";
+		return logoFileInvertido!=null?logoFileInvertido:"logo_branco_166_43.png";
+	}
+	public void setLogoFileInvertido(String logoFileInvertido) {
+		this.logoFileInvertido = logoFileInvertido;
+	}
 	public boolean isAdministrador() {
     		return this.getUsuario().getPerfil().getTipo() == PerfilTipo.ADMINISTRADOR;
     }

@@ -29,7 +29,7 @@
 										<label for="emailAlarme">Email p/ Notificação/Alarmes</label>
 										<h:inputText id="emailAlarme"
 											value="#{clienteConfigForm.clienteConfig.emailAlarme}"
-											readonly='#{clienteConfigForm.action.equals("SHOW")  or loginBean.hasPermission("VEICULO_VER_PROPRIO")}'
+											
 											styleClass="form-control input-sm"
 											style="#{component.valid?'':'border-color:red;'}" />
 									</div>
@@ -46,20 +46,20 @@
 								<div class="col-sm-4">
 									<div class="form-group input-group input-group-sm">
 										<h:selectBooleanCheckbox id="alarmeBateria"
-											disabled='#{clienteConfigForm.action.equals("SHOW") or loginBean.hasPermission("VEICULO_VER_PROPRIO")}'
+											
 											value="#{clienteConfigForm.clienteConfig.alarmeBateria}"
 											style="margin-top:27px" onclick="disableInput()" />
-										<label for="alarmeBateria">&nbsp;&nbsp;Alarme de Desconexão de Bateria</label>
+										<label for="alarmeBateria">&nbsp;&nbsp;Alarme de desconexão de bateria</label>
 									</div>
 								</div>
 								
 								<div class="col-sm-4">
 									<div class="form-group input-group input-group-sm">
 										<h:selectBooleanCheckbox id="alarmeCerca"
-											disabled='#{clienteConfigForm.action.equals("SHOW") or loginBean.hasPermission("VEICULO_VER_PROPRIO")}'
+											
 											value="#{clienteConfigForm.clienteConfig.alarmeCerca}"
 											style="margin-top:27px" onclick="disableInput()" />
-										<label for="alarmeCerca">&nbsp;&nbsp;Alarme de Cerca Virtual</label>
+										<label for="alarmeCerca">&nbsp;&nbsp;Alarme de cerca virtual</label>
 									</div>
 								</div>
 								
@@ -67,10 +67,10 @@
 								<div class="col-sm-4">
 									<div class="form-group input-group input-group-sm">
 										<h:selectBooleanCheckbox id="alarmeVelocidade"
-											disabled='#{clienteConfigForm.action.equals("SHOW") or loginBean.hasPermission("VEICULO_VER_PROPRIO")}'
+											
 											value="#{clienteConfigForm.clienteConfig.alarmeVelocidade}"
 											style="margin-top:27px" onclick="disableInput()" />
-										<label for="alarmeVelocidade">&nbsp;&nbsp;Alarme de Velocidade</label>
+										<label for="alarmeVelocidade">&nbsp;&nbsp;Alarme de velocidade</label>
 									</div>
 								</div>
 								

@@ -7,6 +7,7 @@ import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.Query;
 
+import net.moveltrack.domain.ModeloRastreador;
 import net.moveltrack.domain.RelatorioUsoIndevido;
 import net.moveltrack.domain.RelatorioUsoIndevidoParam;
 import net.moveltrack.domain.Veiculo;
@@ -23,6 +24,9 @@ public class RelatorioUsoIndevidoDao extends DaoBean<RelatorioUsoIndevido>{
 		String filtroVeiculo = veiculo==null?" ":" and v.placa='"+veiculo.getPlaca()+"' ";
 		String orderBy = ordem.equals("DATA")? " order by ano,mes,dia,hora,placa,id;": " order by placa,ano,mes,dia,hora,id;";
 		
+		//Se for a Wellfield que tem o Spot, não coloca o filtro da ignição, pois o aparelho não suporta
+		String filtroIgnition = ruip.getCliente().getId() == 704?" ":" and l.ignition = 1 "; 
+		
 		String sql = "select null as nomeMotorista, null as diaSemana, null as data, year(l.dateLocation) as ano,month(l.dateLocation) as mes, day(l.dateLocation) as dia,hour(l.dateLocation) as hora,v.placa as placa, v.marcaModelo as marcaModelo, concat(day(l.dateLocation),hour(l.dateLocation),v.id) as id "+ 
 				
 		" from location l" +
@@ -33,7 +37,7 @@ public class RelatorioUsoIndevidoDao extends DaoBean<RelatorioUsoIndevido>{
 		" inner join contrato c on v.contrato_id = c.id"+
 		" inner join pessoa p on c.cliente_id = p.id"+
 		
-		" where l.velocidade > :velocidade and l.ignition = 1 and ("+
+		" where l.velocidade > :velocidade and ("+
 			" (weekday(l.dateLocation)=0 and (time(l.dateLocation) < :segundaInicio or time(l.dateLocation) > :segundaFim)) or"+
 			" (weekday(l.dateLocation)=1 and (time(l.dateLocation) < :tercaInicio or   time(l.dateLocation) > :tercaFim)) or"+
 			" (weekday(l.dateLocation)=2 and (time(l.dateLocation) < :quartaInicio or  time(l.dateLocation) > :quartaFim)) or"+
@@ -44,6 +48,7 @@ public class RelatorioUsoIndevidoDao extends DaoBean<RelatorioUsoIndevido>{
 		" )"+
 		" and l.dateLocation > :inicio and l.dateLocation < :fim"+
 		filtroVeiculo+
+		filtroIgnition+
 		" and p.id = :clienteId"+
 		" group by ano,mes,dia,hora,placa,marcaModelo,id"+
 		orderBy;

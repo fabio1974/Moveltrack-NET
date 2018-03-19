@@ -12,7 +12,12 @@ import org.apache.commons.lang3.StringUtils;
 
 import net.moveltrack.controller.action.BaseAction;
 import net.moveltrack.dao.ClienteConfigDao;
+import net.moveltrack.dao.ClienteDao;
+import net.moveltrack.dao.PessoaDao;
+import net.moveltrack.domain.Cliente;
 import net.moveltrack.domain.ClienteConfig;
+import net.moveltrack.domain.Permission;
+import net.moveltrack.security.LoginBean;
 import net.moveltrack.util.Utils;
 
 
@@ -27,8 +32,9 @@ public class ClienteConfigForm extends BaseAction implements Serializable {
 	
 	private ClienteConfig clienteConfig;
 	private String action = Action.INSERT;
-
-	
+	@Inject LoginBean loginBean;
+	@Inject	PessoaDao pessoaDao;
+	@Inject ClienteDao clienteDao;
 
 
 	public ClienteConfigForm() {
@@ -38,8 +44,19 @@ public class ClienteConfigForm extends BaseAction implements Serializable {
 	@PostConstruct
 	public void init() {
 		System.out.println("Init ... ");
-		if(clienteConfig==null)
-			buildNewObject();
+		if(loginBean.hasPermission(Permission.CLIENTE_VER_PROPRIO)){
+			Cliente cliente = (Cliente)clienteDao.findByUsuario(loginBean.getUsuario());
+			if(cliente.getClienteConfig()==null) {
+				clienteConfig = new ClienteConfig();
+				clienteConfig.setEmailAlarme(cliente.getEmailAlarme());
+				dao.salvar(clienteConfig);
+				cliente.setClienteConfig(clienteConfig);
+				clienteDao.merge(cliente);
+			}else {
+				clienteConfig = cliente.getClienteConfig();
+			}
+			
+		}
 	}
 	
 	private void buildNewObject(){
@@ -50,17 +67,13 @@ public class ClienteConfigForm extends BaseAction implements Serializable {
 	@Transactional
 	public String salvar() {
 		if (validaGravacao()) {
-			if(action.contains(Action.INSERT)){
-				dao.salvar(clienteConfig);
-				setAction(Action.SHOW);
-				operacaoSucesso();
-			}else if(action.equals(Action.UPDATE)){
 				dao.merge(clienteConfig);
+				Cliente cliente = (Cliente)clienteDao.findByUsuario(loginBean.getUsuario());
+				cliente.setEmailAlarme(clienteConfig.getEmailAlarme());
+				clienteDao.merge(cliente);
 				operacaoSucesso();
-			}
-			return "veiculoForm";
-		}else
-			return "veiculoForm";
+		}
+		return "clienteConfigForm";
 	}
 	
 

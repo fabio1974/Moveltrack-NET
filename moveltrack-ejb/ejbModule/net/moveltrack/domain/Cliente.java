@@ -82,6 +82,9 @@ public class Cliente extends Pessoa {
 	public void setEmailAlarme(String emailAlarme) {
 		this.emailAlarme = emailAlarme;
 	}
+	
+	
+	
 
 /*	public boolean isPessoaJuridica() {
 		return isPessoaJuridica;
@@ -90,6 +93,14 @@ public class Cliente extends Pessoa {
 	public void setPessoaJuridica(boolean isPessoaJuridica) {
 		this.isPessoaJuridica = isPessoaJuridica;
 	}*/
+
+	public ClienteConfig getClienteConfig() {
+		return clienteConfig;
+	}
+
+	public void setClienteConfig(ClienteConfig clienteConfig) {
+		this.clienteConfig = clienteConfig;
+	}
 
 	public String getNomeFantasia() {
 		return nomeFantasia;

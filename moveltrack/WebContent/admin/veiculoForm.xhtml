@@ -6,6 +6,7 @@
 	xmlns:b="http://bootsfaces.net/ui"
     xmlns:p="http://primefaces.org/ui"  
 	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core" 
 	xmlns:ui="http://java.sun.com/jsf/facelets">
 
 <h:body>
@@ -274,7 +275,7 @@
 									</div>
 								</div>
 								
-								
+								<c:if test="#{!loginBean.hasPermission('VEICULO_VER_PROPRIO')}">
 								<div class="col-sm-3">
 									<div class="form-group input-group input-group-sm">
 										<h:selectBooleanCheckbox id="isDemo"
@@ -284,6 +285,7 @@
 										<label for="isDemo">Demostração</label>
 									</div>
 								</div>
+								</c:if>
 								
 								
 								

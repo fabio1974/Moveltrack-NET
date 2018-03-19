@@ -250,7 +250,7 @@ where vi.status <> 'FINALIZADA'
 				 
 				 +" and l.dateLocation >=:inicio"
 				 +" and l.dateLocation <=:fim"
-				 +" and velocidade >:velocidade"
+				 +" and l.velocidade >:velocidade"
 
 				 +" order by v.placa,l.dateLocation"; 
 
