@@ -66,6 +66,12 @@
 							</li>
 							</c:if>
 							
+							<li  class="#{navigator.topico.equals('alarme')?'active':''}">
+								<h:commandLink 	action="clienteConfigForm"><i class="fa fa-rss-square"/>Alarmes
+									<f:setPropertyActionListener value="clienteConfig" target="#{navigator.topico}" />
+								</h:commandLink>
+							</li>
+							
 							<c:if test="#{loginBean.hasPermission('MENU_RASTREADOR')}">
 							<li  class="#{navigator.topico.equals('equipamento')?'active':''}">
 								<h:commandLink 	action="equipamentoTable"><i class="fa fa-rss-square"/>Rastreadores

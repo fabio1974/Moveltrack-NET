@@ -18,7 +18,7 @@
 				<div class="ibox">
 					<div class="inbox title">
 						<b><h:outputText
-								value='#{veiculoForm.action.contains("INSERT")?"Inserir Novo ":veiculoForm.action.equals("UPDATE")?"Atualizar ":"Detalhes do "}Veiculo' /></b>
+								value='#{clienteConfigForm.action.contains("INSERT")?"Inserir ":clienteConfigForm.action.equals("UPDATE")?"Atualizar ":"Detalhes dos "}Alarmes' /></b>
 					</div>
 					<div class="ibox-content">
 						<h:form onsubmit="document.body.style.cursor='wait'" id="form" role="form">
@@ -26,265 +26,56 @@
 							<div class="row">
 								<div class="col-sm-6">
 									<div class="form-group">
-										<label for="contrato">Contrato</label>
-										<h:inputText name="contrato" id="contrato"
-											value="#{veiculoForm.veiculo.contrato}"
-											class="input-sm form-control input-s-sm "
-											converter="#{contratoConverter}"
-											style="#{component.valid?'':'border-color:red;'}"
-											readonly='#{veiculoForm.action.equals("SHOW") or loginBean.hasPermission("VEICULO_VER_PROPRIO")}' 
-											/>
-									</div>
-								</div>
-								
-								
-								<div class="col-sm-3">
-									<div class="form-group">
-										<label for="placa">Placa</label>
-										<h:inputText   id="placa" 
-											class="input-sm form-control input-s-sm text-uppercase" 
-											readonly='#{veiculoForm.action.equals("SHOW") or loginBean.hasPermission("VEICULO_VER_PROPRIO")}' 
-											style="#{component.valid?'':'border-color:red;'}"
-											value="#{veiculoForm.veiculo.placa}"
-											 /> 
-									</div>
-								</div>
-								
-								<div class="col-sm-3">
-									<div class="form-group">
-										<label for="veiculoTipo">Tipo de Veículo</label>
-										<h:selectOneMenu id="veiculoTipo" 
-											value="#{veiculoForm.veiculo.tipo}"
-											disabled='#{veiculoForm.action.equals("SHOW") or loginBean.hasPermission("VEICULO_VER_PROPRIO")}'
+										<label for="emailAlarme">Email p/ Notificação/Alarmes</label>
+										<h:inputText id="emailAlarme"
+											value="#{clienteConfigForm.clienteConfig.emailAlarme}"
+											readonly='#{clienteConfigForm.action.equals("SHOW")  or loginBean.hasPermission("VEICULO_VER_PROPRIO")}'
 											styleClass="form-control input-sm"
-											style="#{component.valid?'':'border-color:red;'}">
-											<f:selectItems value="#{veiculoForm.tipos}" />
-										</h:selectOneMenu>
+											style="#{component.valid?'':'border-color:red;'}" />
 									</div>
 								</div>
-								
-								
-								
-								
-								
-								
-								
-								
 								
 								
 							</div>
-							<div class="row">
 
-								
-								<div class="col-sm-3">
-									<div class="form-group">
-										<label for="marcaModelo">Marca/Modelo</label>
-										<h:inputText   id="marcaModelo" 
-											class="input-sm form-control input-s-sm " 
-											readonly='#{veiculoForm.action.equals("SHOW") or loginBean.hasPermission("VEICULO_VER_PROPRIO")}' 
-											style="#{component.valid?'':'border-color:red;'}"
-											value="#{veiculoForm.veiculo.marcaModelo}"
-											 /> 
-									</div>
-								</div>
-								
-								
-								<div class="col-sm-3">
-									<div class="form-group">
-										<label for="cor">Cor</label>
-										<h:selectOneMenu id="cor" 
-											value="#{veiculoForm.veiculo.cor}"
-											disabled='#{veiculoForm.action.equals("SHOW") or loginBean.hasPermission("VEICULO_VER_PROPRIO")}'
-											styleClass="form-control input-sm"
-											style="#{component.valid?'':'border-color:red;'}">
-											<f:selectItems value="#{veiculoForm.cores}" />
-										</h:selectOneMenu>
-									</div>
-								</div>
-								
-								
-							
-								
-								
-								<div class="col-sm-3">
-									<div class="form-group">
-										<label for="consumoCombustivel">Consumo de Combustível (km/l)</label>
-										<h:inputText id="consumoCombustivel"
-											value="#{veiculoForm.veiculo.consumoCombustivel}"
-											readonly='#{veiculoForm.action.equals("SHOW")}'
-											styleClass="form-control input-sm"
-											style="#{component.valid?'':'border-color:red;'}"
-											
-											 >
-											 <f:convertNumber pattern="#0.0" />
-										</h:inputText>	 
-									</div>
-								</div>
-								
-								
-								<div class="col-sm-3">
-									<div class="form-group">
-										<label for="status">Status</label>
-										<h:selectOneMenu id="status" 
-											value="#{veiculoForm.veiculo.status}"
-											disabled='#{veiculoForm.action.equals("SHOW") or loginBean.hasPermission("VEICULO_VER_PROPRIO")}'
-											styleClass="form-control input-sm"
-											style="#{component.valid?'':'border-color:red;'}">
-											<f:selectItems value="#{veiculoForm.statuses}" />
-										</h:selectOneMenu>
-									</div>
-								</div>
-								
-								
-								
-
-
-							</div>
+						
 						
 							
-							
-							<div class="row">
-							
-								<div class="col-sm-3">
-									<div class="form-group">
-										<label for="equipamento">Rastreador</label>
-										<h:inputText name="equipamento" id="equipamento"
-											value="#{veiculoForm.veiculo.equipamento}"
-											class="input-sm form-control input-s-sm "
-											converter="#{equipamentoConverter}"
-											style="#{component.valid?'':'border-color:red;'}"
-											readonly='#{veiculoForm.action.equals("SHOW") or loginBean.hasPermission("VEICULO_VER_PROPRIO")}' 
-											/>
-									</div>
-								</div>
-							
-							
 
-								<div class="col-sm-3">
-									<div class="form-group">
-										<label for="instalador">Instalador</label>
-										<h:selectOneMenu class="input-sm form-control input-s-sm "
-											disabled='#{veiculoForm.action.equals("SHOW") or loginBean.hasPermission("VEICULO_VER_PROPRIO")}'
-											style="#{component.valid?'':'border-color:red;'}" 
-											id="instalador"
-											value="#{veiculoForm.veiculo.instalador}" 
-											converter="#{empregadoConverter}">
-											<f:selectItem itemValue="0" itemLabel="Selecione..." />
-											<f:selectItems value="#{veiculoForm.instaladores}" />
-										</h:selectOneMenu>
-									</div>
-								</div>
-
-
-
-
-								<div class="col-sm-3">
-									<div class="form-group">
-										<label for="dataInstalacao">Data Instalação</label>
-										<div class='input-group date' id='dataInstalacao'>
-										<h:inputText id="dataInstalacao"
-											value="#{veiculoForm.veiculo.dataInstalacao}"
-											readonly='#{veiculoForm.action.equals("SHOW") or loginBean.hasPermission("VEICULO_VER_PROPRIO")}'
-											styleClass="form-control input-sm"
-											style="#{component.valid?'':'border-color:red;'}">
-											<f:convertDateTime pattern="dd/MM/yyyy HH:mm" timeZone="GMT-3" />
-										</h:inputText>
-										<span  class="input-group-addon"> 
-											<span class="glyphicon glyphicon-calendar"></span>
-										</span>
-
-										</div>
-									</div>
-								</div>
-								
-								<div class="col-sm-3">
-									<div class="form-group">
-										<label for="velocidadeMaxima">Velocidade Máxima (Alarme)</label>
-										<h:inputText id="velocidadeMaxima"
-											value="#{veiculoForm.veiculo.velocidadeMaxima}"
-											readonly='#{veiculoForm.action.equals("SHOW")}'
-											styleClass="form-control input-sm"
-											style="#{component.valid?'':'border-color:red;'}"
-											 >
-											 <f:convertNumber pattern="#0.0" />
-										</h:inputText>	 
-									</div>
-								</div>
-							
-
-
-							</div>
-							
-							
-							
-							<div class="row" style="#{loginBean.hasPermission('VEICULO_VER_PROPRIO')?'display:none':'display:'}">
-
-								<div  class="col-sm-3">
-									<div class="form-group">
-										<label for="dataDesinstalacao">Data da Retirada</label>
-										<div class='input-group date' id='dataDesinstalacao'>
-										<h:inputText id="dataDesinstalacao"
-											value="#{veiculoForm.veiculo.dataDesinstalacao}"
-											readonly='#{veiculoForm.action.equals("SHOW") or loginBean.hasPermission("VEICULO_VER_PROPRIO")}'
-											styleClass="form-control input-sm"
-											style="#{component.valid?'':'border-color:red;'}">
-											<f:convertDateTime pattern="dd/MM/yyyy HH:mm" timeZone="GMT-3" />
-										</h:inputText>
-																				<span  class="input-group-addon"> 
-											<span class="glyphicon glyphicon-calendar"></span>
-										</span>
-										</div>
-									</div>
-								</div>
-							
-							</div>
-							
-							
-							
-							
-
-							<div class="row">
-								<div class="col-sm-3">
+							<div class="row form-group">
+								<div class="col-sm-4">
 									<div class="form-group input-group input-group-sm">
-										<h:selectBooleanCheckbox id="isComBloqueio"
-											disabled='#{veiculoForm.action.equals("SHOW") or loginBean.hasPermission("VEICULO_VER_PROPRIO")}'
-											value="#{veiculoForm.veiculo.comBloqueio}"
+										<h:selectBooleanCheckbox id="alarmeBateria"
+											disabled='#{clienteConfigForm.action.equals("SHOW") or loginBean.hasPermission("VEICULO_VER_PROPRIO")}'
+											value="#{clienteConfigForm.clienteConfig.alarmeBateria}"
 											style="margin-top:27px" onclick="disableInput()" />
-										<label for="isComBloqueio">Com Bloqueio</label>
+										<label for="alarmeBateria">&nbsp;&nbsp;Alarme de Desconexão de Bateria</label>
 									</div>
 								</div>
 								
-								<div class="col-sm-3">
+								<div class="col-sm-4">
 									<div class="form-group input-group input-group-sm">
-										<h:selectBooleanCheckbox id="isComCercaVirtual"
-											disabled='#{veiculoForm.action.equals("SHOW") or loginBean.hasPermission("VEICULO_VER_PROPRIO")}'
-											value="#{veiculoForm.veiculo.comCercaVirtual}"
+										<h:selectBooleanCheckbox id="alarmeCerca"
+											disabled='#{clienteConfigForm.action.equals("SHOW") or loginBean.hasPermission("VEICULO_VER_PROPRIO")}'
+											value="#{clienteConfigForm.clienteConfig.alarmeCerca}"
 											style="margin-top:27px" onclick="disableInput()" />
-										<label for="isComCercaVirtual">Com Cerca Virtual</label>
+										<label for="alarmeCerca">&nbsp;&nbsp;Alarme de Cerca Virtual</label>
 									</div>
 								</div>
 								
-								<div class="col-sm-3">
+								
+								<div class="col-sm-4">
 									<div class="form-group input-group input-group-sm">
-										<h:selectBooleanCheckbox id="isComEscuta"
-											disabled='#{veiculoForm.action.equals("SHOW") or loginBean.hasPermission("VEICULO_VER_PROPRIO")}'
-											value="#{veiculoForm.veiculo.comEscuta}"
+										<h:selectBooleanCheckbox id="alarmeVelocidade"
+											disabled='#{clienteConfigForm.action.equals("SHOW") or loginBean.hasPermission("VEICULO_VER_PROPRIO")}'
+											value="#{clienteConfigForm.clienteConfig.alarmeVelocidade}"
 											style="margin-top:27px" onclick="disableInput()" />
-										<label for="isComEscuta">Com Escuta</label>
+										<label for="alarmeVelocidade">&nbsp;&nbsp;Alarme de Velocidade</label>
 									</div>
 								</div>
 								
 								
-								<div class="col-sm-3">
-									<div class="form-group input-group input-group-sm">
-										<h:selectBooleanCheckbox id="isDemo"
-											disabled='#{veiculoForm.action.equals("SHOW") or loginBean.hasPermission("VEICULO_VER_PROPRIO")}'
-											value="#{veiculoForm.veiculo.demo}"
-											style="margin-top:27px" onclick="disableInput()" />
-										<label for="isDemo">Demostração</label>
-									</div>
-								</div>
-								
+					
 								
 								
 							</div>
@@ -294,16 +85,10 @@
 								<div class="col-lg-5">
 
 									<h:panelGrid columns="3">
-										<h:commandLink id="voltar"
-											value='#{veiculoForm.action.contains("INSERT")?"Listar Veículos":"Voltar"}'
-											action="#{veiculoForm.sair()}"
-											styleClass="btn btn-primary btn-sm">&nbsp;
-											<i class="fa fa-undo"/>
-											</h:commandLink>
-										&nbsp;&nbsp;
+										
 										<h:commandLink id="salvar" value="Salvar"
-											action="#{veiculoForm.salvar()}"
-											rendered='#{!veiculoForm.action.equals("SHOW")}'
+											action="#{clienteConfigForm.salvar()}"
+											rendered='#{!clienteConfigForm.action.equals("SHOW")}'
 											styleClass=" btn btn-primary btn-sm" />
 									</h:panelGrid>
 
@@ -325,9 +110,7 @@
 			</div>
 
 <script type="text/javascript"> 
- jQuery(function($){
-   $("#form\\:placa").mask("aaa-9999");
-});
+
 
 </script>
 
