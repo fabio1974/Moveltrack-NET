@@ -2,6 +2,7 @@ package net.moveltrack.dao;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -124,6 +125,9 @@ where vi.status <> 'FINALIZADA'
 			return null;
 		}
 	}
+	
+
+
 	
 	
 	@SuppressWarnings("unchecked")

@@ -30,6 +30,8 @@ public class BackgroundTaskManager implements ServletContextListener {
 	@Inject TaskSetaPendenciasDeCarnes taskSetaPendenciasDeCarnes;
 	@Inject TaskDeletaLocations taskDeletaLocations;
 	@Inject TaskCerca taskCerca;
+	@Inject TaskAlarmeBateria taskAlarmeBateria;
+	@Inject TaskAlarmeVelocidade taskAlarmeVelocidade;
 	@Inject TaskTeste taskTeste;
 	@Inject TaskGeraBoletoNoIugu taskGeraBoletoNoIugu;
 	@Inject TaskCorrigeIugu taskCorrigeIugu;
@@ -60,6 +62,14 @@ public class BackgroundTaskManager implements ServletContextListener {
 		taskCerca.setIntervalo(30);  
 		taskCerca.setPeriodo(20);
 		tasks.add(taskCerca);
+		
+		taskAlarmeVelocidade.setIntervalo(10);  
+		taskAlarmeVelocidade.setPeriodo(30 * 60);
+		tasks.add(taskAlarmeVelocidade);
+
+		taskAlarmeBateria.setIntervalo(15*60);  
+		taskAlarmeBateria.setPeriodo(30*60);
+		tasks.add(taskAlarmeBateria);
 		
 		taskVenceBoletos.setInicio("00:01:00");
 		taskVenceBoletos.setPeriodo(86400);

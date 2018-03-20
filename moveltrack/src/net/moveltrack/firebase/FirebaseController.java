@@ -62,7 +62,7 @@ public class FirebaseController {
     		FirebaseController.sendMessage(message);
     	}
     	
-    	sendEmailCliente.sendNotification(cliente,title,text);  //Aproveita e ,manda um e-mail para o cliente.
+    	sendEmailCliente.sendEmail(cliente,title,text);  //Aproveita e ,manda um e-mail para o cliente.
     	
     }
 	

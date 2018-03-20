@@ -57,8 +57,9 @@ public class PoligonoDao extends DaoBean<Poligono>{
 
 	public List<Poligono> findAtivos(){
 		try{
-			Query query = getEm().createQuery("select o from Poligono o where o.ativo=:ativo");
+			Query query = getEm().createQuery("select o from Poligono o where o.ativo=:ativo and o.veiculo.contrato.cliente.clienteConfig.alarmeCerca=:alarmeCerca");
 			query.setParameter("ativo",true);
+			query.setParameter("alarmeCerca",true);
 			return (List<Poligono>)query.getResultList();
 		}catch(Exception e){
 			e.printStackTrace();
