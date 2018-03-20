@@ -16,6 +16,7 @@ import org.apache.commons.lang3.StringUtils;
 
 import com.google.gson.Gson;
 
+import net.moveltrack.dao.GeoEnderecoDao;
 import net.moveltrack.dao.LocationDao;
 import net.moveltrack.dao.VeiculoDao;
 import net.moveltrack.domain.Location;
@@ -58,7 +59,7 @@ public class PontosMapa extends HttpServlet {
 	
 	@Inject
 	MapaBean mapaBean;
-	
+	@Inject GeoEnderecoDao geoEnderecoDao;
 	
 	private List<Location> getPontosDoMapaOtimizados(HttpServletRequest request){
 		
@@ -91,6 +92,10 @@ public class PontosMapa extends HttpServlet {
 			}catch(Exception e){
 				System.out.println(e.getMessage());
 			}
+		}
+		if(!pontosOtimizados.isEmpty()) {
+			Location lastLoc = pontosOtimizados.get(pontosOtimizados.size()-1);
+			lastLoc.setEndereco(geoEnderecoDao.getAddressFromLocation(lastLoc,true));
 		}
 		return pontosOtimizados;
 	}

@@ -7,6 +7,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
@@ -55,6 +56,9 @@ public class Location extends BaseEntity {
 
    
     private int satelites;
+    
+    @Transient
+    private String endereco;
 
    
     private int mcc;
@@ -202,6 +206,13 @@ public class Location extends BaseEntity {
 	public void setAlarmType(String alarmType) {
 		this.alarmType = alarmType;
 	}
+	public String getEndereco() {
+		return endereco;
+	}
+	public void setEndereco(String endereco) {
+		this.endereco = endereco;
+	}
     
+	
     
 }

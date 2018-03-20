@@ -14,9 +14,11 @@ import javax.servlet.http.HttpServletResponse;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import net.moveltrack.dao.GeoEnderecoDao;
 import net.moveltrack.dao.Location2Dao;
 import net.moveltrack.dao.LocationDao;
 import net.moveltrack.dao.VeiculoDao;
+import net.moveltrack.domain.GeoEndereco;
 import net.moveltrack.domain.LastLocation;
 import net.moveltrack.domain.Location;
 import net.moveltrack.domain.Mapa;
@@ -58,7 +60,7 @@ public class PontosFrota extends HttpServlet {
 	
 	@Inject VeiculoDao veiculoDao;
 	@Inject LocationDao locationDao;
-
+	@Inject GeoEnderecoDao geoEnderecoDao;
 	
 	private Mapa getMapa(HttpServletRequest request){
 
@@ -78,6 +80,7 @@ public class PontosFrota extends HttpServlet {
 				ll.setVeiculoId(veiculo.getId());
 				ll.setVeiculoTipo(veiculo.getTipo().name());
 				ll.setModeloRastreador(veiculo.getEquipamento().getModelo().name());
+				ll.setEndereco(geoEnderecoDao.getAddressFromLocation(loc, true));
 				lastLocations.add(ll);
 			}
 			
