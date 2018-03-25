@@ -19,7 +19,7 @@ public class Constantes {
 	public final static int PORT_CRX3 =  6224;
 	
 	public static final boolean DEBUG_CRX1 = false;
-	public static final boolean DEBUG_CRX3 = true;	
+	public static final boolean DEBUG_CRX3 = false;	
 	public static final boolean DEBUG_CRXN = false;	
 	public static final boolean DEBUG_GT06 = false;
 	public static final boolean DEBUG_TK103 = false;

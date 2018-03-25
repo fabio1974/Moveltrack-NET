@@ -1,11 +1,13 @@
 package net.moveltrack.gateway;
 
 import java.net.Socket;
+import java.net.SocketTimeoutException;
 import java.util.BitSet;
 
 import net.moveltrack.domain.Sms;
 import net.moveltrack.domain.SmsStatus;
 import net.moveltrack.gateway.persistence.SmsDAO;
+import net.moveltrack.gateway.utils.Utils;
 
 public abstract class CommandHandler {
 
@@ -16,10 +18,18 @@ public abstract class CommandHandler {
 	
 	public void sendToTerminal(byte[] response,Socket socket,Sms sms) {
 		try {  
-			printSocketStatus(false,"smsTipo="+sms.getTipo().toString(),socket);				
+			printSocketStatus(true,"smsTipo="+sms.getTipo().toString(),socket);
+			socket.setSoTimeout(15*1000);
+			Utils.log(false,"Writing to the socket...");
 			socket.getOutputStream().write(response);
+			Utils.log(false,"Writed to the socket!");
+			
 			SmsDAO.getInstance().updateStatusTo(sms,SmsStatus.ENVIADO);
 			Thread.sleep(2000);
+			
+		} catch (SocketTimeoutException ste) {
+			Utils.log(false,ste.getMessage());
+			SmsDAO.getInstance().updateStatusTo(sms,SmsStatus.ESPERANDO);
 		} catch (Exception e) {
 			SmsDAO.getInstance().updateStatusTo(sms,SmsStatus.ESPERANDO);
 		}

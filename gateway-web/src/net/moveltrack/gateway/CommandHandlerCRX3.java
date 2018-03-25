@@ -25,7 +25,7 @@ public class CommandHandlerCRX3 extends CommandHandler {
 	}
 	
 	public void sendCommandToTracker(Sms sms) {
-		Utils.log(DEBUG_MODE, "enviando para o imei (sms):"+sms.getImei()); 
+		Utils.log(true, "enviando para o imei (sms):"+sms.getImei()); 
 		byte[] command = null;
 		byte serial1 = HashMaps.getInstance().getSerial1ByImei(sms.getImei());
 		byte serial2 = HashMaps.getInstance().getSerial2ByImei(sms.getImei());
@@ -36,13 +36,13 @@ public class CommandHandlerCRX3 extends CommandHandler {
 		switch (sms.getTipo()) {
 		case BLOQUEIO:
 			command = buildCommand(COMMAND_CUT_OIL,serial1,serial2);
-			Utils.log(DEBUG_MODE,"Comando de Bloqueio");
-			printBuff(DEBUG_MODE,command);
+			Utils.log(true,"Comando de Bloqueio");
+			printBuff(true,command);
 			break;
 		case DESBLOQUEIO:
 			command = buildCommand(COMMAND_CONNECT_OIL,serial1,serial2);
-			Utils.log(DEBUG_MODE,"Comando de Desbloqueio");
-			printBuff(DEBUG_MODE,command);
+			Utils.log(true,"Comando de Desbloqueio");
+			printBuff(true,command);
 			break;
 		default:
 			break;

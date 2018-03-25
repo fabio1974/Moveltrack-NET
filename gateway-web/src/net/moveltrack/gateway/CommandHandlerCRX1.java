@@ -12,7 +12,7 @@ import net.moveltrack.gateway.utils.Utils;
 
 public class CommandHandlerCRX1 extends CommandHandler {
 
-	boolean DEBUG_MODE = true;//Constantes.DEBUG_CRX1;
+	boolean DEBUG_MODE = Constantes.DEBUG_CRX1;
 	
 	public final static byte[] COMMAND_LOCATION =      {0x44,0x57,0x58,0x58,0x2C,0x30,0x30,0x30,0x30,0x30,0x30,0x23};
 							                		   // D    W    X    X    ,    0    0    0    0    0    0    #

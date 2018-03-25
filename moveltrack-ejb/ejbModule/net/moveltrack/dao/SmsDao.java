@@ -18,29 +18,41 @@ public class SmsDao extends DaoBean<Sms>{
 
 	public SmsDao() { }
 
+	boolean DEBUG = false;
+	
+	private void log(String message) {
+		if(DEBUG)
+			System.out.println(message);
+	}
+	
 	public List<Sms> getWaitingPowerCommands() {
 		
 		try{
-		List<Sms> smss = new ArrayList<Sms>();
-		Calendar calendar = Calendar.getInstance();
-		calendar.add(Calendar.MINUTE,-1);
-		
-		String sql =" select max(s.id),s.imei from Sms s "+
-				" where s.dataUltimaAtualizacao >:dataUltimaAtualizacao "
-				+ " and (s.tipo = 'BLOQUEIO' or s.tipo = 'DESBLOQUEIO') and s.status=:status group by s.imei ";
-		
-		Query query = getEm().createQuery(sql);
-		query.setParameter("dataUltimaAtualizacao",calendar.getTime());
-		query.setParameter("status",SmsStatus.ESPERANDO_SOCKET);
-		List<Object[]>  objects = (List<Object[]>)query.getResultList();
-		
-		if(objects!=null && objects.size()>0)
-			for (Object[] object : objects) {
-				Sms sms = findById((Integer)object[0]);
-				smss.add(sms);
-				System.out.println("Pegando Sms do Tipo "+sms.getTipo() + " para disparo de comando por GPRS. Imei:"+sms.getImei());
+			List<Sms> smss = new ArrayList<Sms>();
+			Calendar calendar = Calendar.getInstance();
+			calendar.add(Calendar.MINUTE,-1);
+
+			String sql =" select max(s.id),s.imei from Sms s "+
+					" where s.dataUltimaAtualizacao >:dataUltimaAtualizacao "
+					+ " and (s.tipo = 'BLOQUEIO' or s.tipo = 'DESBLOQUEIO') and s.status=:status group by s.imei ";
+
+			Query query = getEm().createQuery(sql);
+			query.setParameter("dataUltimaAtualizacao",calendar.getTime());
+			query.setParameter("status",SmsStatus.ESPERANDO_SOCKET);
+			List<Object[]>  objects = (List<Object[]>)query.getResultList();
+
+			log(sql);
+			log(calendar.getTime().toString());
+			log(""+SmsStatus.ESPERANDO_SOCKET);
+
+			if(objects!=null && objects.size()>0) {
+				for (Object[] object : objects) {
+					Sms sms = findById((Integer)object[0]);
+					smss.add(sms);
+					log("Pegando Sms do Tipo "+sms.getTipo() + " para disparo de comando por GPRS. Imei:"+sms.getImei());
+				}
 			}else{
-				//System.out.println("Zero para disparo de comando por GPRS.");
+				log("Zero para disparo de comando por GPRS.");
 			}
 			return smss.size()>0?smss:null;
 		}catch(Exception e){
