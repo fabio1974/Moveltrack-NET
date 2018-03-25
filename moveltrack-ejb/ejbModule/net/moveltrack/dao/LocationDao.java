@@ -2,6 +2,7 @@ package net.moveltrack.dao;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -125,6 +126,9 @@ where vi.status <> 'FINALIZADA'
 		}
 	}
 	
+
+
+	
 	
 	@SuppressWarnings("unchecked")
 	public Location2 getLastLocation2FromVeiculo(Veiculo veiculo) {
@@ -155,7 +159,7 @@ where vi.status <> 'FINALIZADA'
 				+" l2.alarm,l2.alarmType,l2.battery,l2.bloqueio,l2.comando,l2.dateLocationInicio,l2.gps,"
 				+" l2.gsm,l2.ignition,l2.mcc,0 as satelites,l2.sos,l2.volt,l2.version"
 
-				+" from location l2"
+				+" from location2 l2"
 				+" inner join (select l.imei as imei, max(l.dateLocation) as dateLocation from location2 l group by l.imei)  loc2"
 				+" on loc2.imei = l2.imei and loc2.dateLocation = l2.dateLocation"
 

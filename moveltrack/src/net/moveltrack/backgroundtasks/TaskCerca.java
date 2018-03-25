@@ -9,6 +9,7 @@ import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 
+
 import net.moveltrack.action.BloqueioBean;
 import net.moveltrack.dao.LocationDao;
 import net.moveltrack.dao.PoligonoDao;
@@ -75,12 +76,6 @@ public class TaskCerca extends Task {
 							System.out.println(locationCorrente.getAlarmType()+" "+cerca.getVeiculo().getPlaca()+" "+cerca.getVeiculo().getMarcaModelo());
 
 							Cliente cliente = cerca.getVeiculo().getContrato().getCliente();
-
-							/*if(count<10){
-								sendNotification(cliente, "Saiu da Cerca Virtual"+count,"Veículo "+cerca.getVeiculo().getMarcaModelo()+", de placa "+ cerca.getVeiculo().getPlaca());
-								count++;
-							}	*/
-
 
 							//Saiu da cerca!
 							if(idCercaAnterior!=null && idCercaAnterior.intValue()==cerca.getId().intValue() && locationAnterior!=null && locationAnterior.getAlarmType().equals("dentro") && locationCorrente.getAlarmType().equals("fora")){

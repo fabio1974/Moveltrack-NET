@@ -118,6 +118,32 @@ public class ClienteDao extends DaoBean<Cliente>{
 	}
 
 
+	public List<Cliente> findAlarmeBateria() {
+		List<Cliente> list = new ArrayList<Cliente>();
+		Query query = getEm().createQuery("select o from Cliente o where o.clienteConfig is not null and o.clienteConfig.alarmeBateria=:alarmeBateria");
+		query.setParameter("alarmeBateria",true);
+		try{
+			list = (List<Cliente>)query.getResultList();
+		}catch(Exception e){
+			return null;
+		}
+		return list;
+	}
+	
+	public List<Cliente> findAlarmeVelocidade() {
+		List<Cliente> list = new ArrayList<Cliente>();
+		Query query = getEm().createQuery("select o from Cliente o where o.clienteConfig is not null and o.clienteConfig.alarmeVelocidade=:alarmeVelocidade");
+		query.setParameter("alarmeVelocidade",true);
+		try{
+			list = (List<Cliente>)query.getResultList();
+		}catch(Exception e){
+			return null;
+		}
+		return list;
+	}
+
+
+
 
 
 

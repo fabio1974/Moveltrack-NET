@@ -46,6 +46,7 @@ function desenhaLastLoc(lastLoc){
 						+"<tr><td class='titimpressao01'>Marca/Modelo</td><td class='dados'>"+lastLoc.marcaModelo+"</td></tr>"
 						+"<tr><td class='titimpressao01'>Velocidade</td><td class='dados'>"+(lastLoc.location.velocidade).toFixed(2)+"km/h</td></tr>"
 						+"<tr><td class='titimpressao01'>Última Leitura</td><td class='titimpressao01'>"+dateFormat(lastLoc.location.dateLocation,"dd/mm/yyyy HH:MM")+"</td></tr>"
+						+"<tr><td class='titimpressao01'>Endereço</td><td class='dados'>"+lastLoc.endereco+"</td></tr>"
 						
 						+"</table></div>" ;
 	var title = lastLoc.location.velocidade+"Km/h" + " em "+lastLoc.location.dateLocation;
@@ -63,6 +64,7 @@ function desenhaLastLocXs(lastLoc){
 						+"<tr><td class='titimpressao01'>Marca/Modelo</td><td class='dados'>"+lastLoc.marcaModelo+"</td></tr>"
 						+"<tr><td class='titimpressao01'>Velocidade</td><td class='dados'>"+(lastLoc.location.velocidade).toFixed(2)+"km/h</td></tr>"
 						+"<tr><td class='titimpressao01'>Última Leitura</td><td class='titimpressao01'>"+dateFormat(lastLoc.location.dateLocation,"dd/mm/yyyy HH:MM")+"</td></tr>"
+						+"<tr><td class='titimpressao01'>Endereço</td><td class='dados'>"+lastLoc.endereco+"</td></tr>"
 						
 						+link
 						
@@ -79,6 +81,7 @@ function desenhaVeiculo(lastLoc){
 						+"<tr><td class='titimpressao01'>Velocidade</td><td class='dados'>"+(lastLoc.velocidade).toFixed(2)+"km/h</td></tr>"
 						+"<tr><td class='titimpressao01'>Distância Percorrida</td><td class='dados'>"+(distancia/1000).toFixed(2)+"km</td></tr>"
 						+"<tr><td class='titimpressao01'>Última Leitura</td><td class='titimpressao01'>"+dateFormat(lastLoc.dateLocation,"dd/mm/yyyy HH:MM:ss")+"</td></tr>"
+						+"<tr><td class='titimpressao01'>Endereço</td><td class='dados'>"+lastLoc.endereco+"</td></tr>"
 						
 						+"</table></div>" ;
 	var title = (lastLoc.velocidade).toFixed(2)+"km/h" + " em "+dateFormat(lastLoc.dateLocation,"dd/mm/yyyy HH:MM:ss");

@@ -28,7 +28,7 @@ public class SendEmailCliente
 	
 	@Inject BoletoUtils boletoUtils;
 	
-   public void sendNotification(Cliente cliente, String subject, String content)
+   public void sendEmail(Cliente cliente, String subject, String content)
    {
 		 
 		   
