@@ -50,7 +50,12 @@
 										<c:if test="#{loginBean.hasPermission('MENU_VIAGENS')}">
 											<h:commandLink styleClass="btn btn-primary btn-sm btn-block"  action="relatorioExcessoVelocidade">Excesso de Velocidade</h:commandLink>
 											<p/>
-										</c:if>		
+										</c:if>	
+										
+										<c:if test="#{loginBean.hasPermission('MENU_VIAGENS')}">
+											<h:commandLink styleClass="btn btn-primary btn-sm btn-block"  action="relatorioDistanciaPercorrida">Distância Percorrida</h:commandLink>
+											<p/>
+										</c:if>			
 												
 										
 										
