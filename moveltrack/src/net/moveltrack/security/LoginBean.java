@@ -136,6 +136,11 @@ public class LoginBean extends BaseAction implements Serializable{
 		for (Permissao permissao : usuario.getPerfil().getPermissoes()) {
 			permissoes.put(permissao.getDescricao(),permissao);
 		}
+		
+		for (Permissao permissao : usuario.getPermissoes()) {
+			permissoes.put(permissao.getDescricao(),permissao);
+		}
+
 		return true;
 	}
 	

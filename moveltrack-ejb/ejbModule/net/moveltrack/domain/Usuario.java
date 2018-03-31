@@ -1,7 +1,9 @@
 package net.moveltrack.domain;
 
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,6 +11,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
@@ -49,6 +52,16 @@ public class Usuario extends BaseEntity {
 	
 	@ManyToOne(fetch = FetchType.EAGER)
 	private Perfil perfil;
+	
+    @ManyToMany(fetch = FetchType.EAGER)
+    private Set<Permissao> permissoes = new HashSet<Permissao>();
+
+	public Set<Permissao> getPermissoes() {
+		return permissoes;
+	}
+	public void setPermissoes(Set<Permissao> permissoes) {
+		this.permissoes = permissoes;
+	}
 
 	
 	public Usuario() {

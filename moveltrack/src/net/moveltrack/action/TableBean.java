@@ -10,7 +10,6 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import net.moveltrack.domain.BaseEntity;
-import net.moveltrack.domain.Permission;
 import net.moveltrack.security.LoginBean;
 
 /**

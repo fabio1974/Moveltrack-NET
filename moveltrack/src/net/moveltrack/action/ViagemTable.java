@@ -11,7 +11,6 @@ import net.moveltrack.dao.ViagemDao;
 import net.moveltrack.domain.Cliente;
 import net.moveltrack.domain.Motorista;
 import net.moveltrack.domain.Municipio;
-import net.moveltrack.domain.Permission;
 import net.moveltrack.domain.Veiculo;
 import net.moveltrack.domain.Viagem;
 import net.moveltrack.domain.ViagemStatus;

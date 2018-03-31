@@ -239,7 +239,7 @@
 												</center>	
 												</f:facet>
 												<center>
-												<h:panelGrid   columns="7">
+												<h:panelGrid   columns="9">
 												
 														<h:commandLink 
 															styleClass="btn btn-primary btn-xs "
@@ -281,6 +281,17 @@
 															<f:setPropertyActionListener value="#{cliente}"  target="#{clienteForm.cliente}"/>
 															<f:setPropertyActionListener value="#{cliente.usuario.perfil.tipo}"  target="#{clienteForm.tipo}"/>															
 															<f:setPropertyActionListener value="UPDATE"  target="#{clienteForm.action}"/>
+														</h:commandLink>
+														
+														&nbsp;&nbsp;
+														<h:commandLink rendered="#{loginBean.empregadoAdministrador}"
+															styleClass="btn btn-danger btn-xs " 
+															title="Permissões do Usuário"
+															action="acessoUsuario">
+															<i style="width:12px;" class="fa fa-lock"/>
+															<f:setPropertyActionListener value="#{cliente.usuario}"  target="#{acessoUsuario.usuario}"/>
+															<f:actionListener binding="#{acessoUsuario.updateView()}" ></f:actionListener>
+															<f:setPropertyActionListener value="#{cliente.nome}"  target="#{acessoUsuario.nomeCliente}"/>
 														</h:commandLink>
 														
 														

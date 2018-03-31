@@ -198,7 +198,7 @@
 									</div>
 								</div>
 								
-								<div class="col-sm-3">
+								<div class="col-sm-3" style="#{!loginBean.hasPermission('MENU_ALARMES')?'display:none':'display:'}">
 									<div class="form-group">
 										<label for="velocidadeMaxima">Velocidade Máxima (Alarme)</label>
 										<h:inputText id="velocidadeMaxima"

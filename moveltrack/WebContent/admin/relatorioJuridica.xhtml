@@ -37,22 +37,22 @@
 											<p/>
 										</c:if>
 					
-										<c:if test="#{loginBean.hasPermission('MENU_VIAGENS')}">
+										<c:if test="#{loginBean.hasPermission('RELATORIO_RESTRICAO_TRAFEGO')}">
 											<h:commandLink styleClass="btn btn-primary btn-sm btn-block"  action="relatorioUsoIndevido2">Restrição de Tráfego</h:commandLink>
 											<p/>
 										</c:if>		
 										
-										<c:if test="#{loginBean.hasPermission('MENU_VIAGENS')}">
+										<c:if test="#{loginBean.hasPermission('RELATORIO_MOTORISTA_CNH')}">
 											<h:commandLink styleClass="btn btn-primary btn-sm btn-block"  action="relatorioCNH">Vencimento de CNH</h:commandLink>
 											<p/>
 										</c:if>
 										
-										<c:if test="#{loginBean.hasPermission('MENU_VIAGENS')}">
+										<c:if test="#{loginBean.hasPermission('RELATORIO_EXCESSO_VELOCIDADE')}">
 											<h:commandLink styleClass="btn btn-primary btn-sm btn-block"  action="relatorioExcessoVelocidade">Excesso de Velocidade</h:commandLink>
 											<p/>
 										</c:if>	
 										
-										<c:if test="#{loginBean.hasPermission('MENU_VIAGENS')}">
+										<c:if test="#{loginBean.hasPermission('RELATORIO_DISTANCIA_PERCORRIDA')}">
 											<h:commandLink styleClass="btn btn-primary btn-sm btn-block"  action="relatorioDistanciaPercorrida">Distância Percorrida</h:commandLink>
 											<p/>
 										</c:if>			
