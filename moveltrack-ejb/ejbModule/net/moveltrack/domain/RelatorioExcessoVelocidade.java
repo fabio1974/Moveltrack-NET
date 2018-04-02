@@ -17,6 +17,7 @@ public class RelatorioExcessoVelocidade{
     private double latitude;
     private double longitude;
     private double velocidade;
+    private double distancia;
 	public Integer getId() {
 		return id;
 	}
@@ -66,7 +67,11 @@ public class RelatorioExcessoVelocidade{
 	public void setVelocidade(double velocidade) {
 		this.velocidade = velocidade;
 	}
-
-
+	public double getDistancia() {
+		return distancia;
+	}
+	public void setDistancia(double distancia) {
+		this.distancia = distancia;
+	}
 	
 }	

@@ -35,6 +35,7 @@ public class BackgroundTaskManager implements ServletContextListener {
 	@Inject TaskTeste taskTeste;
 	@Inject TaskGeraBoletoNoIugu taskGeraBoletoNoIugu;
 	@Inject TaskCorrigeIugu taskCorrigeIugu;
+	@Inject TaskDistanciaDiaria taskDistanciaDiaria;
 
 	@PostConstruct
 	public void init() {
@@ -46,7 +47,8 @@ public class BackgroundTaskManager implements ServletContextListener {
 		executor = new ScheduledThreadPoolExecutor(MAXIMUM_CONCURRENT);
 		List<Task> tasks = new ArrayList<Task>();
 		
-		//executor.schedule(taskCorrigeIugu,5,TimeUnit.SECONDS);
+		//executor.schedule(taskDistanciaDiaria,5,TimeUnit.SECONDS);
+		
 		taskCorrigeIugu.setInicio("01:30:00");
 		taskCorrigeIugu.setPeriodo(604800);
 		tasks.add(taskCorrigeIugu);
@@ -82,6 +84,10 @@ public class BackgroundTaskManager implements ServletContextListener {
 		taskEncerraViagens.setInicio("00:10:00");
 		taskEncerraViagens.setPeriodo(86400);
 		tasks.add(taskEncerraViagens);
+		
+		taskDistanciaDiaria.setInicio("00:15:00");
+		taskDistanciaDiaria.setPeriodo(86400);
+		tasks.add(taskDistanciaDiaria);
 		
 		taskGeraBoletoNoIugu.setIntervalo(20);
 		taskGeraBoletoNoIugu.setPeriodo(5);

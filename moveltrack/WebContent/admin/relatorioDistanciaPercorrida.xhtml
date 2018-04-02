@@ -19,35 +19,13 @@
 				
 						
 							<div class="row">
-								<div class="col-sm-1"></div>
-								<div class="col-sm-3">
-								<div class="form-group">
-									<label for="velocidade">Velocidade Limite</label>
-																<h:selectOneMenu id="velocidade" 
-																	converter="#{selectIntegerConverter}"
-																	value="#{relatorioExcessoVelocidadeBean.velocidade}"
-																	styleClass="form-control input-sm">
-																	
-																	<f:selectItem itemValue="60"  itemLabel="&nbsp;&nbsp;&nbsp;&nbsp;> 60km/h " />
-																	<f:selectItem itemValue="80"  itemLabel="&nbsp;&nbsp;&nbsp;&nbsp;> 80km/h " />
-																	<f:selectItem itemValue="90"  itemLabel="&nbsp;&nbsp;&nbsp;&nbsp;> 90km/h " />
-																	<f:selectItem itemValue="100" itemLabel="&nbsp;&nbsp;&nbsp;&nbsp;> 100km/h " />
-																	<f:selectItem itemValue="110" itemLabel="&nbsp;&nbsp;&nbsp;&nbsp;> 110km/h " />
-																	<f:selectItem itemValue="120" itemLabel="&nbsp;&nbsp;&nbsp;&nbsp;> 120km/h " />
-															
-																</h:selectOneMenu>
-
-
-
-								</div>		
-								</div>
 
 								<div class="col-sm-3">
 									<div class="form-group ">
 										<label for="inicio">Início do Período</label>
 										<div class='input-group input-group-sm date' id='inicio'>
 											<h:inputText id="inicio"
-												value="#{relatorioExcessoVelocidadeBean.inicio}"
+												value="#{relatorioDistanciaPercorridaBean.inicio}"
 												styleClass="form-control ">
 												<f:convertDateTime pattern="dd/MM/yyyy HH:mm" timeZone="GMT-3" />
 											</h:inputText>
@@ -62,7 +40,7 @@
 										<label for="fim">Fim do Período</label>
 										<div class='input-group input-group-sm date' id='fim'>
 											<h:inputText id="fim"
-												value="#{relatorioExcessoVelocidadeBean.fim}"
+												value="#{relatorioDistanciaPercorridaBean.fim}"
 												styleClass="form-control ">
 												<f:convertDateTime pattern="dd/MM/yyyy HH:mm" timeZone="GMT-3" />
 											</h:inputText>
@@ -72,25 +50,53 @@
 										</div>
 									</div>
 								</div>
-								<div class="col-sm-1">
-								</div>
+								
+										<div class="col-sm-3">
+										<div class="form-group ">
+										<label for="veiculo">Escolher Veículo</label>
+																<h:selectOneMenu id="veiculo"
+																	converter="#{veiculoConverter}"
+																	value="#{relatorioDistanciaPercorridaBean.veiculo}"
+																	styleClass="form-control">
+																	<f:selectItem itemLabel="Todos"  noSelectionOption="yes"/>
+																	<f:selectItems value="#{viagemForm.veiculos}" var="veiculo" itemLabel="#{veiculo.placa}" itemValue="#{veiculo}" />
+																</h:selectOneMenu>
+										</div>
+									</div>	
+									
+									<div class="col-sm-3">
+										<div class="form-group ">
+										<label for="ordem">Ordenar por</label>
+																<h:selectOneMenu id="ordem"
+																	value="#{relatorioDistanciaPercorridaBean.orderby}"
+																	styleClass="form-control">
+																	<f:selectItem itemLabel="Maior Distância" itemValue="distancia" />
+																	<f:selectItem itemLabel="Modelo do Veículo"  itemValue="marcaModelo"/>
+																	<f:selectItem itemLabel="Placa do Veículo"  itemValue="placa"/>
+																	
+																	
+																	
+																</h:selectOneMenu>
+										</div>
+									</div>	
+								
 							</div>
 							
 							<p/>
 							
 							<div class="row">
-								<div class="col-sm-3"></div>
-								<div class="col-sm-6">
+							
+								<div class="col-sm-12">
 									<table class="table table-striped  table-hover">
 										<tfoot>
 											<tr>
-												<td class="customFooter">Registros de Excesso de Velocidade No Período</td>
+												<!-- <td class="customFooter">Registros de Excesso de Velocidade No Período</td> -->
 												<td class="customFooter">
-												<center>
+												
 													<h:panelGrid columns="6">
 
 														<h:commandLink style="width:80px" value="Pdf" onclick="return validateReport();"  immediate="false"
-															action="#{relatorioExcessoVelocidadeBean.pdf('PDF')}"
+															action="#{relatorioDistanciaPercorridaBean.pdf('PDF')}"
 															styleClass="btn btn-primary btn-xs" >
 														<i class="fa fa-file-pdf-o"/>
 														</h:commandLink>	
@@ -98,13 +104,13 @@
 														&nbsp;&nbsp;&nbsp;&nbsp;
 														
 														<h:commandLink style="width:80px" value="Excel" onclick="return validateReport();"  immediate="false"
-															action="#{relatorioExcessoVelocidadeBean.pdf('EXCEL')}"
+															action="#{relatorioDistanciaPercorridaBean.pdf('EXCEL')}"
 															styleClass="btn btn-primary btn-xs" >
 															<i class="fa fa-file-excel-o"/>
 														</h:commandLink>	
 
 													</h:panelGrid>
-													</center>
+												
 													</td>
 											</tr>
 										</tfoot>
@@ -138,6 +144,14 @@ function validateReport(){
 		alert("O período do relatório deve ser menor do que um mês!");
 		return false; 
 	}
+
+	var lastNight = new Date();
+	lastNight.setHours(0,0,0,0);
+
+/* 	if(fim > lastNight){
+		alert("A data final é no máximo até meia noite de ontem!");
+		return false; 
+	}  */
 
 	return true;
 

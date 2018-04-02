@@ -80,7 +80,7 @@ public class LoginBean extends BaseAction implements Serializable{
 	public boolean hasPermission(Permission permission){
 		try{
 			Permissao permissao = permissaoDao.findByDescricao(permission.toString());
-			return  usuario.getPerfil().getPermissoes().contains(permissao);
+			return  usuario.getPerfil().getPermissoes().contains(permissao) || usuario.getPermissoes().contains(permissao);
 			
 		}catch(Exception e){
 			System.out.println("usuario "+usuario.getNomeUsuario()+ " não tem permissao "+permission.toString());
