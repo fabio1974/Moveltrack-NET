@@ -29,6 +29,9 @@ public class LocationDao extends DaoBean<Location>{
 	@SuppressWarnings("unchecked")
 	public List<Object> getLocationsFromVeiculo(Veiculo veiculo,Date inicio, Date fim){
 		
+		if(veiculo.getEquipamento()==null)
+			return new ArrayList<Object>();
+		
 		String orderby = "";
 		if(veiculo.getEquipamento().getModelo() == ModeloRastreador.TK103A2 || veiculo.getEquipamento().getModelo() == ModeloRastreador.TK06)
 			orderby = " order by l.id ";
@@ -100,8 +103,12 @@ where vi.status <> 'FINALIZADA'
 */
 
 
-	@SuppressWarnings("unchecked")
+
 	public Location getLastLocationFromVeiculo(Veiculo veiculo) {
+		
+		if(veiculo.getEquipamento()==null)
+			return null;
+		
 		String sql = "select l from Location l where l.imei = '"+veiculo.getEquipamento().getImei()+"' and l.dateLocation<=:now order by l.dateLocation desc ";
 		Query q = getEm().createQuery(sql);
 		q.setParameter("now",new Date());
@@ -268,6 +275,10 @@ where vi.status <> 'FINALIZADA'
 		list = (List<RelatorioExcessoVelocidade>)q.getResultList();
 		return list;
 	}
+
+
+
+	
 	
 
 	

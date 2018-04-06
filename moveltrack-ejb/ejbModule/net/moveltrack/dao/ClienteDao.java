@@ -142,7 +142,38 @@ public class ClienteDao extends DaoBean<Cliente>{
 		return list;
 	}
 
-
+	
+	
+	@SuppressWarnings("unchecked")
+	public List<Integer> findRelatorioDistanciaDiaria(){
+		
+		List<Integer> ids = null; 
+		
+		String sql = "	select p.id from usuario u" + 
+				"	inner join pessoa p on p.usuario_id = u.id" + 
+				"	inner join usuario_permissao up on up.usuario_id = u.id" + 
+				"	inner join permissao pe on pe.id = up.permissoes_id" + 
+				"	where pe.descricao = 'RELATORIO_DISTANCIA_PERCORRIDA'" + 
+				"	and p.status = 'ATIVO'" + 
+				"" + 
+				"	UNION" + 
+				"" + 
+				"	select p.id from usuario u" + 
+				"	inner join pessoa p on p.usuario_id = u.id" + 
+				"	inner join perfil pf on u.perfil_id = pf.id" + 
+				"	inner join perfil_permissao pp on pf.id = pp.Perfil_id" + 
+				"	inner join permissao pe on pe.id = pp.permissoes_id" + 
+				"	where pe.descricao = 'RELATORIO_DISTANCIA_PERCORRIDA'" + 
+				"	and p.status = 'ATIVO'";
+	
+		Query query = getEm().createNativeQuery(sql);
+		try{
+			ids = (List<Integer>)query.getResultList();
+		}catch(Exception e){
+			return null;
+		}
+		return ids;
+	}
 
 
 

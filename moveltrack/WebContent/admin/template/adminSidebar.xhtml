@@ -70,11 +70,13 @@
 							</li>
 							</c:if>
 							
+							<c:if test="#{loginBean.hasPermission('MENU_ALARMES')}">
 							<li  class="#{navigator.topico.equals('alarme')?'active':''}">
 								<h:commandLink 	action="clienteConfigForm"><i class="fa fa-rss-square"/>Alarmes
 									<f:setPropertyActionListener value="clienteConfig" target="#{navigator.topico}" />
 								</h:commandLink>
 							</li>
+							</c:if>
 							
 							<c:if test="#{loginBean.hasPermission('MENU_RASTREADOR')}">
 							<li  class="#{navigator.topico.equals('equipamento')?'active':''}">
@@ -205,7 +207,7 @@
 							</li>
 							</c:if>
 							
-							<c:if test="#{loginBean.hasPermission('MENU_DESPESA_DE_FROTA')}">
+							<c:if test="#{loginBean.hasPermission('MENU_VIAGENS')}">
 							<li class="#{navigator.topico.equals('despesaFrota')?'active':''}">
 								<h:commandLink 	action="#{conversation.novaConversa('despesaFrotaTable')}"><i class="fa fa-dollar"/>Despesas da Frota
 									<f:setPropertyActionListener value="despesaFrota" target="#{navigator.topico}" />
@@ -213,7 +215,7 @@
 							</li>
 							</c:if>
 							
-							<c:if test="#{loginBean.hasPermission('MENU_VIAGENS')}">
+							<c:if test="#{loginBean.hasPermission('MENU_RELATORIOS_FROTA')}">
 							<li class="#{navigator.topico.equals('relatorioJuridica')?'active':''}">
 								<h:commandLink 	action="relatorioJuridica"><i class="fa fa-file-pdf-o"/>Relatórios da Frota
 									<f:setPropertyActionListener value="relatorioJuridica" target="#{navigator.topico}" />
@@ -222,7 +224,7 @@
 							</c:if>
 							
 							
-							<c:if test="#{loginBean.hasPermission('MENU_RELATORIO')}">
+							<c:if test="#{loginBean.hasPermission('MENU_RELATORIOS_INTERNOS')}">
 							<li class="#{navigator.topico.equals('relatorioInterno')?'active':''}">
 								<h:commandLink 	action="relatorioInterno"><i class="fa fa-file-pdf-o"/>Relatórios Internos
 									<f:setPropertyActionListener value="relatorioInterno" target="#{navigator.topico}" />
@@ -236,11 +238,12 @@
 							
 							<c:if test="#{loginBean.hasPermission('MENU_ACESSO')}">
 							<li  class="#{navigator.topico.equals('controle')?'active':''}">
-								<h:commandLink 	action="#{conversation.novaConversa('controleTable')}"><i class="fa fa-key"/>Controle de Acesso
+								<h:commandLink 	action="#{conversation.novaConversa('controleTable')}"><i class="fa fa-key"/>Acesso de Perfil
 								    <f:setPropertyActionListener value="controle" target="#{navigator.topico}" />
 								</h:commandLink>
 							</li>
 							</c:if>
+					
 							
 
 							

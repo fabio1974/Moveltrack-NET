@@ -34,23 +34,9 @@ public class Perfil extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private PerfilTipo tipo;
 
-    
-    //private String descricao;
-
-    /**
-     */
     @ManyToMany(fetch = FetchType.EAGER)
     private Set<Permissao> permissoes = new HashSet<Permissao>();
 
-
-/*    public String getDescricao() {
-		return descricao;
-	}
-	public void setDescricao(String descricao) {
-		this.descricao = descricao;
-	}*/
-    
-    
 	public Set<Permissao> getPermissoes() {
 		return permissoes;
 	}
@@ -64,11 +50,5 @@ public class Perfil extends BaseEntity {
 		this.tipo = tipo;
 	}
 	
-	
-/*	@Override
-	public String toString(){
-		return descricao;
-	}*/
-
 
 }
