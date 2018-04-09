@@ -54,12 +54,10 @@ public class Location extends BaseEntity {
     @Size(max = 30)
     private String comando;
 
-   
     private int satelites;
     
     @Transient
     private String endereco;
-
    
     private int mcc;
 
