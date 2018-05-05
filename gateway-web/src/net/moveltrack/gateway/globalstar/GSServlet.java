@@ -114,18 +114,20 @@ public class GSServlet extends HttpServlet {
 		location.setMcc(0);
 		location.setSatelites(0);
 		location.setVersion(0);
-		locationDao.salvar(location);
 		
-		Location2 location2 = new Location2();
-		location2.setImei(location.getImei());
-		location2.setLatitude(location.getLatitude());
-		location2.setLongitude(location.getLongitude());
-		location2.setDateLocationInicio(location.getDateLocationInicio());
-		location2.setDateLocation(location.getDateLocation());
-		location2.setComando(location.getComando());
-		location2.setBattery(location.getBattery());
-		location2.setVelocidade(location.getVelocidade());
-		location2Dao.salvar(location2);
+		if(location.getVelocidade() < 200 && location.getLatitude() > -999) {
+			locationDao.salvar(location);
+			Location2 location2 = new Location2();
+			location2.setImei(location.getImei());
+			location2.setLatitude(location.getLatitude());
+			location2.setLongitude(location.getLongitude());
+			location2.setDateLocationInicio(location.getDateLocationInicio());
+			location2.setDateLocation(location.getDateLocation());
+			location2.setComando(location.getComando());
+			location2.setBattery(location.getBattery());
+			location2.setVelocidade(location.getVelocidade());
+			location2Dao.salvar(location2);
+		}
 	}
 
 	private boolean isHeadersValid(HttpServletRequest request) throws IOException {
