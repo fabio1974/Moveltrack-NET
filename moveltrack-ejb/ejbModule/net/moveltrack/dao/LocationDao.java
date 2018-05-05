@@ -250,7 +250,7 @@ where vi.status <> 'FINALIZADA'
 
 		List<RelatorioExcessoVelocidade> list = new ArrayList<RelatorioExcessoVelocidade>();
 		
-		String sql = " select l.id, '' as endereco, l.dateLocation, v.placa,v.marcaModelo, l.latitude, l.longitude, l.velocidade " 
+		String sql = " select l.id, '' as endereco, l.dateLocation, v.placa,v.marcaModelo, l.latitude, l.longitude, l.velocidade, 0 as distancia " 
 				 +" from location l"
 				 +" inner join equipamento e on e.imei = l.imei"
 				 +" inner join veiculo v on v.equipamento_id = e.id"
