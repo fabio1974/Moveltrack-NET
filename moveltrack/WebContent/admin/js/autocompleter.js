@@ -161,7 +161,7 @@ $(document).ready(function() {
 	
 	
 	$(function() {	
-		$("#form\\:municipio,#form\\:table\\:municipio,#form\\:cidadeDestino").autocomplete({
+		$("#form\\:municipio,#form\\:table\\:municipio,#form\\:cidadeDestino,#form\\:table\\:cidadeDestino").autocomplete({
 			minLength: 3,
 			source : function(request, response) {
 				$.ajax({

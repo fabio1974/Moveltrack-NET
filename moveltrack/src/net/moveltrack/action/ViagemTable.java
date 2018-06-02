@@ -76,7 +76,7 @@ public class ViagemTable extends TableBean {
 		preFilters.put("veiculoId",veiculo);
 		preFilters.put("clienteId",cliente);
 		preFilters.put("motoristaId",motorista);
-		preFilters.put("municipioId",cidadeDestino);
+		preFilters.put("cidadeDestinoId",cidadeDestino);
 		
 		normalizeFilters();
 	}
