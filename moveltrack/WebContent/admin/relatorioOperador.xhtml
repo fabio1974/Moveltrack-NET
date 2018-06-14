@@ -64,7 +64,6 @@
 												<div class="form-group">
 													<label for="operador">Instalador</label>
 													<h:selectOneMenu class="input-sm form-control input-s-sm "
-														disabled='#{veiculoForm.action.equals("SHOW") or loginBean.hasPermission("VEICULO_VER_PROPRIO")}'
 														style="#{component.valid?'':'border-color:red;'}"
 														id="operador" value="#{relatorioOperador.operador}"
 														converter="#{empregadoConverter}">
