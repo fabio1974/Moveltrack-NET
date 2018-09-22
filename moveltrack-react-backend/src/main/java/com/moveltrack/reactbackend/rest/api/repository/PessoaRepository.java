@@ -5,11 +5,13 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
 import com.moveltrack.reactbackend.model.Pessoa;
+import com.moveltrack.reactbackend.model.Usuario;
 
 @RepositoryRestResource(path = "pessoas")
 public interface PessoaRepository extends PagingAndSortingRepository<Pessoa,Integer> , JpaSpecificationExecutor<Pessoa>{
 
 	Pessoa findByCpf(String username);
+	Pessoa findByUsuario(Usuario usuario);
 
 	/*List<Pessoa> findByNome(@Param("nome") String nome);
 	Pessoa findBySenha(@Param("senha") String senha);

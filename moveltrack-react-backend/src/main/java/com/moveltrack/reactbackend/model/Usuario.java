@@ -10,6 +10,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
@@ -51,6 +52,7 @@ public class Usuario {
 	private Perfil perfil;
 	
     @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name="usuario_permissao")
     private Set<Permissao> permissoes = new HashSet<Permissao>();
 
 	public Set<Permissao> getPermissoes() {

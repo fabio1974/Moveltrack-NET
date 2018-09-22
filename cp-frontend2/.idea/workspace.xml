@@ -2,7 +2,44 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="1bf25753-3118-4e84-9d29-29dafa6b3507" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/../moveltrack-react-frontend/build/static/js/main.4c5a21c0.js" beforeDir="false" afterPath="$PROJECT_DIR$/../moveltrack-react-frontend/build/static/js/main.4c5a21c0.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../moveltrack-react-backend/src/main/java/com/moveltrack/reactbackend/model/Acidente.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../moveltrack-react-backend/src/main/java/com/moveltrack/reactbackend/model/Afastamento.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../moveltrack-react-backend/src/main/java/com/moveltrack/reactbackend/model/AfastamentoTipo.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../moveltrack-react-backend/src/main/java/com/moveltrack/reactbackend/model/Afinidade.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../moveltrack-react-backend/src/main/java/com/moveltrack/reactbackend/model/AfinidadeId.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../moveltrack-react-backend/src/main/java/com/moveltrack/reactbackend/model/AreaOrganizacional.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../moveltrack-react-backend/src/main/java/com/moveltrack/reactbackend/model/AreaOrganizacionalTipo.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../moveltrack-react-backend/src/main/java/com/moveltrack/reactbackend/model/Arma.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../moveltrack-react-backend/src/main/java/com/moveltrack/reactbackend/model/ArmaApreendida.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../moveltrack-react-backend/src/main/java/com/moveltrack/reactbackend/model/Chip.java" beforeDir="false" afterPath="$PROJECT_DIR$/../moveltrack-react-backend/src/main/java/com/moveltrack/reactbackend/model/Chip.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../moveltrack-react-backend/src/main/java/com/moveltrack/reactbackend/model/Crime.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../moveltrack-react-backend/src/main/java/com/moveltrack/reactbackend/model/Curriculo.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../moveltrack-react-backend/src/main/java/com/moveltrack/reactbackend/model/Curso.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../moveltrack-react-backend/src/main/java/com/moveltrack/reactbackend/model/DrogaApreendida.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../moveltrack-react-backend/src/main/java/com/moveltrack/reactbackend/model/DrogaApreendidaTipo.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../moveltrack-react-backend/src/main/java/com/moveltrack/reactbackend/model/DrogaApreendidaUnidade.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../moveltrack-react-backend/src/main/java/com/moveltrack/reactbackend/model/EquipamentoDeApoio.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../moveltrack-react-backend/src/main/java/com/moveltrack/reactbackend/model/EquipamentoDeApoioID.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../moveltrack-react-backend/src/main/java/com/moveltrack/reactbackend/model/Escala.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../moveltrack-react-backend/src/main/java/com/moveltrack/reactbackend/model/EscalaEquipe.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../moveltrack-react-backend/src/main/java/com/moveltrack/reactbackend/model/EscalaEquipeSigla.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../moveltrack-react-backend/src/main/java/com/moveltrack/reactbackend/model/EscalaTipo.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../moveltrack-react-backend/src/main/java/com/moveltrack/reactbackend/model/Experiencia.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../moveltrack-react-backend/src/main/java/com/moveltrack/reactbackend/model/Formacao.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../moveltrack-react-backend/src/main/java/com/moveltrack/reactbackend/model/Habilidade.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../moveltrack-react-backend/src/main/java/com/moveltrack/reactbackend/model/Idioma.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../moveltrack-react-backend/src/main/java/com/moveltrack/reactbackend/model/Operacao.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../moveltrack-react-backend/src/main/java/com/moveltrack/reactbackend/model/OperacaoStatus.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../moveltrack-react-backend/src/main/java/com/moveltrack/reactbackend/model/Perfil.java" beforeDir="false" afterPath="$PROJECT_DIR$/../moveltrack-react-backend/src/main/java/com/moveltrack/reactbackend/model/Perfil.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../moveltrack-react-backend/src/main/java/com/moveltrack/reactbackend/model/Permissao.java" beforeDir="false" afterPath="$PROJECT_DIR$/../moveltrack-react-backend/src/main/java/com/moveltrack/reactbackend/model/Permissao.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../moveltrack-react-backend/src/main/java/com/moveltrack/reactbackend/model/Pessoa.java" beforeDir="false" afterPath="$PROJECT_DIR$/../moveltrack-react-backend/src/main/java/com/moveltrack/reactbackend/model/Pessoa.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../moveltrack-react-backend/src/main/java/com/moveltrack/reactbackend/model/PessoaApreendida.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../moveltrack-react-backend/src/main/java/com/moveltrack/reactbackend/model/Plantao.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../moveltrack-react-backend/src/main/java/com/moveltrack/reactbackend/model/Rastreador.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../moveltrack-react-backend/src/main/java/com/moveltrack/reactbackend/model/RastreadorTipo.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../moveltrack-react-backend/src/main/java/com/moveltrack/reactbackend/model/Usuario.java" beforeDir="false" afterPath="$PROJECT_DIR$/../moveltrack-react-backend/src/main/java/com/moveltrack/reactbackend/model/Usuario.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../moveltrack-react-backend/src/main/java/com/moveltrack/reactbackend/model/Viatura.java" beforeDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -380,7 +417,7 @@
       <path value="$PROJECT_DIR$/../moveltrack-react-frontend/src/views/Widgets/package.json" />
     </packageJsonPaths>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
+  <component name="ProjectFrameBounds" extendedState="7">
     <option name="x" value="1912" />
     <option name="y" value="-8" />
     <option name="width" value="1456" />
@@ -529,17 +566,17 @@
       <workItem from="1536991430200" duration="7000" />
       <workItem from="1536993170415" duration="1138000" />
       <workItem from="1537411906152" duration="716000" />
-      <workItem from="1537621401505" duration="117000" />
+      <workItem from="1537621401505" duration="747000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="182184000" />
+    <option name="totallyTimeSpent" value="182814000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="1912" y="-8" width="1456" height="876" extended-state="6" />
+    <frame x="1912" y="-8" width="1456" height="876" extended-state="7" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.6231494" visible="true" weight="0.370945" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.6231494" visible="true" weight="0.370945" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="npm" order="2" sideWeight="0.3768506" side_tool="true" weight="0.370945" />
       <window_info id="Favorites" order="3" side_tool="true" />

@@ -3,13 +3,13 @@ package com.moveltrack.reactbackend.model;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.xml.bind.annotation.XmlRootElement;
 
-@XmlRootElement
+
+
 @Entity
 public class Permissao {
 
-	private static final long serialVersionUID = 4409549347552909844L;
+
 
 	@Id
 	private Integer id;

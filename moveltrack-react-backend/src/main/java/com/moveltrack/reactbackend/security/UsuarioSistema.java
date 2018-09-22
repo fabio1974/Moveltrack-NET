@@ -14,12 +14,16 @@ public class UsuarioSistema extends User {
 
 	private Pessoa pessoa;
 
-	public UsuarioSistema(Usuario usuario, Collection<? extends GrantedAuthority> authorities) {
+	public UsuarioSistema(Usuario usuario, Collection<? extends GrantedAuthority> authorities, Pessoa pessoa) {
 		super(usuario.getNomeUsuario(), usuario.getSenha(), authorities);
 		this.pessoa = pessoa;
 	}
 
 	public Pessoa getPessoa() {
 		return pessoa;
+	}
+
+	public void setPessoa(Pessoa pessoa) {
+		this.pessoa = pessoa;
 	}
 }

@@ -6,10 +6,10 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.web.servlet.DispatcherServlet;
 
 @SpringBootApplication
-public class CartaoProgramaApplication {
+public class MoveltrackReactBackendApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(CartaoProgramaApplication.class, args);
+		SpringApplication.run(MoveltrackReactBackendApplication.class, args);
 	}
 
 	

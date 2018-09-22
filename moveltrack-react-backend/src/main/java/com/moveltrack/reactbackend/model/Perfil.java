@@ -8,6 +8,7 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 
 import com.sun.istack.internal.NotNull;
@@ -33,6 +34,7 @@ public class Perfil {
     private PerfilTipo tipo;
 
     @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name="perfil_permissao")
     private Set<Permissao> permissoes = new HashSet<Permissao>();
 
 	public Set<Permissao> getPermissoes() {
