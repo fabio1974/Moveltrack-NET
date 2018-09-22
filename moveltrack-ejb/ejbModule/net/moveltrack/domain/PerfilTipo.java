@@ -10,5 +10,9 @@ public enum PerfilTipo {
     FINANCEIRO,
     GERENTE_GERAL,
     GERENTE_ADM,
-    INSTALADOR
+    INSTALADOR;
+
+	public boolean isCliente() {
+		return this == CLIENTE_PF || this==CLIENTE_PJ;
+	}
 }

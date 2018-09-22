@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.moveltrack.dao.UsuarioDao;
+import net.moveltrack.domain.PerfilTipo;
 import net.moveltrack.domain.Usuario;
 
 public class LoginFilter implements Filter {
@@ -32,6 +33,8 @@ public class LoginFilter implements Filter {
     	try{
     		if (loginBean == null || !loginBean.isLoggedIn()) {
     			((HttpServletResponse)response).sendRedirect(getUrl(request));
+    		}else if(loginBean.getUsuario().getPerfil().getTipo().isCliente()) {
+    			((HttpServletResponse)response).sendRedirect("http://localhost:3000");
     		}
     		chain.doFilter(request, response);
     	}catch(Exception e){
