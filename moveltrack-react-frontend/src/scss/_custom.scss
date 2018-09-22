@@ -1,0 +1,25 @@
+// Here you can add other styles
+
+.rs-sm .Select-control {
+    height: 24px !important;
+    //line-height: 1.5 !important;
+    //padding: 0 0.5rem;
+    font-size: 0.76563rem;
+    vertical-align: top !important;
+
+    .Select-placeholder {
+        line-height: 2 !important;
+        top: 5px !important;
+        vertical-align: top !important;
+    }
+
+    .Select-input {
+        line-height: 1.5 !important;
+        height: 24px !important;
+        vertical-align: top !important;
+    }
+  }
+
+  .rs-sm .Select-placeholder, .Select--single > .Select-control .Select-value {
+    line-height: 2 !important;
+}

@@ -1,0 +1,434 @@
+.main-footer {
+    position: fixed;
+    bottom:0px;
+    width:100%;
+}
+
+.meucontainer {
+    width: 100%;
+    padding-right: 90px; 
+    margin-left: 20px;
+    
+}
+
+button {
+    margin-left: 5px;
+}
+
+.margin-left-0{
+    margin-left: 0px;
+}
+
+.margin-0{
+    margin: 0px;
+}
+
+.height-36{
+    height: 36px;
+}
+
+.height-28{
+    height: 28px;
+}
+
+.height-22{
+    height: 22px;
+}
+
+.height-200{
+  height: 200px;
+}
+
+
+.height-24{
+    height: 24px;
+}
+
+.font-size-12{
+    font-size: 12px;
+}
+
+
+.padding-0{
+    padding: 0px;
+}
+
+.padding-l-0{
+  padding-left: 0px;
+}
+
+.padding-r-0{
+  padding-right: 0px;
+}
+
+.padding-l-10{
+  padding-left: 10px;
+}
+
+.padding-r-10{
+  padding-right: 10px;
+}
+
+.padding-l-15{
+  padding-left: 15px;
+}
+
+.padding-r-15{
+  padding-right: 15px;
+}
+
+
+.padding-l-20{
+  padding-left: 20px;
+}
+
+.padding-r-20{
+  padding-right: 20px;
+}
+
+.margin-2{
+  margin: 2px;
+}
+
+.margin-4{
+  margin: 4px;
+}
+
+.margin-5{
+  margin: 5px;
+}
+
+.margin-7{
+  margin: 7px;
+}
+
+.margin-8{
+  margin: 8px;
+}
+
+.margin-10{
+  margin: 10px;
+}
+
+.margin-15{
+  margin: 15px;
+}
+
+
+
+
+.padding-5{
+  padding: 5px;
+}
+
+
+.padding-10{
+  padding: 10px;
+}
+
+
+.padding-20{
+  padding: 20px;
+}
+
+.padding-h-5{
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#floating-panel {
+  position: absolute;
+  top: 10px;
+  left: 120px;
+  z-index: 5;
+  background-color: #fff200;
+
+  padding-right: 15px;
+  padding-left: 12px;
+
+  border: 1px solid #999;
+  text-align: center;
+  font-family: 'Roboto','sans-serif';
+  line-height: 30px;
+
+  border-radius: 0.25rem;
+
+}
+
+.padding-h-10{
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.padding-h-20{
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+.margin-v-10{
+  margin-bottom: 10px;
+  margin-top: 10px;
+}
+
+.margin-v-5{
+  margin-bottom: 5px;
+  margin-top: 5px;
+}
+
+.margin-bottom-5{
+  margin-bottom: 5px;
+}
+
+.margin-bottom-10{
+  margin-bottom: 10px;
+}
+
+
+
+
+
+.padding-v-0{
+  padding-bottom: 0px;
+  padding-top: 0px;
+}
+
+.padding-v-10{
+  padding-bottom: 10px;
+  padding-top: 10px;
+}
+
+.padding-v-15{
+  padding-bottom: 15px;
+  padding-top: 15px;
+}
+
+
+.padding-v-20{
+  padding-bottom: 20px;
+  padding-top: 20px;
+}
+
+
+.btn-xs{
+    padding: 0px 0.27rem;
+    font-size: 12px;
+    height: 24px;
+}
+
+
+
+.botao-h1{
+    line-height: 1;
+}
+
+.input-sx {
+    height: 28px !important;
+    line-height: 1;
+    width: 20px !important;
+}
+
+.table-actions {
+    width: 150px;
+}
+
+input[type=checkbox], input[type=radio] {
+    margin: 33px 0 0;
+}
+
+.width-40{
+    width: 40px !important;
+}
+
+.width-60{
+    width: 60px !important;
+}
+
+.width-80{
+    width: 80px !important;
+}
+
+.width-100{
+    width: 100px !important;
+}
+
+.width-120{
+    width: 120px !important;
+}
+
+.width-140{
+    width: 140px !important;
+}
+
+.width-160{
+    width: 160px !important;
+}
+
+.width-180{
+    width: 180px !important;
+}
+
+.width-200{
+    width: 200px !important;
+}
+
+
+.h-divider{
+    margin-top:0px;
+    margin-bottom:10px;
+    height:1px;
+    width:100%;
+    border-top:1px solid lightgrey;
+   }
+
+.table > thead > tr > th, .table > tbody > tr > th, .table > tfoot > tr > th, .table > thead > tr > td, .table > tbody > tr > td, .table > tfoot > tr > td {
+    border-top: 1px solid #ccc;
+    line-height: 1.1;
+    padding: 5px;
+    vertical-align: middle;
+}
+
+.input-xs {
+    height: 22px;
+/*     padding: 2px 5px;
+    font-size: 12px;
+ */    line-height: 1.5;
+ /* border-radius: 3px; */
+}
+
+.on-bottom{
+    padding-bottom: 0px !important;
+    margin-bottom: 0px !important;
+    vertical-align: bottom;
+}
+
+
+.maxWidth {
+    width: 100% !important;
+}
+
+.maxHeight{
+    height: 100% !important;
+}
+
+.margin-top-40{
+  margin-top:40px;
+}
+
+/***********************************************/
+/*                 SIDE BAR CSS                */
+/***********************************************/
+
+.sidebar-minimized .sidebar .sidebar-nav {
+  overflow: visible !important;
+  width: 50px;
+}
+
+/*
+.sidebar .nav-dropdown-items .nav-item {
+  background: #f0f3f5;
+}
+
+.sidebar .nav-dropdown.open .nav-link {
+  color: #3a4248;
+}
+
+.sidebar .nav-dropdown.open .nav-link:hover {
+  color: #FFF;
+}
+
+.sidebar .nav-dropdown-toggle {
+  background: #ccc;
+}
+
+.sidebar .nav-link.active {
+  background: #e4e5e6;
+  color: #3a4248;
+}
+
+.sidebar .nav-item  {
+  background: #ccc;
+  color: #3a4248;
+}
+
+.sidebar .nav-link  {
+  color: #3a4248;
+  border-bottom: 0.25px solid #bbb;
+}
+
+.sidebar .nav-link:hover   {
+  background: #0b4d75;
+  color: white;
+}
+
+.sidebar .nav{
+  background: #f0f3f5;
+}
+
+.sidebar .sidebar-minimizer {
+  background: #f0f3f5;
+  border: 1px solid #c8ced3;
+  margin: 0;
+}
+
+/***********************************************/
+/*            ABAS - ALTURA E CONTORNO      */
+/***********************************************/
+
+/*diminui a altura das abas*/
+.nav-link {
+  display: block;
+  padding: 0.12rem 0.7rem;
+}
+
+.nav-tabs .nav-link {
+  border: 1px solid #00000014;
+}
+
+/***********************************************/
+/*            CARDS  - ESTREITAMENTO           */
+/***********************************************/
+
+
+.card-header {
+  padding: 0.4rem 1.25rem;
+}
+
+.card-footer {
+  padding: 0.4rem 1.25rem;
+}
+
+
+label {
+  display: inline-block;
+  font-weight: bold;
+  margin: 0;  /*colocado o label mais proximo dos campos...a margem comia muito espaço vertical"*/
+}
+
+/***********************************************/
+/*            MODAL                      */
+/***********************************************/
+
+.styles_overlay__CLSq- {
+  z-index: 1100;
+}
+
+.custom-overlay {
+  /*background: rgba(36, 123, 160, 0.7);*/
+
+}
+.custom-modal {
+  /*background: #b2dbbf;*/
+  max-width: 100%;
+  width: 90%;
+  margin: auto;
+
+
+
+
+  padding-top: 30px;
+  padding-left: 40px;
+  padding-right: 40px;
+  padding-bottom: 35px;
+
+  border-radius: 0.55rem;
+}
