@@ -8,7 +8,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
-import com.moveltrack.reactbackend.model.Viatura;
+import com.moveltrack.reactbackend.model.Veiculo;
 import com.moveltrack.reactbackend.model.st500.Location;
 import com.moveltrack.reactbackend.service.Util;
 
@@ -23,7 +23,7 @@ public class LocationRepImpl implements LocationRepCustom {
 
 
 	@Override
-	public List<Object> findLocationsByVeiculoInicioFim(Viatura viatura, Date inicio, Date fim) {
+	public List<Object> findLocationsByVeiculoInicioFim(Veiculo veiculo, Date inicio, Date fim) {
 
 		String orderby = "";
 			orderby = " order by l.dateLocation ";
@@ -40,7 +40,7 @@ public class LocationRepImpl implements LocationRepCustom {
 				")" + orderby;					
 		
 		Query q = entityManager.createQuery(sql);
-		q.setParameter("imei",viatura.getRastreador().getImei());
+		q.setParameter("imei",veiculo.getEquipamento().getImei());
 		q.setParameter("inicio",inicio);
 		q.setParameter("fim",fim);
 		
@@ -55,8 +55,8 @@ public class LocationRepImpl implements LocationRepCustom {
 	}
 	
 	
-	public Location getLastLocationFromVeiculo(Viatura viatura) {
-		String sql = "select l from Location l where l.imei = '"+viatura.getRastreador().getImei()+"' and l.dateLocation<=:now order by l.dateLocation desc ";
+	public Location getLastLocationFromVeiculo(Veiculo veiculo) {
+		String sql = "select l from Location l where l.imei = '"+veiculo.getEquipamento().getImei()+"' and l.dateLocation<=:now order by l.dateLocation desc ";
 		Query q = entityManager.createQuery(sql);
 		q.setParameter("now",new Date());
 		q.setMaxResults(1);

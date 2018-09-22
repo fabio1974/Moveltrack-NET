@@ -6,6 +6,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 
 import com.moveltrack.reactbackend.model.Pessoa;
+import com.moveltrack.reactbackend.model.Usuario;
 
 public class UsuarioSistema extends User {
 
@@ -13,8 +14,8 @@ public class UsuarioSistema extends User {
 
 	private Pessoa pessoa;
 
-	public UsuarioSistema(Pessoa pessoa, Collection<? extends GrantedAuthority> authorities) {
-		super(pessoa.getCpf(), pessoa.getSenha(), authorities);
+	public UsuarioSistema(Usuario usuario, Collection<? extends GrantedAuthority> authorities) {
+		super(usuario.getNomeUsuario(), usuario.getSenha(), authorities);
 		this.pessoa = pessoa;
 	}
 

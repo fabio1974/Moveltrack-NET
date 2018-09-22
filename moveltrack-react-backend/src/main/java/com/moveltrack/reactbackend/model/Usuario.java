@@ -1,139 +1,181 @@
 package com.moveltrack.reactbackend.model;
 
-//@Entity
-//@Table(name = "tb_usu_usuario")
+import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.persistence.Transient;
+import javax.xml.bind.annotation.XmlRootElement;
+
+
+
+@XmlRootElement
+@Entity
 public class Usuario {
 
-//	@Id
-//	@GeneratedValue(strategy = GenerationType.IDENTITY)
-//	@Column(name = "usu_id_usuario")
-	private Long id;
 
-//	@Column(name = "usu_ds_nome")
-	private String nome;
-//
-//	@Column(name = "usu_ds_nome_guerra")
-//	private String nomeGuerra;
-//
-//	@Column(name = "usu_ds_matricula")
-//	private String matricula;
 
-//	@Column(name = "usu_ds_cpf")
-	private String cpf;
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	private Integer id;
 
-//	@Column(name = "usu_ds_email")
-//	private String email;
+	@Column(length = 50, nullable = false)
+	private String senha;
+	
+	@Transient
+	private String confirmaSenha;
 
-//	@Column(name = "usu_ds_password")
-	private String password;
+	@Column(length = 50)
+	private String email;
 
-//	@Column(name = "usu_celular")
-//	private String celular;
-//	
-//	@ManyToOne
-//	@JoinColumn(name = "uf_sigla")
-//	private Uf uf;
-//
-//	@ManyToOne
-//	@JoinColumn(name = "org_id_orgao")
-//	private Orgao orgao;
-//	
-//	@JsonIgnore
-//	@OneToMany(mappedBy="usuario", cascade=CascadeType.PERSIST, fetch=FetchType.EAGER)
-//	private List<UsuarioGrupo> usuarioGrupo;
+	@Column(nullable = false)
+	private boolean ativo;
 
-	public Long getId() {
+	@Column(length = 25, unique = true, nullable = false)
+	private String nomeUsuario;
+
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date ultimoAcesso;
+	
+	@ManyToOne(fetch = FetchType.EAGER)
+	private Perfil perfil;
+	
+    @ManyToMany(fetch = FetchType.EAGER)
+    private Set<Permissao> permissoes = new HashSet<Permissao>();
+
+	public Set<Permissao> getPermissoes() {
+		return permissoes;
+	}
+	public void setPermissoes(Set<Permissao> permissoes) {
+		this.permissoes = permissoes;
+	}
+
+	
+	public Usuario() {
+
+	}
+	
+	
+	public Perfil getPerfil() {
+		return perfil;
+	}
+
+
+	public void setPerfil(Perfil perfil) {
+		this.perfil = perfil;
+	}
+
+
+
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
-	public String getNome() {
-		return nome;
+	public String getSenha() {
+		return senha;
 	}
 
-	public void setNome(String nome) {
-		this.nome = nome;
+	public void setSenha(String senha) {
+		if(senha!=null)
+			senha = senha.trim();
+		this.senha = senha;
 	}
-//
-//	public String getNomeGuerra() {
-//		return nomeGuerra;
-//	}
-//
-//	public void setNomeGuerra(String nomeGuerra) {
-//		this.nomeGuerra = nomeGuerra;
-//	}
-//
-//	public String getMatricula() {
-//		return matricula;
-//	}
-//
-//	public void setMatricula(String matricula) {
-//		this.matricula = matricula;
-//	}
 
-	public String getCpf() {
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+
+
+	public boolean isAtivo() {
+		return ativo;
+	}
+
+
+	public String getNomeUsuario() {
+		return nomeUsuario;
+	}
+
+	public void setNomeUsuario(String nomeUsuario) {
+		if(nomeUsuario!=null)
+			nomeUsuario = nomeUsuario.trim();
+		this.nomeUsuario = nomeUsuario;
+	}
+
+	public Date getUltimoAcesso() {
+		return ultimoAcesso;
+	}
+
+	public void setUltimoAcesso(Date ultimoAcesso) {
+		this.ultimoAcesso = ultimoAcesso;
+	}
+
+
+
+	public String getConfirmaSenha() {
+		return confirmaSenha;
+	}
+
+
+
+	public void setConfirmaSenha(String confirmaSenha) {
+		this.confirmaSenha = confirmaSenha;
+	}
+
+
+	public void setAtivo(boolean ativo) {
+		this.ativo = ativo;
+	}
+
+	
+	public boolean acessoFinanceiro(){
+		return perfil.getTipo() == PerfilTipo.ADMINISTRADOR ||
+				  perfil.getTipo() == PerfilTipo.FINANCEIRO ||
+					 perfil.getTipo() == PerfilTipo.GERENTE_ADM;
+	}	
+	
+	
+/*	public List<UsuarioPermissao> getUsuarioPermissoes() {
+		return usuarioPermissoes;
+	}
+
+	public void setUsuarioPermissoes(List<UsuarioPermissao> usuarioPermissoes) {
+		this.usuarioPermissoes = usuarioPermissoes;
+	}*/
+
+/*	@Transient
+	public String getCpfFormatado() {
+
+		if (StringUtils.isBlank(nomeUsuario)) {
+			return "";
+		}
+
+		MaskFormatter mask;
+		try {
+			mask = new MaskFormatter("###.###.###-##");
+			mask.setValueContainsLiteralCharacters(false);
+			return mask.valueToString(nomeUSuario);
+		} catch (java.text.ParseException e) {
+			e.printStackTrace();
+		}
 		return cpf;
-	}
-
-	public void setCpf(String cpf) {
-		this.cpf = cpf;
-	}
-
-//	public String getEmail() {
-//		return email;
-//	}
-//
-//	public void setEmail(String email) {
-//		this.email = email;
-//	}
-
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
-	}
-
-//	public String getCelular() {
-//		return celular;
-//	}
-//
-//	public void setCelular(String celular) {
-//		this.celular = celular;
-//	}
-//
-//	public Uf getUf() {
-//		return uf;
-//	}
-//
-//	public void setUf(Uf uf) {
-//		this.uf = uf;
-//	}
-//
-//	public Orgao getOrgao() {
-//		return orgao;
-//	}
-//
-//	public void setOrgao(Orgao orgao) {
-//		this.orgao = orgao;
-//	}
-//
-//	public List<UsuarioGrupo> getUsuarioGrupo() {
-//		return usuarioGrupo;
-//	}
-//
-//	public void setUsuarioGrupo(List<UsuarioGrupo> usuarioGrupo) {
-//		this.usuarioGrupo = usuarioGrupo;
-//	}
-//
-//	public Set<Funcionalidade> getFuncionalidades() {
-//		Set<Funcionalidade> funcionalidades = new HashSet<>();
-//		usuarioGrupo.forEach(ug -> funcionalidades.addAll(ug.getGrupo().getFuncionalidades()));
-//
-//		return funcionalidades;
-//	}
+	}*/
 }
