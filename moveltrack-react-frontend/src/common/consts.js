@@ -10,6 +10,6 @@ if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
 
 
 export default {
-    API_URL: `http://${HOST}:8080/api`,
-    OAPI_URL: `http://${HOST}:8080`
+    API_URL: `http://${HOST}:8090/api`,
+    OAPI_URL: `http://${HOST}:8090`
 }

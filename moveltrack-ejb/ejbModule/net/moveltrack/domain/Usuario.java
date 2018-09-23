@@ -36,6 +36,10 @@ public class Usuario extends BaseEntity {
 	private String senha;
 	
 	@Transient
+	private String pwd;
+
+	
+	@Transient
 	private String confirmaSenha;
 
 	@Column(length = 50)
@@ -68,7 +72,12 @@ public class Usuario extends BaseEntity {
 
 	}
 	
-	
+	public String getPwd() {
+		return pwd;
+	}
+	public void setPwd(String pwd) {
+		this.pwd = pwd;
+	}
 	public Perfil getPerfil() {
 		return perfil;
 	}

@@ -1,6 +1,12 @@
 package net.moveltrack.security;
 
 import java.io.IOException;
+import java.io.OutputStream;
+import java.io.UnsupportedEncodingException;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.ProtocolException;
+import java.net.URL;
 
 import javax.inject.Inject;
 import javax.servlet.Filter;
@@ -13,7 +19,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.moveltrack.dao.UsuarioDao;
-import net.moveltrack.domain.PerfilTipo;
 import net.moveltrack.domain.Usuario;
 
 public class LoginFilter implements Filter {
@@ -33,8 +38,9 @@ public class LoginFilter implements Filter {
     	try{
     		if (loginBean == null || !loginBean.isLoggedIn()) {
     			((HttpServletResponse)response).sendRedirect(getUrl(request));
-    		}else if(loginBean.getUsuario().getPerfil().getTipo().isCliente()) {
-    			((HttpServletResponse)response).sendRedirect("http://localhost:3000");
+    		//}else if(loginBean.getUsuario().getPerfil().getTipo().isClientePessoaJuridica()) {
+    		}else if(loginBean.getUsuario().getNomeUsuario().equals("sincoplema")) {	
+    			((HttpServletResponse)response).sendRedirect("http://localhost:3000/?user="+loginBean.getUsuario().getNomeUsuario()+"&pwd="+loginBean.getUsuario().getPwd());
     		}
     		chain.doFilter(request, response);
     	}catch(Exception e){
@@ -47,7 +53,10 @@ public class LoginFilter implements Filter {
     	}
     }
     
-    private String getUrl(ServletRequest request){
+		
+	
+
+	private String getUrl(ServletRequest request){
     	String url = "";
     	try{
 	    	String contextPath = ((HttpServletRequest)request).getContextPath(); //   /moveltrack

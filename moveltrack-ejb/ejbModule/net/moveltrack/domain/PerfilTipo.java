@@ -15,4 +15,9 @@ public enum PerfilTipo {
 	public boolean isCliente() {
 		return this == CLIENTE_PF || this==CLIENTE_PJ;
 	}
+	
+	public boolean isClientePessoaJuridica() {
+		return this==CLIENTE_PJ;
+	}
+
 }

@@ -35,7 +35,19 @@ class DefaultHeader extends Component {
     this.setState(prevState => ({opened:false}))
   }
 
+  /*logoutAndRedirect(){
+    this.props.logout()
+    this.props.history.push("http://localhost:8080/moveltrack");
+  }*/
+
+  decodeToken(token) {
+    return  JSON.parse(atob(token.split('.')[1]));
+  };
+
   render() {
+
+    const access_token = JSON.parse(localStorage.getItem("cp_access_token"))
+    const decodedToken = this.decodeToken(access_token, { complete: true })
 
     // eslint-disable-next-line
     const {children, ...attributes} = this.props;
@@ -64,6 +76,7 @@ class DefaultHeader extends Component {
 
           <AppHeaderDropdown direction="down">
             <DropdownToggle nav>
+              {decodedToken.nome}
               <img src={'assets/img/avatars/6.jpg'} className="img-avatar" alt="admin@bootstrapmaster.com"/>
             </DropdownToggle>
             <DropdownMenu right style={{right: 'auto'}}>
@@ -78,7 +91,12 @@ class DefaultHeader extends Component {
       </React.Fragment>
     );
   }
+
+
+
 }
+
+
 
 DefaultHeader.propTypes = propTypes;
 DefaultHeader.defaultProps = defaultProps;

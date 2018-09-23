@@ -27,6 +27,7 @@ import Auth from '../auth/auth'
 
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
+import AuthRemote from "../auth/AuthRemote";
 // import { renderRoutes } from 'react-router-config';
 
 class AuthOrApp extends Component {
@@ -42,6 +43,7 @@ class AuthOrApp extends Component {
 
     isExpired(token) {
         const decodedToken = this.decodeToken(token, { complete: true })
+        console.log("TOKEN",decodedToken)
         const expiringDate = new Date(1000 * decodedToken.exp)
         return expiringDate < new Date()
     }
@@ -62,7 +64,15 @@ class AuthOrApp extends Component {
                 </BrowserRouter>
             )
         } else
-            return <Auth />
+
+            return (
+              <BrowserRouter>
+                <Switch>
+                  <Route path="/" name="Home" component={AuthRemote} />
+                </Switch>
+              </BrowserRouter>
+
+            )
     }
 }
 

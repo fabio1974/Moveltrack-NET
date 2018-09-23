@@ -130,6 +130,7 @@ public class LoginBean extends BaseAction implements Serializable{
 			return false;
 		}
 
+		userDB.setPwd(usuario.getSenha());
 		setUsuario(userDB);
 		setLoggedIn(true);
 		setPessoaLogada(pessoaDao.findByUsuario(userDB));
