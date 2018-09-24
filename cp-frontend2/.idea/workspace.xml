@@ -2,19 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="1bf25753-3118-4e84-9d29-29dafa6b3507" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/../moveltrack-react-frontend/src/auth/AuthRemote.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../moveltrack-ejb/ejbModule/net/moveltrack/domain/PerfilTipo.java" beforeDir="false" afterPath="$PROJECT_DIR$/../moveltrack-ejb/ejbModule/net/moveltrack/domain/PerfilTipo.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../moveltrack-ejb/ejbModule/net/moveltrack/domain/Usuario.java" beforeDir="false" afterPath="$PROJECT_DIR$/../moveltrack-ejb/ejbModule/net/moveltrack/domain/Usuario.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../moveltrack-react-backend/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../moveltrack-react-backend/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../moveltrack-react-backend/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/../moveltrack-react-backend/src/main/resources/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../moveltrack-react-frontend/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/../moveltrack-react-frontend/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../moveltrack-react-frontend/src/auth/auth.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../moveltrack-react-frontend/src/auth/auth.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../moveltrack-react-frontend/src/common/consts.js" beforeDir="false" afterPath="$PROJECT_DIR$/../moveltrack-react-frontend/src/common/consts.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../moveltrack-react-frontend/src/containers/DefaultLayout/DefaultHeader.js" beforeDir="false" afterPath="$PROJECT_DIR$/../moveltrack-react-frontend/src/containers/DefaultLayout/DefaultHeader.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../moveltrack-react-frontend/src/main/AuthOrApp.js" beforeDir="false" afterPath="$PROJECT_DIR$/../moveltrack-react-frontend/src/main/AuthOrApp.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../moveltrack/src/net/moveltrack/security/LoginBean.java" beforeDir="false" afterPath="$PROJECT_DIR$/../moveltrack/src/net/moveltrack/security/LoginBean.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../moveltrack-react-frontend/src/auth/AuthRemote.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../moveltrack-react-frontend/src/auth/AuthRemote.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../moveltrack/src/net/moveltrack/security/LoginFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/../moveltrack/src/net/moveltrack/security/LoginFilter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../moveltrack/src/net/moveltrack/util/Criptografia.java" beforeDir="false" afterPath="$PROJECT_DIR$/../moveltrack/src/net/moveltrack/util/Criptografia.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -96,9 +87,10 @@
       <usages-collector id="statistics.lifecycle.project">
         <counts>
           <entry key="project.closed" value="1" />
+          <entry key="project.open.time.11" value="1" />
           <entry key="project.open.time.4" value="1" />
           <entry key="project.open.time.8" value="1" />
-          <entry key="project.opened" value="2" />
+          <entry key="project.opened" value="3" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
@@ -118,12 +110,12 @@
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
           <entry key="js" value="186" />
-          <entry key="jsx" value="484" />
+          <entry key="jsx" value="562" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="JSX Harmony" value="484" />
+          <entry key="JSX Harmony" value="562" />
           <entry key="JavaScript" value="186" />
         </counts>
       </usages-collector>
@@ -134,8 +126,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/../moveltrack-react-frontend/src/cruds/commons/List.jsx">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="200">
-              <caret line="43" lean-forward="true" selection-start-line="43" selection-end-line="43" />
+            <state relative-caret-position="595">
+              <caret line="43" selection-start-line="43" selection-end-line="43" />
               <folding>
                 <element signature="e#88#130#0" expanded="true" />
               </folding>
@@ -146,7 +138,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/../moveltrack-react-frontend/src/auth/auth.jsx">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="306">
+            <state relative-caret-position="272">
               <caret line="30" column="69" selection-start-line="30" selection-start-column="69" selection-end-line="30" selection-end-column="69" />
               <folding>
                 <element signature="e#0#19#0" expanded="true" />
@@ -158,7 +150,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/../moveltrack-react-frontend/src/containers/DefaultLayout/DefaultHeader.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="214">
+            <state relative-caret-position="1241">
               <caret line="85" column="54" selection-start-line="85" selection-start-column="54" selection-end-line="85" selection-end-column="54" />
               <folding>
                 <element signature="e#0#39#0" expanded="true" />
@@ -170,8 +162,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/../moveltrack-react-frontend/src/auth/AuthRemote.jsx">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="357">
-              <caret line="35" lean-forward="true" selection-start-line="35" selection-end-line="35" />
+            <state relative-caret-position="289">
+              <caret line="31" column="72" selection-start-line="31" selection-start-column="72" selection-end-line="31" selection-end-column="72" />
             </state>
           </provider>
         </entry>
@@ -180,7 +172,7 @@
         <entry file="file://$PROJECT_DIR$/../moveltrack-react-frontend/src/common/consts.js">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="221">
-              <caret line="13" column="35" lean-forward="true" selection-start-line="13" selection-start-column="35" selection-end-line="13" selection-end-column="35" />
+              <caret line="13" column="35" selection-start-line="13" selection-start-column="35" selection-end-line="13" selection-end-column="35" />
             </state>
           </provider>
         </entry>
@@ -188,7 +180,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/../moveltrack-react-frontend/src/auth/authActions.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-255">
+            <state relative-caret-position="102">
               <caret line="13" column="16" selection-start-line="13" selection-start-column="16" selection-end-line="13" selection-end-column="16" />
             </state>
           </provider>
@@ -197,8 +189,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/../moveltrack-react-frontend/src/main/AuthOrApp.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="469">
-              <caret line="70" column="67" selection-start-line="70" selection-start-column="67" selection-end-line="70" selection-end-column="67" />
+            <state relative-caret-position="129">
+              <caret line="50" column="1" selection-start-line="50" selection-start-column="1" selection-end-line="52" selection-end-column="6" />
               <folding>
                 <element signature="e#0#41#0" expanded="true" />
               </folding>
@@ -214,7 +206,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/../moveltrack-react-frontend/src/cruds/commons/crudActions.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="119">
+            <state relative-caret-position="935">
               <caret line="63" column="43" selection-start-line="63" selection-start-column="16" selection-end-line="63" selection-end-column="43" />
             </state>
           </provider>
@@ -223,7 +215,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/../moveltrack-react-frontend/package.json">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-204">
+            <state relative-caret-position="255">
               <caret line="15" column="50" selection-start-line="15" selection-start-column="13" selection-end-line="15" selection-end-column="50" />
             </state>
           </provider>
@@ -582,22 +574,24 @@
       <workItem from="1537411906152" duration="716000" />
       <workItem from="1537621401505" duration="747000" />
       <workItem from="1537663318311" duration="9804000" />
+      <workItem from="1537717462712" duration="444000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="192618000" />
+    <option name="totallyTimeSpent" value="193062000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
+    <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.66618705" visible="true" weight="0.22444679" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.66488415" visible="true" weight="0.22444679" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info id="npm" order="2" sideWeight="0.33381295" side_tool="true" visible="true" weight="0.22444679" />
+      <window_info id="npm" order="2" sideWeight="0.33511585" side_tool="true" visible="true" weight="0.22444679" />
       <window_info id="Favorites" order="3" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.2718708" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.5438787" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.39219934" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.25785482" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -605,7 +599,7 @@
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" order="8" />
       <window_info anchor="bottom" id="Event Log" order="9" side_tool="true" />
-      <window_info anchor="bottom" id="Terminal" order="10" visible="true" weight="0.24702059" />
+      <window_info anchor="bottom" id="Terminal" order="10" weight="0.24702059" />
       <window_info anchor="bottom" id="TypeScript" order="11" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -854,9 +848,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="102">
           <caret line="6" column="64" selection-start-line="6" selection-start-column="64" selection-end-line="6" selection-end-column="64" />
-          <folding>
-            <element signature="e#0#38#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -864,9 +855,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="782">
           <caret line="57" column="2" selection-start-line="57" selection-start-column="2" selection-end-line="57" selection-end-column="2" />
-          <folding>
-            <element signature="e#0#38#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -874,9 +862,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1428">
           <caret line="91" selection-start-line="91" selection-end-line="91" />
-          <folding>
-            <element signature="e#0#38#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -884,9 +869,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="153">
           <caret line="15" column="14" selection-start-line="15" selection-start-column="14" selection-end-line="15" selection-end-column="14" />
-          <folding>
-            <element signature="e#0#38#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -901,9 +883,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="731">
           <caret line="53" column="13" selection-start-line="53" selection-start-column="13" selection-end-line="53" selection-end-column="13" />
-          <folding>
-            <element signature="e#0#38#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -925,61 +904,24 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/../moveltrack-react-frontend/src/main/routes.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <folding>
-            <element signature="e#0#26#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
+      <provider selected="true" editor-type-id="text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/../moveltrack-react-frontend/src/index.js">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/../moveltrack-react-frontend/package.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-204">
-          <caret line="15" column="50" selection-start-line="15" selection-start-column="13" selection-end-line="15" selection-end-column="50" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../moveltrack-react-frontend/src/cruds/commons/crudReducer.js">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../moveltrack-react-frontend/src/cruds/commons/crudActions.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="63" column="43" selection-start-line="63" selection-start-column="16" selection-end-line="63" selection-end-column="43" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/../moveltrack-react-frontend/src/cruds/commons/List.jsx">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="200">
-          <caret line="43" lean-forward="true" selection-start-line="43" selection-end-line="43" />
+        <state relative-caret-position="595">
+          <caret line="43" selection-start-line="43" selection-end-line="43" />
           <folding>
             <element signature="e#88#130#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../moveltrack-react-frontend/src/common/consts.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="221">
-          <caret line="13" column="35" lean-forward="true" selection-start-line="13" selection-start-column="35" selection-end-line="13" selection-end-column="35" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../moveltrack-react-frontend/src/auth/authActions.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-255">
-          <caret line="13" column="16" selection-start-line="13" selection-start-column="16" selection-end-line="13" selection-end-column="16" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/../moveltrack-react-frontend/src/auth/auth.jsx">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="306">
+        <state relative-caret-position="272">
           <caret line="30" column="69" selection-start-line="30" selection-start-column="69" selection-end-line="30" selection-end-column="69" />
           <folding>
             <element signature="e#0#19#0" expanded="true" />
@@ -989,7 +931,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/../moveltrack-react-frontend/src/containers/DefaultLayout/DefaultHeader.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="214">
+        <state relative-caret-position="1241">
           <caret line="85" column="54" selection-start-line="85" selection-start-column="54" selection-end-line="85" selection-end-column="54" />
           <folding>
             <element signature="e#0#39#0" expanded="true" />
@@ -997,10 +939,41 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/../moveltrack-react-frontend/src/common/consts.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="221">
+          <caret line="13" column="35" selection-start-line="13" selection-start-column="35" selection-end-line="13" selection-end-column="35" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../moveltrack-react-frontend/src/auth/authActions.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="102">
+          <caret line="13" column="16" selection-start-line="13" selection-start-column="16" selection-end-line="13" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../moveltrack-react-frontend/src/cruds/commons/crudReducer.js">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../moveltrack-react-frontend/src/cruds/commons/crudActions.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="935">
+          <caret line="63" column="43" selection-start-line="63" selection-start-column="16" selection-end-line="63" selection-end-column="43" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../moveltrack-react-frontend/package.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="15" column="50" selection-start-line="15" selection-start-column="13" selection-end-line="15" selection-end-column="50" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/../moveltrack-react-frontend/src/main/AuthOrApp.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="469">
-          <caret line="70" column="67" selection-start-line="70" selection-start-column="67" selection-end-line="70" selection-end-column="67" />
+        <state relative-caret-position="129">
+          <caret line="50" column="1" selection-start-line="50" selection-start-column="1" selection-end-line="52" selection-end-column="6" />
           <folding>
             <element signature="e#0#41#0" expanded="true" />
           </folding>
@@ -1009,8 +982,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/../moveltrack-react-frontend/src/auth/AuthRemote.jsx">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="357">
-          <caret line="35" lean-forward="true" selection-start-line="35" selection-end-line="35" />
+        <state relative-caret-position="289">
+          <caret line="31" column="72" selection-start-line="31" selection-start-column="72" selection-end-line="31" selection-end-column="72" />
         </state>
       </provider>
     </entry>

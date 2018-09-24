@@ -22,17 +22,24 @@ class AuthRemote extends Component {
   constructor(props) {
     super(props)
     let params = queryString.parse(this.props.location.search)
-    if(_.has(params,'user') && _.has(params,'pwd')){
-      const{user,pwd} = params
-      const values = {username: user, password: pwd}
-      this.onSubmit(values)
-      this.props.history.push("/");
+    if(_.has(params,'token')){
+      try {
+        const jwt = this.decodeToken(params.token)
+        const values = {username: jwt.jti, password: jwt.iss}
+        this.onSubmit(values)
+        this.props.history.push("/");
+      }catch (e) {
+        window.location = "http://localhost:8080/moveltrack/login.xhtml"
+      }
     }else{
       window.location = "http://localhost:8080/moveltrack/login.xhtml"
     }
     this.state = {loginMode: true}
   }
 
+  decodeToken(token) {
+    return  JSON.parse(atob(token.split('.')[1]));
+  };
 
   changeMode() {
     this.setState({loginMode: !this.state.loginMode})
