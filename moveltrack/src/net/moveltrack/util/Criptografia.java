@@ -3,9 +3,12 @@ package net.moveltrack.util;
 import java.io.IOException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.Base64;
 
 import org.apache.commons.lang3.StringUtils;
 import org.jboss.security.Base64Encoder;
+
+import com.sun.xml.internal.fastinfoset.Encoder;
 
 public class Criptografia {
 
@@ -27,6 +30,23 @@ public class Criptografia {
 			e.printStackTrace();
 		}
 		return r;
-	}		
+	}	
+	
+	public static void main(String[] args) {
+		String nome = "fabio";
+		Criptografia c = new Criptografia();
+		
+		try {
+			String cript = Base64.getEncoder().encode(nome.getBytes()).toString();
+			String decoded = Base64.getDecoder().decode(cript.getBytes()).toString();
+			System.out.println(cript);
+			System.out.println(decoded);
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
 
 }

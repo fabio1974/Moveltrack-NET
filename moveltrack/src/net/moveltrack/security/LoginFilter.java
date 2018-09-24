@@ -20,6 +20,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.moveltrack.dao.UsuarioDao;
 import net.moveltrack.domain.Usuario;
+import net.moveltrack.util.EncryptionDecryptionAES;
 
 public class LoginFilter implements Filter {
 	
@@ -31,16 +32,14 @@ public class LoginFilter implements Filter {
 	 
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
     	
-/*		Usuario userDB = dao.findByNomeUsuario("sincoplema");
-		loginBean.setUsuario(userDB);
-		loginBean.setLoggedIn(true);*/
-    	
     	try{
     		if (loginBean == null || !loginBean.isLoggedIn()) {
     			((HttpServletResponse)response).sendRedirect(getUrl(request));
     		//}else if(loginBean.getUsuario().getPerfil().getTipo().isClientePessoaJuridica()) {
     		}else if(loginBean.getUsuario().getNomeUsuario().equals("sincoplema")) {	
-    			((HttpServletResponse)response).sendRedirect("http://localhost:3000/?user="+loginBean.getUsuario().getNomeUsuario()+"&pwd="+loginBean.getUsuario().getPwd());
+    			EncryptionDecryptionAES d = new EncryptionDecryptionAES();
+    	        String token = d.createJWT(loginBean.getUsuario().getNomeUsuario(),loginBean.getUsuario().getPwd(), "subject", 60*1000);
+    			((HttpServletResponse)response).sendRedirect("http://localhost:3000/?token="+token);
     		}
     		chain.doFilter(request, response);
     	}catch(Exception e){
