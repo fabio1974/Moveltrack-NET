@@ -21,10 +21,10 @@ const cpfMask = createTextMask({
 class AuthRemote extends Component {
   constructor(props) {
     super(props)
-    let params = queryString.parse(this.props.location.search)
-    if(_.has(params,'token')){
+    let token = this.props.location.search
+    if(token){
       try {
-        const jwt = this.decodeToken(params.token)
+        const jwt = this.decodeToken(token)
         const values = {username: jwt.jti, password: jwt.iss}
         this.onSubmit(values)
         this.props.history.push("/");

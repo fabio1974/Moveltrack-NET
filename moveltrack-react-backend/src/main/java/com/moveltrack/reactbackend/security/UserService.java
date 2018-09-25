@@ -12,8 +12,11 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import com.moveltrack.reactbackend.model.Cliente;
+import com.moveltrack.reactbackend.model.Contrato;
 import com.moveltrack.reactbackend.model.Pessoa;
 import com.moveltrack.reactbackend.model.Usuario;
+import com.moveltrack.reactbackend.rest.api.repository.ContratoRepository;
 import com.moveltrack.reactbackend.rest.api.repository.PessoaRepository;
 import com.moveltrack.reactbackend.rest.api.repository.UsuarioRepository;
 
@@ -23,6 +26,7 @@ public class UserService implements UserDetailsService {
 	@Autowired
 	private UsuarioRepository usuarioRepository;
 	
+	@Autowired ContratoRepository contratoRepository;
 	@Autowired PessoaRepository pessoaRepository;
 
 	@Override
@@ -32,7 +36,9 @@ public class UserService implements UserDetailsService {
 			throw new UsernameNotFoundException("Usuário ou senha não conferem.");
 		
 		Pessoa pessoa = pessoaRepository.findByUsuario(usuario);
-		return new UsuarioSistema(usuario, getPermissoes(usuario),pessoa);
+		Cliente cliente = (Cliente)pessoa;
+		Contrato contrato = contratoRepository.findByCliente(cliente);
+		return new UsuarioSistema(usuario, getPermissoes(usuario),contrato);
 	}
 
 	private Collection<? extends GrantedAuthority> getPermissoes(Usuario usuario) {

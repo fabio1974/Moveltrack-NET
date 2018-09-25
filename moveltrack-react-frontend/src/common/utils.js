@@ -25,10 +25,20 @@ export function buildQueryFromFilter(filters) {
     return '';
   const fields = Object.keys(filters)
   let query = ''
-  fields.map(field => {
+  fields.forEach(field => {
     if (filters[field].length > 0)
       query = query + field + ':' + filters[field] + ','
   })
   query = '&search=' + query
   return query = query.slice(',', -1);
+}
+
+export function decodeToken(token) {
+  return  JSON.parse(atob(token.split('.')[1]));
+};
+
+export function getDecodedToken(){
+  const access_token = JSON.parse(localStorage.getItem("cp_access_token"))
+  const decodedToken = decodeToken(access_token, { complete: true })
+  return decodedToken
 }

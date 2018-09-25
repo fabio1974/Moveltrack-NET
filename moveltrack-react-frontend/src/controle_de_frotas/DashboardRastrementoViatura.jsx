@@ -22,6 +22,7 @@ import OBDAlertas from "./OBDAlertas";
 import RelatorioParadas from "./RelatorioParadas";
 import RelatorioPercurso from "./RelatorioPercurso";
 import Tacografo from "./Tacografo";
+import {getDecodedToken} from "../common/utils";
 
 class DashboardRastrementoViatura extends Component {
 
@@ -60,8 +61,8 @@ class DashboardRastrementoViatura extends Component {
       tacografoOpened: false,
 
       //lista
-      objectName: 'viatura',
-      path: '/viaturas',
+      objectName: 'veiculo',
+      path: '/veiculos',
       object: {
         placa: {type: String, descryption: 'Placa', show: true, filter: true},
         marcaModelo: {type: String, descryption: 'Marca/Modelo', show: true, filter: true},
@@ -141,7 +142,12 @@ class DashboardRastrementoViatura extends Component {
 
   updatePage() {
     const {path, filter, pageSize, currentPage} = this.state
-    const query = buildQueryFromFilter(filter)
+    const decodedToken = getDecodedToken()
+    const filterClone = {...filter,contrato:decodedToken.contrato.id.toString()}
+    console.log("CLONE",filterClone)
+    const query = buildQueryFromFilter(filterClone)
+    this.setState(prevState => ({filter:filterClone}))
+
     const url = `${consts.API_URL}${path}?page=${currentPage}&size=${pageSize}${query}`
 
     axios.get(url)
@@ -359,7 +365,7 @@ class DashboardRastrementoViatura extends Component {
 
         <div className="row maxHeight maxWidth padding-0 ">
 
-          <Grid cols="12 2" className="bg-white padding-h-10 padding-v-10 ">
+          <Grid cols="12 3" className="bg-white padding-h-10 padding-v-10 ">
 
             <ListViatura state={this.state} executeFilter={this.executeFilter} rastrearViatura={this.rastrearViatura}/>
 
@@ -436,7 +442,7 @@ class DashboardRastrementoViatura extends Component {
 
           </Grid>
 
-          <Grid cols="12 10" className="maxHeight maxWidth padding-0">
+          <Grid cols="12 9" className="maxHeight maxWidth padding-0">
             <div id="floating-panel">{this.state.mapMessage}</div>
             <MapComponent onMapReady={(a,b)=>this.onMapReady(a,b)} polyline={this.state.polyline}/>
           </Grid>

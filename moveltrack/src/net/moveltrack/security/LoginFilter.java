@@ -1,12 +1,6 @@
 package net.moveltrack.security;
 
 import java.io.IOException;
-import java.io.OutputStream;
-import java.io.UnsupportedEncodingException;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.ProtocolException;
-import java.net.URL;
 
 import javax.inject.Inject;
 import javax.servlet.Filter;
@@ -18,8 +12,11 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.moveltrack.dao.ClienteDao;
+import net.moveltrack.dao.ContratoDao;
 import net.moveltrack.dao.UsuarioDao;
-import net.moveltrack.domain.Usuario;
+import net.moveltrack.domain.Cliente;
+import net.moveltrack.domain.Contrato;
 import net.moveltrack.util.EncryptionDecryptionAES;
 
 public class LoginFilter implements Filter {
@@ -29,6 +26,7 @@ public class LoginFilter implements Filter {
 	
 	@Inject
 	UsuarioDao dao;
+	
 	 
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
     	
@@ -36,10 +34,10 @@ public class LoginFilter implements Filter {
     		if (loginBean == null || !loginBean.isLoggedIn()) {
     			((HttpServletResponse)response).sendRedirect(getUrl(request));
     		//}else if(loginBean.getUsuario().getPerfil().getTipo().isClientePessoaJuridica()) {
-    		}else if(loginBean.getUsuario().getNomeUsuario().equals("sincoplema")) {	
+    		}else if(loginBean.getUsuario().getNomeUsuario().equals("sincoplema")) {
     			EncryptionDecryptionAES d = new EncryptionDecryptionAES();
-    	        String token = d.createJWT(loginBean.getUsuario().getNomeUsuario(),loginBean.getUsuario().getPwd(), "subject", 60*1000);
-    			((HttpServletResponse)response).sendRedirect("http://localhost:3000/?token="+token);
+    	        String token = d.createJWT(loginBean.getUsuario().getNomeUsuario(),loginBean.getUsuario().getPwd(),"subject", 60*1000);
+    			((HttpServletResponse)response).sendRedirect("http://localhost:3000/?"+token);
     		}
     		chain.doFilter(request, response);
     	}catch(Exception e){

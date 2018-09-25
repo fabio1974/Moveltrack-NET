@@ -5,25 +5,27 @@ import java.util.Collection;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 
-import com.moveltrack.reactbackend.model.Pessoa;
+import com.moveltrack.reactbackend.model.Contrato;
 import com.moveltrack.reactbackend.model.Usuario;
 
 public class UsuarioSistema extends User {
 
 	private static final long serialVersionUID = 1L;
 
-	private Pessoa pessoa;
+	private Contrato contrato;
 
-	public UsuarioSistema(Usuario usuario, Collection<? extends GrantedAuthority> authorities, Pessoa pessoa) {
+	public UsuarioSistema(Usuario usuario, Collection<? extends GrantedAuthority> authorities,Contrato contrato) {
 		super(usuario.getNomeUsuario(), usuario.getSenha(), authorities);
-		this.pessoa = pessoa;
+		this.contrato = contrato;
 	}
 
-	public Pessoa getPessoa() {
-		return pessoa;
+	public Contrato getContrato() {
+		return contrato;
 	}
 
-	public void setPessoa(Pessoa pessoa) {
-		this.pessoa = pessoa;
+	public void setContrato(Contrato contrato) {
+		this.contrato = contrato;
 	}
+
+	
 }

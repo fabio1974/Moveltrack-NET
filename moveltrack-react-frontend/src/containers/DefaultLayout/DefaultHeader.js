@@ -76,7 +76,7 @@ class DefaultHeader extends Component {
 
           <AppHeaderDropdown direction="down">
             <DropdownToggle nav>
-              {decodedToken.nome}
+              {decodedToken.contrato.cliente.nome}
               <img src={'assets/img/avatars/6.jpg'} className="img-avatar" alt="admin@bootstrapmaster.com"/>
             </DropdownToggle>
             <DropdownMenu right style={{right: 'auto'}}>

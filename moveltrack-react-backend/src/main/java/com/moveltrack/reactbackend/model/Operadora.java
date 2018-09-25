@@ -3,5 +3,11 @@ public enum Operadora {
     CLARO, 
     OI, 
     TIM, 
-    VIVO	
+    VIVO, 
+    TODAS, 
+    LINK_CLARO, 
+    LINK_TIM, 
+    LINK_VIVO, 
+    VODAFONE, 
+    TRANSMEET_VIVO;
 }

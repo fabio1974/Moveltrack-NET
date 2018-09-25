@@ -12,9 +12,6 @@ export class MapComponent extends Component {
 
 
   componentDidMount() {
-
-
-
   }
 
 
