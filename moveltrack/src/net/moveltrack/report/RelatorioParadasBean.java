@@ -13,11 +13,9 @@ import org.apache.commons.lang3.StringUtils;
 
 import net.moveltrack.action.maps.MapaVeiculoBean;
 import net.moveltrack.dao.ReportDao;
-import net.moveltrack.dao.ReportDao.LitrosValor;
-import net.moveltrack.domain.Cliente;
-import net.moveltrack.domain.RelatorioFrota;
+import net.moveltrack.domain.Equipamento;
+import net.moveltrack.domain.ModeloRastreador;
 import net.moveltrack.domain.RelatorioVeiculo;
-import net.moveltrack.domain.Veiculo;
 import net.moveltrack.security.LoginBean;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 
@@ -58,7 +56,11 @@ public class RelatorioParadasBean extends Report implements Serializable {
 
 	@Override
 	protected void setJRBeanCollectionDataSource() {
-		list = reportDao.getRelatorioParadas(mapaVeiculoBean.getVeiculo(),mapaVeiculoBean.getInicio(),mapaVeiculoBean.getFim());
+		Equipamento equipamento = mapaVeiculoBean.getVeiculo().getEquipamento();
+		if(equipamento.getModelo() == ModeloRastreador.SPOT_TRACE)
+			list = reportDao.getRelatorioParadasSpotTrace(mapaVeiculoBean.getVeiculo(),mapaVeiculoBean.getInicio(),mapaVeiculoBean.getFim());
+		else
+			list = reportDao.getRelatorioParadas(mapaVeiculoBean.getVeiculo(),mapaVeiculoBean.getInicio(),mapaVeiculoBean.getFim());
 	}
 	
 

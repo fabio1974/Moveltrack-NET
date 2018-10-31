@@ -57,6 +57,8 @@ public class LocationDao extends DaoBean<Location>{
 				"(l.dateLocationInicio <=:inicio and l.dateLocation >=:fim)"+
 				")" + orderby;					
 		
+		System.out.println(sql);
+		
 		Query q = getEm().createQuery(sql);
 		q.setParameter("imei",veiculo.getEquipamento().getImei());
 		q.setParameter("inicio",inicio);

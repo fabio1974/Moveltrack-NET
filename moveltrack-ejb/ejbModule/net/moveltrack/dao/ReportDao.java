@@ -988,6 +988,79 @@ public class ReportDao extends DaoBean<Object>{
 		return lista;
 	}
 	
+	
+	public List<RelatorioVeiculo> getRelatorioParadasSpotTrace(Veiculo veiculo, Date inicio, Date fim) {
+		List<RelatorioVeiculo> lista = new ArrayList<RelatorioVeiculo>();
+		List<Location> pontosOtimizados = new ArrayList<Location>();
+		List<Object> pontosCrus = locationDao.getLocationsFromVeiculo(veiculo,inicio,fim);
+		
+		pontosOtimizados = MapaUtil.otimizaPontosDoBanco(pontosCrus,inicio,fim);
+
+		int count=0;
+		Date chegada = null;
+		Date saida = null;
+		
+		Location stopBegin = null;
+		Location loc = null;
+		
+		for (Object obj : pontosCrus) {
+			loc = MapaUtil.getLocationFromObject(obj);
+			
+			if(loc.getComando().equals("STOP") && stopBegin==null){
+				stopBegin = loc;
+				
+			}else if(loc.getComando().equals("NEWMOVEMENT")){
+				if(stopBegin == null) {
+					chegada = inicio;
+				}else {
+					chegada = stopBegin.getDateLocation();
+				}
+				saida = loc.getDateLocation();
+				count++;
+				RelatorioVeiculo rv = buildParada(count, loc, chegada, saida);
+				lista.add(rv);
+				stopBegin = null;
+			}else {
+				
+				if(stopBegin!=null && !loc.getComando().equals("STOP")) {
+					chegada = stopBegin.getDateLocation();
+					saida = loc.getDateLocation();
+					count++;
+					RelatorioVeiculo rv = buildParada(count, loc, chegada, saida);
+					lista.add(rv);
+					stopBegin = null;
+				}
+			}
+		}
+		
+		if(stopBegin!=null) {
+			chegada = loc.getDateLocation();
+			Date now = new Date();
+			saida = fim.before(now)?fim:now;
+			count++;
+			RelatorioVeiculo rv = buildParada(count, loc, chegada, saida);
+			lista.add(rv);
+			stopBegin = null;
+		}
+		
+		return lista;
+	}
+
+	private RelatorioVeiculo buildParada(int count, Location loc, Date chegada, Date saida) {
+		RelatorioVeiculo rv = new RelatorioVeiculo();
+		rv.setSituacao("P-"+ String.format("%02d",count));
+		rv.setEndereco(geoEnderecoDao.getAddressFromLocation(loc,true));
+		
+		rv.setChegada(chegada);
+		rv.setSaida(saida);
+		
+		long diff = rv.getSaida().getTime() - rv.getChegada().getTime();
+		rv.setPermanencia(Utils.convertMillisecondsToTimeString(diff));
+		rv.setLatitude(loc.getLatitude());
+		rv.setLongitude(loc.getLongitude());
+		return rv;
+	}
+	
 
 
 
