@@ -1,6 +1,8 @@
 package net.moveltrack.util;
 
-import com.google.code.geocoder.model.LatLng;
+
+
+import com.google.maps.model.LatLng;
 
 import net.moveltrack.domain.Location;
 import net.moveltrack.domain.Location2;
@@ -10,7 +12,7 @@ public class GeoDistanceCalulator {
 	private static float acochambratorFactor = 1.06f;
 	
 	public static double distVincenty(LatLng ponto1, LatLng ponto2) {
-		return vicentDistance(ponto1.getLat().doubleValue(),ponto1.getLng().doubleValue(),ponto2.getLat().doubleValue(),ponto2.getLng().doubleValue());
+		return vicentDistance(ponto1.lat,ponto1.lng,ponto2.lat,ponto2.lng);
 	}
 	
 	/**

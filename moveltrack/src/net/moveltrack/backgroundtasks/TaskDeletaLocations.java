@@ -35,7 +35,7 @@ public class TaskDeletaLocations extends Task  {
 
 		
 		Calendar c2 = Calendar.getInstance();
-		c2.add(Calendar.DAY_OF_YEAR,-120);
+		c2.add(Calendar.DAY_OF_YEAR,-730);
 		locationDao.deleteUntilDateFromLocation(c2.getTime());
 		
     }

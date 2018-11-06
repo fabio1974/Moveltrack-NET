@@ -26,7 +26,27 @@ public class MapaUtil  {
 			//center.setLocation(pontosMapa.get(0).getLongitude(),pontosMapa.get(0).getLatitude());
 		}else {
 			List<Location> pontosDeParada = new ArrayList<Location>();
+			
+			Location initLoc = getLocationFromObject(pontosDoBanco.get(0));
+			initLoc.setDateLocation(inicio);
+			initLoc.setDateLocationInicio(inicio);
+			pontosDoBanco.add(0,initLoc);
+			
+			
+			
+			Date now = new Date();
+			
+			Location fimLoc = getLocationFromObject(pontosDoBanco.get(pontosDoBanco.size()-1));
+			if(fimLoc.getVelocidade()<=0) {
+				fimLoc.setDateLocation(fim.before(now)?fim:now);
+				fimLoc.setDateLocationInicio(fim.before(now)?fim:now);
+				pontosDoBanco.add(fimLoc);				
+			}
+			
+			
 			int size = pontosDoBanco.size();
+
+
 			Location lastLoc=null;
 			for (int i = 0; i < size; i++) {
 				   Location loc = getLocationFromObject(pontosDoBanco.get(i));	

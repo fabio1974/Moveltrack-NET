@@ -989,7 +989,7 @@ public class ReportDao extends DaoBean<Object>{
 	}
 	
 	
-	public List<RelatorioVeiculo> getRelatorioParadasSpotTrace(Veiculo veiculo, Date inicio, Date fim) {
+	public List<RelatorioVeiculo> getRelatorioParadasSpotTrace2(Veiculo veiculo, Date inicio, Date fim) {
 		List<RelatorioVeiculo> lista = new ArrayList<RelatorioVeiculo>();
 		List<Location> pontosOtimizados = new ArrayList<Location>();
 		List<Object> pontosCrus = locationDao.getLocationsFromVeiculo(veiculo,inicio,fim);
@@ -1003,16 +1003,18 @@ public class ReportDao extends DaoBean<Object>{
 		Location stopBegin = null;
 		Location loc = null;
 		
+		int index = 0;
 		for (Object obj : pontosCrus) {
+			
 			loc = MapaUtil.getLocationFromObject(obj);
 			
 			if(loc.getComando().equals("STOP") && stopBegin==null){
 				stopBegin = loc;
 				
 			}else if(loc.getComando().equals("NEWMOVEMENT")){
-				if(stopBegin == null) {
+				if(index ==0 && stopBegin == null) {
 					chegada = inicio;
-				}else {
+				}else if(stopBegin!=null){
 					chegada = stopBegin.getDateLocation();
 				}
 				saida = loc.getDateLocation();
@@ -1031,6 +1033,7 @@ public class ReportDao extends DaoBean<Object>{
 					stopBegin = null;
 				}
 			}
+			index++;
 		}
 		
 		if(stopBegin!=null) {

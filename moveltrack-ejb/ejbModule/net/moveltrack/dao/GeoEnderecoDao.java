@@ -1,6 +1,5 @@
 package net.moveltrack.dao;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,13 +7,11 @@ import javax.ejb.Stateless;
 import javax.persistence.Query;
 import javax.transaction.Transactional;
 
-import com.google.code.geocoder.Geocoder;
-import com.google.code.geocoder.GeocoderRequestBuilder;
-import com.google.code.geocoder.model.GeocodeResponse;
-import com.google.code.geocoder.model.GeocoderRequest;
-import com.google.code.geocoder.model.GeocoderResult;
-import com.google.code.geocoder.model.GeocoderStatus;
-import com.google.code.geocoder.model.LatLng;
+import com.google.maps.GeoApiContext;
+import com.google.maps.GeocodingApi;
+import com.google.maps.GeocodingApiRequest;
+import com.google.maps.model.GeocodingResult;
+import com.google.maps.model.LatLng;
 
 import net.moveltrack.domain.Chip;
 import net.moveltrack.domain.GeoEndereco;
@@ -51,6 +48,25 @@ public class GeoEnderecoDao extends DaoBean<GeoEndereco>{
 		return getAddressFromLocation(location,gc);
 	}
 	
+	
+	
+	public static String getAddressFromLocation(double latitude, double longitude){
+
+		GeoApiContext context = new GeoApiContext.Builder().apiKey("AIzaSyCg5eE_buXJLsJZbnTZ7z3MnJBOV3_RoYc").build();
+		LatLng latlng = new LatLng(latitude,longitude);
+		GeocodingApiRequest req = GeocodingApi.reverseGeocode(context, latlng).language("pt-BR");
+		try {
+			GeocodingResult[] results =  req.await();
+			return results[0].formattedAddress;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return "";
+		}
+	}
+		
+	
+
+	
 	public String getAddressFromLocation(Location location, boolean gc){
 
 		Query query = getEm().createQuery("select P.endereco from GeoEndereco P where ABS(P.latitude-:latitude) < 0.0002 and ABS(P.longitude-:longitude) < 0.0002 and P.confiavel=true");
@@ -65,38 +81,8 @@ public class GeoEnderecoDao extends DaoBean<GeoEndereco>{
 			}	
 		}
 		
-		if(gc){
-			try{
-				final Geocoder geocoder = new Geocoder();
-				LatLng p = new LatLng(new BigDecimal(location.getLatitude()),new BigDecimal(location.getLongitude()));
-				GeocoderRequest geocoderRequest = new GeocoderRequestBuilder().setLocation(p).getGeocoderRequest();
-				GeocodeResponse geocoderResponse = geocoder.geocode(geocoderRequest);
-				
-				
-				
-				if(geocoderResponse.getStatus()== GeocoderStatus.OK){
-					List<GeocoderResult> rs = geocoderResponse.getResults();
-					for (GeocoderResult geocoderResult : rs) {
-							if(geocoderResult.getFormattedAddress()!=null){
-								insertGeoEnderecoConfiavel(geocoderResult.getFormattedAddress(),location.getLatitude(),location.getLongitude());
-								return geocoderResult.getFormattedAddress();
-							}	
-					}
-				}
-				geocoderResponse = geocoder.geocode(geocoderRequest);
-				if(geocoderResponse.getStatus()== GeocoderStatus.OK){
-					List<GeocoderResult> rs = geocoderResponse.getResults();
-					for (GeocoderResult geocoderResult : rs) {
-							if(geocoderResult.getFormattedAddress()!=null){
-								insertGeoEnderecoConfiavel(geocoderResult.getFormattedAddress(),location.getLatitude(),location.getLongitude());
-								return geocoderResult.getFormattedAddress();
-							}
-					}
-				}
-			}catch(Exception e){
-				e.printStackTrace();
-			}
-		}
+		if(gc)
+			return getAddressFromLocation(location.getLatitude(),location.getLongitude());
 		return "";
 	}	
 	
@@ -114,8 +100,13 @@ public class GeoEnderecoDao extends DaoBean<GeoEndereco>{
 			e.printStackTrace();
 		}	
 	}
+
+	public Location getLocationFromAddress(String bairro, String descricao, String sigla) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
-	public Location getLocationFromAddress(String bairro, String cidade, String estadoSigla) {
+	/*public Location getLocationFromAddress(String bairro, String cidade, String estadoSigla) {
 	    final Geocoder geocoder = new Geocoder();
 	    GeocoderRequest geocoderRequest = new GeocoderRequestBuilder().setAddress(bairro+","+cidade+","+estadoSigla).getGeocoderRequest();
 	    GeocodeResponse geocoderResponse = geocoder.geocode(geocoderRequest);
@@ -128,7 +119,7 @@ public class GeoEnderecoDao extends DaoBean<GeoEndereco>{
 		} catch (Exception e) {
 			return null;
 		}
-	}
+	}*/
 
 	
 

@@ -57,10 +57,7 @@ public class RelatorioParadasBean extends Report implements Serializable {
 	@Override
 	protected void setJRBeanCollectionDataSource() {
 		Equipamento equipamento = mapaVeiculoBean.getVeiculo().getEquipamento();
-		if(equipamento.getModelo() == ModeloRastreador.SPOT_TRACE)
-			list = reportDao.getRelatorioParadasSpotTrace(mapaVeiculoBean.getVeiculo(),mapaVeiculoBean.getInicio(),mapaVeiculoBean.getFim());
-		else
-			list = reportDao.getRelatorioParadas(mapaVeiculoBean.getVeiculo(),mapaVeiculoBean.getInicio(),mapaVeiculoBean.getFim());
+		list = reportDao.getRelatorioParadas(mapaVeiculoBean.getVeiculo(),mapaVeiculoBean.getInicio(),mapaVeiculoBean.getFim());
 	}
 	
 
