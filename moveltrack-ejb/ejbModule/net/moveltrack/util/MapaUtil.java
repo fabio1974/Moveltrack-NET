@@ -37,7 +37,7 @@ public class MapaUtil  {
 			Date now = new Date();
 			
 			Location fimLoc = getLocationFromObject(pontosDoBanco.get(pontosDoBanco.size()-1));
-			if(fimLoc.getVelocidade()<=0) {
+			if(fimLoc.getVelocidade()<=0 || fimLoc.getComando().equals("STOP")) {
 				fimLoc.setDateLocation(fim.before(now)?fim:now);
 				fimLoc.setDateLocationInicio(fim.before(now)?fim:now);
 				pontosDoBanco.add(fimLoc);				

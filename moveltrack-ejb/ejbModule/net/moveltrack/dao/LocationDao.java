@@ -242,7 +242,8 @@ where vi.status <> 'FINALIZADA'
 			return 0;
 		double ds = GeoDistanceCalulator.vicentDistance(previous,current);
 		double dt = current.getDateLocation().getTime() - previous.getDateLocation().getTime();
-		return (ds/1000)/(dt/3600000);
+		double speed = (ds/1000)/(dt/3600000);
+		return speed<3?0:speed;
 	}
 
 

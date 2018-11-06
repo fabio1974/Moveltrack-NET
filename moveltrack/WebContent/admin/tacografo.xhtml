@@ -58,7 +58,7 @@
 									      };
 	
 							      
-							      $.getJSON("#{request.contextPath}/PontosMapa?imei="+imei+"&amp;inicio="+inicio+"&amp;fim="+fim,function(locs){
+							      $.getJSON("#{request.contextPath}/PontosTacografo?imei="+imei+"&amp;inicio="+inicio+"&amp;fim="+fim,function(locs){
 								    	pontosCaminho = new Array();
 								    	var loc;
 								    	if(locs.length>0){

@@ -16,6 +16,7 @@ import net.moveltrack.domain.ConsumoPorVeiculo;
 import net.moveltrack.domain.DespesaFrotaCategoria;
 import net.moveltrack.domain.DespesaFrotaEspecie;
 import net.moveltrack.domain.Location;
+import net.moveltrack.domain.ModeloRastreador;
 import net.moveltrack.domain.Motorista;
 import net.moveltrack.domain.ProdutividadePorVeiculo;
 import net.moveltrack.domain.RelatorioExcessoVelocidade;
@@ -988,7 +989,7 @@ public class ReportDao extends DaoBean<Object>{
 		return lista;
 	}
 	
-	
+/*	
 	public List<RelatorioVeiculo> getRelatorioParadasSpotTrace2(Veiculo veiculo, Date inicio, Date fim) {
 		List<RelatorioVeiculo> lista = new ArrayList<RelatorioVeiculo>();
 		List<Location> pontosOtimizados = new ArrayList<Location>();
@@ -1048,7 +1049,9 @@ public class ReportDao extends DaoBean<Object>{
 		
 		return lista;
 	}
-
+*/
+	
+	
 	private RelatorioVeiculo buildParada(int count, Location loc, Date chegada, Date saida) {
 		RelatorioVeiculo rv = new RelatorioVeiculo();
 		rv.setSituacao("P-"+ String.format("%02d",count));
@@ -1068,7 +1071,11 @@ public class ReportDao extends DaoBean<Object>{
 
 
 
-	public List<RelatorioVeiculo> getRelatorioPercurso(Veiculo veiculo, Date inicio, Date fim, int passo) {
+	public List<RelatorioVeiculo> getRelatorioPercurso(Veiculo veiculo, Date inicio, Date fim, Integer passo) {
+		
+		if(veiculo.getEquipamento().getModelo() == ModeloRastreador.SPOT_TRACE)
+			passo =  0;
+		
 		List<RelatorioVeiculo> lista = new ArrayList<RelatorioVeiculo>();
 		List<Location> pontosOtimizados = new ArrayList<Location>();
 		List<Object> pontosCrus = locationDao.getLocationsFromVeiculo(veiculo,inicio,fim);
