@@ -2,7 +2,6 @@ package net.moveltrack.dao;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -10,6 +9,7 @@ import javax.ejb.Stateless;
 import javax.persistence.Query;
 
 import net.moveltrack.domain.Cliente;
+import net.moveltrack.domain.Equipamento;
 import net.moveltrack.domain.Location;
 import net.moveltrack.domain.Location2;
 import net.moveltrack.domain.ModeloRastreador;
@@ -57,18 +57,59 @@ public class LocationDao extends DaoBean<Location>{
 				"(l.dateLocationInicio <=:inicio and l.dateLocation >=:fim)"+
 				")" + orderby;					
 		
-		System.out.println(sql);
+		//System.out.println(sql);
 		
 		Query q = getEm().createQuery(sql);
 		q.setParameter("imei",veiculo.getEquipamento().getImei());
 		q.setParameter("inicio",inicio);
 		q.setParameter("fim",fim);
 		
-		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
-		
-		System.out.println(sdf.format(fim));
 		
 		List<Object> result = q.getResultList(); 
+		
+		return result;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Location> getLocationsFromEquipamento(Equipamento equipamento,Date inicio, Date fim){
+		
+		if(equipamento==null)
+			return new ArrayList<Location>();
+		
+		String orderby = "";
+		if(equipamento.getModelo() == ModeloRastreador.TK103A2 || equipamento.getModelo() == ModeloRastreador.TK06)
+			orderby = " order by l.id ";
+		else if(equipamento.getModelo() == ModeloRastreador.GT06 
+				||equipamento.getModelo() == ModeloRastreador.GT06N
+				||equipamento.getModelo() == ModeloRastreador.CRX1
+				||equipamento.getModelo() == ModeloRastreador.CRX3				
+				||equipamento.getModelo() == ModeloRastreador.CRXN
+				||equipamento.getModelo() == ModeloRastreador.TR02
+				||equipamento.getModelo() == ModeloRastreador.JV200
+				||equipamento.getModelo() == ModeloRastreador.SPOT_TRACE
+				)
+			orderby = " order by l.dateLocation ";
+
+
+		
+		String sql = "select l from Location l where l.imei =:imei and "+
+				"("+
+				"(l.dateLocation >=:inicio and l.dateLocation <=:fim)"+
+				"or"+
+				"(l.dateLocationInicio >=:inicio and l.dateLocationInicio <=:fim)"+
+				"or"+
+				"(l.dateLocationInicio <=:inicio and l.dateLocation >=:fim)"+
+				")" + orderby;					
+		
+		
+		
+		Query q = getEm().createQuery(sql);
+		q.setParameter("imei",equipamento.getImei());
+		q.setParameter("inicio",inicio);
+		q.setParameter("fim",fim);
+		
+		
+		List<Location> result = q.getResultList(); 
 		
 		return result;
 	}
@@ -123,17 +164,7 @@ where vi.status <> 'FINALIZADA'
 	}
 	
 	
-	public Location getPreviousLocation(Location current) {
-		String sql = "select l from Location l where l.imei = '"+current.getImei()+"' and l.dateLocation<:currentDate order by l.dateLocation desc ";
-		Query q = getEm().createQuery(sql);
-		q.setParameter("currentDate",current.getDateLocation());
-		q.setMaxResults(1);
-		try{
-			return  (Location)q.getResultList().get(0);
-		}catch(Exception e){
-			return null;
-		}
-	}
+
 	
 
 
@@ -243,7 +274,21 @@ where vi.status <> 'FINALIZADA'
 		double ds = GeoDistanceCalulator.vicentDistance(previous,current);
 		double dt = current.getDateLocation().getTime() - previous.getDateLocation().getTime();
 		double speed = (ds/1000)/(dt/3600000);
-		return speed<3?0:speed;
+		//speed = speed<3?0:speed; 
+		return speed;
+	}
+	
+	public Location getPreviousLocation(Location current) {
+		String sql = "select l from Location l where l.imei = '"+current.getImei()+"' and l.dateLocation<:currentDate order by l.dateLocation desc ";
+		Query q = getEm().createQuery(sql);
+		q.setParameter("currentDate",current.getDateLocation());
+		q.setMaxResults(1);
+		try{
+			return  (Location)q.getResultList().get(0);
+		}catch(Exception e){
+			e.printStackTrace();
+			return null;
+		}
 	}
 
 

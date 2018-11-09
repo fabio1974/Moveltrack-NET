@@ -3,9 +3,11 @@ package net.moveltrack.gateway.globalstar;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.StringReader;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.inject.Inject;
@@ -16,18 +18,20 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.transaction.Transactional;
 import javax.xml.bind.JAXB;
+import javax.xml.datatype.DatatypeConfigurationException;
+import javax.xml.datatype.DatatypeFactory;
+import javax.xml.datatype.XMLGregorianCalendar;
 
 import org.apache.commons.lang.StringUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 
 import net.moveltrack.dao.Location2Dao;
 import net.moveltrack.dao.LocationDao;
+import net.moveltrack.dao.VeiculoDao;
 import net.moveltrack.domain.Location;
 import net.moveltrack.domain.Location2;
+import net.moveltrack.domain.Veiculo;
 import net.moveltrack.gateway.utils.Utils;
-import sun.misc.BASE64Decoder;
-import sun.misc.BASE64Encoder;
+import net.moveltrack.util.MapaUtil;
 
 @WebServlet("/GSServlet")
 public class GSServlet extends HttpServlet {
@@ -47,12 +51,14 @@ public class GSServlet extends HttpServlet {
 	
 	@Inject LocationDao locationDao;
 	@Inject Location2Dao location2Dao;
+	@Inject VeiculoDao veiculoDao;
       
     public GSServlet() {
         super();
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    	//testaVelocidade();
     	response.sendError(401, "Unauthorized");
    	}
 
@@ -85,11 +91,46 @@ public class GSServlet extends HttpServlet {
     }
     
     
+    
+/*    public  void testaVelocidade() {
+    	Veiculo veiculo = veiculoDao.findByEquipamento("000000003103985");
+    	Calendar c1 = Calendar.getInstance(); c1.set(2018,10,6,0,0);
+    	Calendar c2 = Calendar.getInstance(); c2.set(2018,10,6,14,0);
+    	List<Object> locs = locationDao.getLocationsFromVeiculo(veiculo, c1.getTime(),c2.getTime());
+    	
+    	for (Object object : locs) {
+			Location loc = MapaUtil.getLocationFromObject(object);
+			Message m = buildMessageForTest(loc);
+			saveMessage(m);
+		}
+    }*/
+
+	/*private static Message buildMessageForTest(Location loc) {
+		
+		Message m = new Message();
+    	m.setBatteryState("GOOD");
+    	m.setEsn("0-3103985");
+    	m.setEsnName("ESNname");
+    	m.setLatitude((float)loc.getLatitude());
+    	m.setLongitude((float)loc.getLongitude());
+    	
+    	GregorianCalendar c = new GregorianCalendar();
+    	c.setTime(loc.getDateLocation());
+    	XMLGregorianCalendar value;
+		try {
+			value = DatatypeFactory.newInstance().newXMLGregorianCalendar(c);
+			m.setTimestamp(value);
+		} catch (DatatypeConfigurationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return m;
+	}*/
 
 
 
     @Transactional
-    private void saveMessage(Message message) {
+    private  void saveMessage(Message message) {
 
     	/*System.out.println(message.getBatteryState());
 		System.out.println(message.getEsn());
@@ -127,6 +168,7 @@ public class GSServlet extends HttpServlet {
 			location2.setBattery(location.getBattery());
 			location2.setVelocidade(location.getVelocidade());
 			location2Dao.salvar(location2);
+			//System.out.println(location.getImei() + " - " + location.getDateLocation() + " - "+ location.getVelocidade());
 		}
 	}
 

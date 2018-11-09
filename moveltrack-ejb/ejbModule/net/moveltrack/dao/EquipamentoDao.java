@@ -7,6 +7,7 @@ import javax.ejb.Stateless;
 import javax.persistence.Query;
 
 import net.moveltrack.domain.Equipamento;
+import net.moveltrack.domain.ModeloRastreador;
 
 @Stateless
 @SuppressWarnings("serial")
@@ -33,6 +34,19 @@ public class EquipamentoDao extends DaoBean<Equipamento>{
 			query.setParameter("imei",imei);
 			return (Equipamento)query.getSingleResult();
 		} catch (Exception e) {
+			return null;
+		}
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Equipamento> findByModelo(ModeloRastreador modelo) {
+		String hql = "select  o from Equipamento o where o.modelo = :modelo order by o.imei" ;
+		try {
+			Query query = getEm().createQuery(hql);
+			query.setParameter("modelo",modelo);
+			return (List<Equipamento>)query.getResultList();
+		} catch (Exception e) {
+			e.printStackTrace();
 			return null;
 		}
 	}

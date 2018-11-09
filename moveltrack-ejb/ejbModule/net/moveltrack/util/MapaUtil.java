@@ -5,16 +5,31 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.ejb.Stateless;
+import javax.inject.Inject;
+
+import net.moveltrack.dao.LocationDao;
 import net.moveltrack.domain.Location;
 import net.moveltrack.domain.Location2;
 import net.moveltrack.domain.Mapa;
 import net.moveltrack.domain.Vertice;
 
-
+@Stateless
 public class MapaUtil  {
 
+	static double VELOCIDADE_LIMITE_PARADA = 3;
+	
+	@Inject static LocationDao locationDao;
+	
 	
 	public  static List<Location> otimizaPontosDoBanco(List<Object> pontosDoBanco, Date inicio, Date fim) {
+		return otimizaPontosDoBanco(pontosDoBanco, inicio, fim, null); 
+	}
+	
+	
+	public  static List<Location> otimizaPontosDoBanco(List<Object> pontosDoBanco, Date inicio, Date fim, Location previous) {
+		
+		
 		
 		List<Location> pontosMapa = new ArrayList<Location>();
 		
@@ -27,21 +42,22 @@ public class MapaUtil  {
 		}else {
 			List<Location> pontosDeParada = new ArrayList<Location>();
 			
-			Location initLoc = getLocationFromObject(pontosDoBanco.get(0));
-			initLoc.setDateLocation(inicio);
-			initLoc.setDateLocationInicio(inicio);
-			pontosDoBanco.add(0,initLoc);
+			if(previous!=null && previous.getImei()!=null && previous.getImei().startsWith("000000")) {
+				previous.setDateLocation(inicio);
+				previous.setDateLocationInicio(inicio);
+				pontosDoBanco.add(0,previous);
+			}
 			
 			
 			
 			Date now = new Date();
 			
-			Location fimLoc = getLocationFromObject(pontosDoBanco.get(pontosDoBanco.size()-1));
-			if(fimLoc.getVelocidade()<=0 || fimLoc.getComando().equals("STOP")) {
+		/*	Location fimLoc = getLocationFromObject(pontosDoBanco.get(pontosDoBanco.size()-1));
+			if(fimLoc.getComando()!=null && fimLoc.getComando().equals("STOP")) {
 				fimLoc.setDateLocation(fim.before(now)?fim:now);
 				fimLoc.setDateLocationInicio(fim.before(now)?fim:now);
 				pontosDoBanco.add(fimLoc);				
-			}
+			}*/
 			
 			
 			int size = pontosDoBanco.size();
@@ -63,7 +79,7 @@ public class MapaUtil  {
 							loc.setDateLocation(fim);
 
 				   boolean isFar = isFarOfLastLocation(loc,lastLoc);
-				   if(loc.getVelocidade()>0 || isFar){
+				   if(loc.getVelocidade() > VELOCIDADE_LIMITE_PARADA  || isFar){
 			            if(pontosDeParada.size()>0){
 			            	Location parada = getAverageLocation(pontosDeParada);
 			            	pontosDeParada.clear();
@@ -99,14 +115,14 @@ public class MapaUtil  {
 	
 
 	public static boolean isParada(Location loc){
-		if(loc.getVelocidade()>0)
+		if(loc.getVelocidade()> VELOCIDADE_LIMITE_PARADA)
 			return false;
 		return loc.getDateLocation().getTime() - loc.getDateLocationInicio().getTime() > 3*60*1000;
 	}	
 	
 	
 	private static boolean isFarOfLastLocation(Location loc, Location lastLoc) {
-		if(lastLoc == null || lastLoc.getVelocidade()>0 || loc.getVelocidade()>0)// TODO Auto-generated method stub
+		if(lastLoc == null || lastLoc.getVelocidade()>VELOCIDADE_LIMITE_PARADA || loc.getVelocidade()>VELOCIDADE_LIMITE_PARADA)// TODO Auto-generated method stub
 			return false;
 		//System.out.println(VicentDistance.distVincenty(loc.getLatitude(),loc.getLongitude(),lastLoc.getLatitude(),lastLoc.getLongitude()));
 		return GeoDistanceCalulator.vicentDistance(loc.getLatitude(),loc.getLongitude(),lastLoc.getLatitude(),lastLoc.getLongitude())>100;

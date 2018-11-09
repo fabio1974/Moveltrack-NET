@@ -78,19 +78,27 @@ public class PontosMapa extends HttpServlet {
 			//for debug only. Comment it for production!
 			//fim = new Date();
 			//Date contaInicio = new Date();
+			
+			Location previous = null;
 
 			try{
 				Veiculo veiculo = veiculoDao.findByEquipamento(imei);
 				List<Object> pontosCrus = locationDao.getLocationsFromVeiculo(veiculo,inicio,fim);
 				if(pontosCrus==null || pontosCrus.size()==0){
 					pontosCrus = new ArrayList<Object>();
-					pontosCrus.add(locationDao.getLastLocationFromVeiculo(veiculo));
-				}	
-				pontosOtimizados = MapaUtil.otimizaPontosDoBanco(pontosCrus,inicio,fim);
+					Location lastLoc = locationDao.getLastLocationFromVeiculo(veiculo);
+					if(lastLoc!=null)
+						pontosCrus.add(locationDao.getLastLocationFromVeiculo(veiculo));
+				}else {
+					previous = locationDao.getPreviousLocation(MapaUtil.getLocationFromObject(pontosCrus.get(0)));	
+				}
+				
+				
+				pontosOtimizados = MapaUtil.otimizaPontosDoBanco(pontosCrus,inicio,fim,previous);
 				//Date contaFim = new Date();
 				//System.out.println(veiculo.getPlaca()+"-"+veiculo.getMarcaModelo() +"-"+ (contaFim.getTime() - contaInicio.getTime()));
 			}catch(Exception e){
-				System.out.println(e.getMessage());
+				e.printStackTrace();
 			}
 		}
 		if(!pontosOtimizados.isEmpty()) {
