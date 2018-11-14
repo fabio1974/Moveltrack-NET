@@ -16,6 +16,7 @@ import org.apache.commons.lang3.StringUtils;
 
 import com.google.gson.Gson;
 
+import net.moveltrack.dao.EquipamentoDao;
 import net.moveltrack.dao.GeoEnderecoDao;
 import net.moveltrack.dao.LocationDao;
 import net.moveltrack.dao.VeiculoDao;
@@ -57,6 +58,8 @@ public class PontosMapa extends HttpServlet {
 	@Inject 
 	LocationDao locationDao;
 	
+	@Inject EquipamentoDao equipamentoDao;
+	
 	@Inject
 	MapaBean mapaBean;
 	@Inject GeoEnderecoDao geoEnderecoDao;
@@ -75,9 +78,6 @@ public class PontosMapa extends HttpServlet {
 				fim = new Date();  
 			else
 				fim = new Date(Long.parseLong(fimStr)); 
-			//for debug only. Comment it for production!
-			//fim = new Date();
-			//Date contaInicio = new Date();
 			
 			Location previous = null;
 
@@ -93,10 +93,7 @@ public class PontosMapa extends HttpServlet {
 					previous = locationDao.getPreviousLocation(MapaUtil.getLocationFromObject(pontosCrus.get(0)));	
 				}
 				
-				
-				pontosOtimizados = MapaUtil.otimizaPontosDoBanco(pontosCrus,inicio,fim,previous);
-				//Date contaFim = new Date();
-				//System.out.println(veiculo.getPlaca()+"-"+veiculo.getMarcaModelo() +"-"+ (contaFim.getTime() - contaInicio.getTime()));
+				pontosOtimizados = MapaUtil.otimizaPontosDoBanco(pontosCrus,inicio,fim,previous,equipamentoDao.findByImei(imei));
 			}catch(Exception e){
 				e.printStackTrace();
 			}

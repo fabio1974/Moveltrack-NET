@@ -279,6 +279,8 @@ where vi.status <> 'FINALIZADA'
 	}
 	
 	public Location getPreviousLocation(Location current) {
+		if(current == null)
+			return null;
 		String sql = "select l from Location l where l.imei = '"+current.getImei()+"' and l.dateLocation<:currentDate order by l.dateLocation desc ";
 		Query q = getEm().createQuery(sql);
 		q.setParameter("currentDate",current.getDateLocation());

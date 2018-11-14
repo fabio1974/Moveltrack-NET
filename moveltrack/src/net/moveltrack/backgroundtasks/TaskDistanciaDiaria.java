@@ -69,7 +69,8 @@ public class TaskDistanciaDiaria extends Task {
 							
 						if(!objs.isEmpty()) {
 								
-								List<Location> locs = MapaUtil.otimizaPontosDoBanco(objs,inicio.getTime(),fim.getTime());
+								Location previous = locationDao.getPreviousLocation(MapaUtil.getLocationFromObject(objs.get(0)));
+								List<Location> locs = MapaUtil.otimizaPontosDoBanco(objs,inicio.getTime(),fim.getTime(),previous,veiculo.getEquipamento());
 
 								DistanciaDiaria dd = new DistanciaDiaria();
 								double distance = getDistance(locs);

@@ -186,8 +186,8 @@ public class RelatorioDistanciaPercorridaBean extends Report implements Serializ
 		List<Object> objs = locationDao.getLocationsFromVeiculo(veiculo,inicioHoje.getTime(),fimHoje.getTime());
 			
 		if(!objs.isEmpty()) {
-
-				List<Location> locs = MapaUtil.otimizaPontosDoBanco(objs,inicioHoje.getTime(),fimHoje.getTime());
+				Location previous = locationDao.getPreviousLocation(MapaUtil.getLocationFromObject(objs.get(0)));
+				List<Location> locs = MapaUtil.otimizaPontosDoBanco(objs,inicioHoje.getTime(),fimHoje.getTime(),previous,veiculo.getEquipamento());
 				DistanciaDiaria dd = new DistanciaDiaria();
 				double distance = getDistance(locs);
 				dd.setDataComputada(inicioHoje.getTime());

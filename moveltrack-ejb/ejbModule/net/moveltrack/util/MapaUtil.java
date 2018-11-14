@@ -9,9 +9,11 @@ import javax.ejb.Stateless;
 import javax.inject.Inject;
 
 import net.moveltrack.dao.LocationDao;
+import net.moveltrack.domain.Equipamento;
 import net.moveltrack.domain.Location;
 import net.moveltrack.domain.Location2;
 import net.moveltrack.domain.Mapa;
+import net.moveltrack.domain.ModeloRastreador;
 import net.moveltrack.domain.Vertice;
 
 @Stateless
@@ -22,14 +24,12 @@ public class MapaUtil  {
 	@Inject static LocationDao locationDao;
 	
 	
-	public  static List<Location> otimizaPontosDoBanco(List<Object> pontosDoBanco, Date inicio, Date fim) {
-		return otimizaPontosDoBanco(pontosDoBanco, inicio, fim, null); 
-	}
+	/*public  static List<Location> otimizaPontosDoBanco(List<Object> pontosDoBanco, Date inicio, Date fim, Location previous,Equipamento equipamento) {
+		return otimizaPontosDoBanco(pontosDoBanco, inicio, fim, previous, equipamento); 
+	}*/
 	
 	
-	public  static List<Location> otimizaPontosDoBanco(List<Object> pontosDoBanco, Date inicio, Date fim, Location previous) {
-		
-		
+	public  static List<Location> otimizaPontosDoBanco(List<Object> pontosDoBanco, Date inicio, Date fim, Location previous, Equipamento equipamento) {
 		
 		List<Location> pontosMapa = new ArrayList<Location>();
 		
@@ -38,78 +38,127 @@ public class MapaUtil  {
 		
 		if(pontosDoBanco.size()==1){
 			pontosMapa.add(getLocationFromObject(pontosDoBanco.get(0)));
-			//center.setLocation(pontosMapa.get(0).getLongitude(),pontosMapa.get(0).getLatitude());
 		}else {
-			List<Location> pontosDeParada = new ArrayList<Location>();
-			
-			if(previous!=null && previous.getImei()!=null && previous.getImei().startsWith("000000")) {
-				previous.setDateLocation(inicio);
-				previous.setDateLocationInicio(inicio);
-				pontosDoBanco.add(0,previous);
-			}
 			
 			
-			
-			Date now = new Date();
-			
-		/*	Location fimLoc = getLocationFromObject(pontosDoBanco.get(pontosDoBanco.size()-1));
-			if(fimLoc.getComando()!=null && fimLoc.getComando().equals("STOP")) {
-				fimLoc.setDateLocation(fim.before(now)?fim:now);
-				fimLoc.setDateLocationInicio(fim.before(now)?fim:now);
-				pontosDoBanco.add(fimLoc);				
-			}*/
+			if(equipamento!=null && equipamento.getModelo() == ModeloRastreador.SPOT_TRACE)
+				calculaParadasSpot(pontosDoBanco, inicio, fim, pontosMapa, previous);
+			else
+				calculaParadas(pontosDoBanco, inicio, fim, pontosMapa);
 			
 			
-			int size = pontosDoBanco.size();
-
-
-			Location lastLoc=null;
-			for (int i = 0; i < size; i++) {
-				   Location loc = getLocationFromObject(pontosDoBanco.get(i));	
-
-				   if(lastLoc!=null && lastLoc.getDateLocation().equals(loc.getDateLocation()) && lastLoc.getDateLocationInicio().equals(loc.getDateLocationInicio())){
-					   lastLoc = loc;
-					   continue;
-				   }
-					   
-				   
-				   if(i==0 && loc.getDateLocationInicio().before(inicio))
-							loc.setDateLocationInicio(inicio);
-				   if((i==size-1) && loc.getDateLocation().after(fim))
-							loc.setDateLocation(fim);
-
-				   boolean isFar = isFarOfLastLocation(loc,lastLoc);
-				   if(loc.getVelocidade() > VELOCIDADE_LIMITE_PARADA  || isFar){
-			            if(pontosDeParada.size()>0){
-			            	Location parada = getAverageLocation(pontosDeParada);
-			            	pontosDeParada.clear();
-			            	if(isFar)
-			            		pontosDeParada.add(loc);
-			            	pontosMapa.add(parada);
-			            }
-			            pontosMapa.add(loc);
-				   }else{
-					   pontosDeParada.add(loc);
-				   }
-				   lastLoc = loc;
-			}
-			//coloca a última parada
-		    if(pontosDeParada.size()>0){
-		    	for (Location location : pontosDeParada) {
-		    		pontosMapa.add(location);
-				}
-		       	Location parada = getLastStop(pontosDeParada);
-	       		//paradas.add(parada);
-	       		pontosMapa.add(parada);
-		    }
 		}
 		return pontosMapa;
-	    //coloca o centro no veículo, ultima posição
-		//if(pontosMapa.size()>0)//{
-			//Location loc = pontosMapa.get(pontosMapa.size()-1);
-			//center.setLocation(loc.getLongitude(),loc.getLatitude());
-		//}else
-			//center.setLocation(-51.82,-13.34);
+	}
+	
+	
+
+	
+	  
+
+	private static void calculaParadasSpot(List<Object> pontosDoBanco, Date inicio, Date fim, List<Location> pontosMapa, Location previous) {
+		
+		ParadaSpot paradaSpot = new ParadaSpot();
+		
+		Location lastLoc = null;
+		
+		if(previous!=null && 
+				(
+						previous.getComando().equals("STOP")
+						
+						||
+							 
+						(previous.getComando().equals("STATUS") && previous.getVelocidade() < VELOCIDADE_LIMITE_PARADA) 
+				)
+		){
+			previous.setDateLocation(inicio);
+			previous.setDateLocationInicio(inicio);
+			paradaSpot.abreParada(previous);
+			lastLoc = previous;
+		}	
+		
+		for (int i = 0; i < pontosDoBanco.size(); i++) {
+			   Location loc = getLocationFromObject(pontosDoBanco.get(i));	
+
+			   if(lastLoc!=null && lastLoc.getDateLocation().equals(loc.getDateLocation()) && lastLoc.getDateLocationInicio().equals(loc.getDateLocationInicio())){
+				   lastLoc = loc;
+				   continue;
+			   }
+
+			   
+			   
+			   if(loc.getComando().equals("STOP") || (loc.getComando().equals("STATUS") && loc.getVelocidade() < VELOCIDADE_LIMITE_PARADA) ){
+				   
+				   if(paradaSpot.isAberta()) {
+					   boolean isFar = isFarOfLastLocation(loc,lastLoc);
+					   if(isFar)
+						   paradaSpot.fechaEAbreNova(pontosMapa,loc);
+					   else
+						   paradaSpot.mantemParada(loc);
+				   }else {
+					   paradaSpot.abreParada(loc);
+				   }
+				   
+			   }
+			   
+			   else if(loc.getComando().equals("NEWMOVEMENT")){
+				   if(paradaSpot.isAberta()) 
+					   paradaSpot.fechaParada(pontosMapa, loc);
+				   pontosMapa.add(loc);
+			   }
+			   
+			   else {
+				   if(paradaSpot.isAberta()) 
+					   paradaSpot.fechaParada(pontosMapa, loc);
+				   pontosMapa.add(loc);
+			   }
+			   lastLoc = loc;
+		}
+	}	
+	
+	
+
+	private static void calculaParadas(List<Object> pontosDoBanco, Date inicio, Date fim, List<Location> pontosMapa) {
+		List<Location> pontosDeParada = new ArrayList<Location>();
+		int size = pontosDoBanco.size();
+		Location lastLoc=null;
+		for (int i = 0; i < size; i++) {
+			   Location loc = getLocationFromObject(pontosDoBanco.get(i));	
+			   if(lastLoc!=null && lastLoc.getDateLocation().equals(loc.getDateLocation()) && lastLoc.getDateLocationInicio().equals(loc.getDateLocationInicio())){
+				   lastLoc = loc;
+				   continue;
+			   }
+				   
+			   if(i==0 && loc.getDateLocationInicio().before(inicio))
+						loc.setDateLocationInicio(inicio);
+			   if((i==size-1) && loc.getDateLocation().after(fim))
+						loc.setDateLocation(fim);
+
+			   boolean isFar = isFarOfLastLocation(loc,lastLoc);
+			   if(loc.getVelocidade() > VELOCIDADE_LIMITE_PARADA  || isFar){
+		            if(pontosDeParada.size()>0){
+		            	Location parada = getAverageLocation(pontosDeParada);
+		            	pontosDeParada.clear();
+		            	if(isFar)
+		            		pontosDeParada.add(loc);
+		            	pontosMapa.add(parada);
+		            }
+		            pontosMapa.add(loc);
+			   }else{
+				   pontosDeParada.add(loc);
+			   }
+			   lastLoc = loc;
+		}
+		
+		//coloca a última parada
+	    if(pontosDeParada.size()>0){
+	    	for (Location location : pontosDeParada) {
+	    		pontosMapa.add(location);
+			}
+	       	Location parada = getLastStop(pontosDeParada);
+       		//paradas.add(parada);
+       		pontosMapa.add(parada);
+	    }
 	}
 	
 	
@@ -324,6 +373,8 @@ public class MapaUtil  {
 	
 	
 	public static Location getLocationFromObject(Object obj){
+		if(obj==null)
+			return null;
 		if(obj instanceof Location)
 			return (Location)obj;
 		else

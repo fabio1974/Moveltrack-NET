@@ -967,7 +967,8 @@ public class ReportDao extends DaoBean<Object>{
 		List<RelatorioVeiculo> lista = new ArrayList<RelatorioVeiculo>();
 		List<Location> pontosOtimizados = new ArrayList<Location>();
 		List<Object> pontosCrus = locationDao.getLocationsFromVeiculo(veiculo,inicio,fim);
-		pontosOtimizados = MapaUtil.otimizaPontosDoBanco(pontosCrus,inicio,fim);
+		Location previous = locationDao.getPreviousLocation(MapaUtil.getLocationFromObject(pontosCrus.get(0)));
+		pontosOtimizados = MapaUtil.otimizaPontosDoBanco(pontosCrus,inicio,fim,previous,veiculo.getEquipamento());
 
 		int count=0;
 		
@@ -1079,7 +1080,8 @@ public class ReportDao extends DaoBean<Object>{
 		List<RelatorioVeiculo> lista = new ArrayList<RelatorioVeiculo>();
 		List<Location> pontosOtimizados = new ArrayList<Location>();
 		List<Object> pontosCrus = locationDao.getLocationsFromVeiculo(veiculo,inicio,fim);
-		pontosOtimizados = MapaUtil.otimizaPontosDoBanco(pontosCrus,inicio,fim);
+		Location previous = locationDao.getPreviousLocation(MapaUtil.getLocationFromObject(pontosCrus.get(0)));	
+		pontosOtimizados = MapaUtil.otimizaPontosDoBanco(pontosCrus,inicio,fim,previous,veiculo.getEquipamento());
 
 		int count=0;
 		

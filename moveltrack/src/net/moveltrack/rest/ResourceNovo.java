@@ -79,8 +79,10 @@ public class ResourceNovo {
     	int veiculoId = Integer.valueOf(veiculoIdStr);
     	Date inicio = new Date(Long.valueOf(inicioStr));
     	Date fim = new Date(Long.valueOf(fimStr));
-    	List<Object> list = locationDao.getLocationsFromVeiculo(veiculoDao.findById(veiculoId),inicio,fim);
-    	List<Location> otimizado = MapaUtil.otimizaPontosDoBanco(list,inicio,fim);
+    	Veiculo veiculo = veiculoDao.findById(veiculoId);
+    	List<Object> list = locationDao.getLocationsFromVeiculo(veiculo,inicio,fim);
+    	Location previous = locationDao.getPreviousLocation(MapaUtil.getLocationFromObject(list.get(0)));
+    	List<Location> otimizado = MapaUtil.otimizaPontosDoBanco(list,inicio,fim,previous,veiculo.getEquipamento());
         Gson gson  = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").setExclusionStrategies(new GsonExcludeStrategy()).create();
        	String result = otimizado==null||otimizado.size()==0?"[{\"retorno\":\" semLocationsParaVeiculo\"}]":gson.toJson(otimizado);
        	return result;
