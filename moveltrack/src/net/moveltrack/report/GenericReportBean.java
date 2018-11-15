@@ -58,6 +58,19 @@ public class GenericReportBean implements Serializable {
 	protected Date fim;
 	protected Date fimExpiracao;
 	protected Date anteOntem;
+	protected String tipo;
+	
+	
+
+	public String getTipo() {
+		return tipo;
+	}
+
+
+	public void setTipo(String tipo) {
+		this.tipo = tipo;
+	}
+
 
 	public Date getAnteOntem() {
 		return anteOntem;

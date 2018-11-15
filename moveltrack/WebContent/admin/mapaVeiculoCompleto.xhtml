@@ -547,7 +547,7 @@ function initialize() {
 						
 						
 						<script type="text/javascript">
-						function goclicky()
+						function gochart(chart)
 						{
 							var width = 0.9 * screen.width;
 							var height = 0.8 * screen.height;
@@ -556,7 +556,7 @@ function initialize() {
 						    var y = screen.height/2 - height/2;
 						    
 						    //window.open(meh.href, 'sharegplus','height=485,width=700,left='+x+',top='+y);
-						    window.open('tacografo.xhtml', 'popupWindowName','width='+width+',height='+height+',left='+x+',top='+y, 'dependent=yes, menubar=no, toolbar=no');
+						    window.open(chart, 'popupWindowName','width='+width+',height='+height+',left='+x+',top='+y, 'dependent=yes, menubar=no, toolbar=no');
 						}
 						</script>
 						
@@ -567,13 +567,30 @@ function initialize() {
 									<h:outputLink style="width:100%" id="tacografo"
 										disabled="#{mapaVeiculoBean.reportDisabled or !bloqueioBean.stop}" 
 										styleClass="btn btn-primary btn-xs" 
-										onclick="goclicky();return false;" >
+										onclick="gochart('tacografo.xhtml');return false;" >
         								<h:outputText value="Gráfico de Velocidade: Tacógrafo Virtual" />
 									</h:outputLink>	
 										
 								</div>
 							</div>
 						</div>
+						
+						<div class="row">
+							<div class="col-sm-12">
+								<div class="form-group">
+										
+									<h:outputLink style="width:100%" id="pye"
+										disabled="#{mapaVeiculoBean.reportDisabled or !bloqueioBean.stop}" 
+										styleClass="btn btn-primary btn-xs" 
+										onclick="gochart('chartModelo.xhtml');return false;" >
+        								<h:outputText value="Gráfico de Torta Modelo" />
+									</h:outputLink>	
+										
+								</div>
+							</div>
+						</div>
+						
+						
 					</h:form>
 
 
