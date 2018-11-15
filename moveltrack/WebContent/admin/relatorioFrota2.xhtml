@@ -144,7 +144,7 @@
 												<td class="customFooter">Produtividade do Motorista</td>
 												<td class="customFooter">
 												<center>
-													<h:panelGrid columns="6">
+													<h:panelGrid columns="8">
 														<h:commandLink style="width:80px" value="Pdf" 
 															action="#{relatorioMotoristaBean.pdf('PDF')}"
 															styleClass="btn btn-primary btn-xs" >
@@ -155,7 +155,17 @@
 															action="#{relatorioMotoristaBean.pdf('EXCEL')}"
 															styleClass="btn btn-primary btn-xs" >
 														<i class="fa fa-file-excel-o"/>
-														</h:commandLink>	
+														</h:commandLink>
+														
+														&nbsp;&nbsp;&nbsp;&nbsp;
+														
+														<h:commandLink style="width:80px" id="produtividadeMotoristaChart"
+															styleClass="btn btn-primary btn-xs" 
+															onclick="gochart('chartModelo.xhtml?tipo=produtividadeMotorista');return false;" >
+					        								<h:outputText value="Gráfico" />
+														</h:commandLink>		
+														
+															
 													</h:panelGrid>
 													</center>
 													</td>
@@ -178,6 +188,17 @@
 															styleClass="btn btn-primary btn-xs" >
 														<i class="fa fa-file-excel-o"/>
 														</h:commandLink>	
+														
+														&nbsp;&nbsp;&nbsp;&nbsp;
+														
+														<h:commandLink style="width:80px" id="consumoMotoristaChart"
+															styleClass="btn btn-primary btn-xs" 
+															onclick="gochart('chartModelo.xhtml?tipo=consumoMotorista');return false;" >
+					        								<h:outputText value="Gráfico" />
+														</h:commandLink>	
+														
+														
+														
 													</h:panelGrid>
 													</center>
 													</td>
@@ -200,7 +221,17 @@
 															action="#{relatorioDestinoBean.pdf('EXCEL')}"
 															styleClass="btn btn-primary btn-xs" >
 														<i class="fa fa-file-excel-o"/>
-														</h:commandLink>	
+														</h:commandLink>
+														
+														&nbsp;&nbsp;&nbsp;&nbsp;
+														
+														<h:commandLink style="width:80px" id="produtividadeDestinoChart"
+															styleClass="btn btn-primary btn-xs" 
+															onclick="gochart('chartModelo.xhtml?tipo=produtividadeDestino');return false;" >
+					        								<h:outputText value="Gráfico" />
+														</h:commandLink>
+														
+															
 													</h:panelGrid>
 													</center>
 													</td>
@@ -223,6 +254,15 @@
 															styleClass="btn btn-primary btn-xs" >
 														<i class="fa fa-file-excel-o"/>
 														</h:commandLink>	
+														
+														&nbsp;&nbsp;&nbsp;&nbsp;
+														
+														<h:commandLink style="width:80px" id="produtividadeEstadoChart"
+															styleClass="btn btn-primary btn-xs" 
+															onclick="gochart('chartModelo.xhtml?tipo=produtividadeEstado');return false;" >
+					        								<h:outputText value="Gráfico" />
+														</h:commandLink>
+														
 													</h:panelGrid>
 													</center>
 													</td>
@@ -245,6 +285,15 @@
 															styleClass="btn btn-primary btn-xs" >
 														<i class="fa fa-file-excel-o"/>
 														</h:commandLink>	
+														
+														&nbsp;&nbsp;&nbsp;&nbsp;
+														
+														<h:commandLink style="width:80px" id="produtividadeMesChart"
+															styleClass="btn btn-primary btn-xs" 
+															onclick="gochart('chartModelo.xhtml?tipo=produtividadeMes');return false;" >
+					        								<h:outputText value="Gráfico" />
+														</h:commandLink>
+														
 													</h:panelGrid>
 													</center>
 													</td>
@@ -266,7 +315,18 @@
 															action="#{relatorioMensalDespesaBean.pdf('EXCEL')}"
 															styleClass="btn btn-primary btn-xs" >
 														<i class="fa fa-file-excel-o"/>
-														</h:commandLink>	
+														</h:commandLink>
+														
+														&nbsp;&nbsp;&nbsp;&nbsp;
+														
+														<h:commandLink style="width:80px" id="despesasMesChart"
+															styleClass="btn btn-primary btn-xs" 
+															onclick="gochart('chartModelo.xhtml?tipo=despesasMes');return false;" >
+					        								<h:outputText value="Gráfico" />
+														</h:commandLink>
+														
+														
+															
 													</h:panelGrid>
 													</center>
 													</td>
