@@ -50,19 +50,7 @@ public class GeoEnderecoDao extends DaoBean<GeoEndereco>{
 	
 	
 	
-	public static String getAddressFromLocation(double latitude, double longitude){
-
-		GeoApiContext context = new GeoApiContext.Builder().apiKey("AIzaSyCg5eE_buXJLsJZbnTZ7z3MnJBOV3_RoYc").build();
-		LatLng latlng = new LatLng(latitude,longitude);
-		GeocodingApiRequest req = GeocodingApi.reverseGeocode(context, latlng).language("pt-BR");
-		try {
-			GeocodingResult[] results =  req.await();
-			return results[0].formattedAddress;
-		} catch (Exception e) {
-			e.printStackTrace();
-			return "";
-		}
-	}
+	
 		
 	
 
@@ -81,11 +69,28 @@ public class GeoEnderecoDao extends DaoBean<GeoEndereco>{
 			}	
 		}
 		
-		if(gc)
-			return getAddressFromLocation(location.getLatitude(),location.getLongitude());
+		if(gc) {
+			String address = getAddressFromLocation(location.getLatitude(),location.getLongitude());
+			if(address.length()>0)
+				insertGeoEnderecoConfiavel(address,location.getLatitude(),location.getLongitude());
+			return address;
+		}	
 		return "";
 	}	
 	
+	public static String getAddressFromLocation(double latitude, double longitude){
+
+		GeoApiContext context = new GeoApiContext.Builder().apiKey("AIzaSyCg5eE_buXJLsJZbnTZ7z3MnJBOV3_RoYc").build();
+		LatLng latlng = new LatLng(latitude,longitude);
+		GeocodingApiRequest req = GeocodingApi.reverseGeocode(context, latlng).language("pt-BR");
+		try {
+			GeocodingResult[] results =  req.await();
+			return results[0].formattedAddress;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return "";
+		}
+	}
 	
 	@Transactional
 	private void insertGeoEnderecoConfiavel(String endereco,double latitude, double longitude){
