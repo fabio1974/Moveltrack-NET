@@ -32,7 +32,8 @@ import net.moveltrack.security.LoginBean;
 
 
 @Named
-public class DespesaFrotaForm extends ConversationBaseAction implements Serializable {
+@SessionScoped
+public class DespesaFrotaForm extends BaseAction implements Serializable {
 
 	private static final long serialVersionUID = 402618051540830394L;
 
@@ -48,12 +49,12 @@ public class DespesaFrotaForm extends ConversationBaseAction implements Serializ
 
 
 	public DespesaFrotaForm() {
-		System.out.println("Constructor ... ");
+		System.out.println("Constructor ... "+this.getClass().getCanonicalName());
 	}
 
 	@PostConstruct
 	public void init() {
-		System.out.println("Init ... ");
+		System.out.println("Init ... "+this.getClass().getCanonicalName());
 		if(despesaFrota==null)
 			buildNewObject();
 	}
@@ -61,7 +62,7 @@ public class DespesaFrotaForm extends ConversationBaseAction implements Serializ
 	private void buildNewObject(){
 		despesaFrota = new DespesaFrota();
 		despesaFrota.setDataDaDespesa(new Date());
-		despesaFrota.setDataDePagamento(new Date());
+		//despesaFrota.setDataDePagamento(new Date());
 	}
 	
 
@@ -146,10 +147,10 @@ public class DespesaFrotaForm extends ConversationBaseAction implements Serializ
 			return false;
 		}
 		
-		if (despesaFrota.getCategoria()!=DespesaFrotaCategoria.VIAGEM && despesaFrota.getDataDePagamento()==null) {
+		/*if (despesaFrota.getCategoria()!=DespesaFrotaCategoria.VIAGEM && despesaFrota.getDataDePagamento()==null) {
 			operacaoErro("error.despesaFrota.dataDePagamento.nao.informado","dataDePagamento", false);
 			return false;
-		}
+		}*/
 		
 		if (despesaFrota.getCategoria()==DespesaFrotaCategoria.VIAGEM && despesaFrota.getViagem()==null) {
 			operacaoErro("error.despesaFrota.viagem.nao.informado","viagem", false);

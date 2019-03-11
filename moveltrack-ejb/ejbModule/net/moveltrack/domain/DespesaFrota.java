@@ -70,8 +70,8 @@ public class DespesaFrota extends BaseEntity {
 		this.cliente = cliente;
 	}
 
-	@Temporal(TemporalType.TIMESTAMP)
-    private Date dataDePagamento;
+	/*@Temporal(TemporalType.TIMESTAMP)
+    private Date dataDePagamento;*/
 
 	public Date getDataDaDespesa() {
 		return dataDaDespesa;
@@ -129,12 +129,12 @@ public class DespesaFrota extends BaseEntity {
 	public void setEspecie(DespesaFrotaEspecie especie) {
 		this.especie = especie;
 	}
-	public Date getDataDePagamento() {
+	/*public Date getDataDePagamento() {
 		return dataDePagamento;
 	}
 	public void setDataDePagamento(Date dataDePagamento) {
 		this.dataDePagamento = dataDePagamento;
-	}
+	}*/
 
 	public static long getSerialversionuid() {
 		return serialVersionUID;

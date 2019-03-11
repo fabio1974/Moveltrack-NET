@@ -97,6 +97,9 @@ public class MapaUtil  {
 						   paradaSpot.mantemParada(loc);
 				   }else {
 					   paradaSpot.abreParada(loc);
+					   if(i==pontosDoBanco.size()-1) {
+						   paradaSpot.fechaParada(pontosMapa, loc);
+					   }
 				   }
 				   
 			   }

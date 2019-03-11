@@ -679,8 +679,16 @@ public class ReportDao extends DaoBean<Object>{
 						+  (cliente!=null?" v.cliente_id=:clienteId and":" ")				
 						+" month(v.partida)=:mes and year(v.partida)=:ano"
 						+" group by d.especie";
+		
+		String sql2 = "select d.especie,sum(d.valor) from despesafrota d"
+						+" where"
+						+  (cliente!=null?" d.cliente_id=:clienteId and":" ")				
+						+" month(d.dataDaDespesa)=:mes and year(d.dataDaDespesa)=:ano"
+						+" group by d.especie";
 
-		Query query = getEm().createNativeQuery(sql);
+		
+
+		Query query = getEm().createNativeQuery(sql2);
 		if(cliente!=null)
 			query.setParameter("clienteId",cliente.getId());
 		query.setParameter("mes",mes);
@@ -709,7 +717,7 @@ public class ReportDao extends DaoBean<Object>{
 						rmd.setTransito(rmd.getTransito()+valor);
 						break;
 					case MANUTENCAO:
-						rmd.setDiarias(valor);
+						rmd.setManutencao(valor);
 						break;
 					case MULTA_DE_TRANSITO:
 						rmd.setTransito(rmd.getTransito()+valor);
