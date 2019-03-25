@@ -322,8 +322,12 @@ public class ReportDao extends DaoBean<Object>{
 				+" sum(v.valorDaCarga) as valorDaCarga,"
 				+" sum(v.pesoDaCarga) as pesoDaCarga,"
 				+" sum(v.distanciaHodometro) as distanciaPercorrida,"
+				
 				+" 0 as despesaEstiva,"
-				+" 0 as despesaDiaria,"				
+				+" 0 as despesaDiaria,"
+				+" 0 as qtdCidadesMedia,"
+				+" 0 as diasViagensMedia,"				
+				+" 0 as mediaCargaLiquida,"
 				+" 0 as despesaTotal,"
 				+" 0 as despesaCombustivel,"
 				+" '' as motorista, "

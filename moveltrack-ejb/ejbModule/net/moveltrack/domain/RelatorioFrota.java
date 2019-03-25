@@ -27,6 +27,9 @@ public class RelatorioFrota{
 	private double despesaCombustivel;
 	private double despesaTotal;
 	private double distanciaPercorrida;
+	private double  qtdCidadesMedia;
+	private double  diasViagensMedia;				
+	private double  mediaCargaLiquida;
 	private double litros;
 	private double kml;
 	private double valorDevolucao;
@@ -64,7 +67,26 @@ public class RelatorioFrota{
 		return destino;
 	}
 	
+	public double getQtdCidadesMedia() {
+		return qtdCidadesMedia;
+	}
+	public void setQtdCidadesMedia(double qtdCidadesMedia) {
+		this.qtdCidadesMedia = qtdCidadesMedia;
+	}
+
 	
+	public double getDiasViagensMedia() {
+		return diasViagensMedia;
+	}
+	public void setDiasViagensMedia(double diasViagensMedia) {
+		this.diasViagensMedia = diasViagensMedia;
+	}
+	public double getMediaCargaLiquida() {
+		return mediaCargaLiquida;
+	}
+	public void setMediaCargaLiquida(double mediaCargaLiquida) {
+		this.mediaCargaLiquida = mediaCargaLiquida;
+	}
 	public String getEstado() {
 		return estado;
 	}

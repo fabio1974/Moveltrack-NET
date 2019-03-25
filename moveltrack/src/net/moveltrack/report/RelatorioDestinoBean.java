@@ -75,6 +75,7 @@ public class RelatorioDestinoBean extends Report implements Serializable {
 		double tLitros = 0;
 		double tDespesaCombustivel=0;
 		double tDespesaEstiva=0;
+		double tCargaLiquida=0;
 		double tDistanciaPercorrida=0;
 		
 		for (RelatorioFrota relatorioFrota : list) {
@@ -84,10 +85,15 @@ public class RelatorioDestinoBean extends Report implements Serializable {
 			tValorDaCarga += relatorioFrota.getValorDaCarga();
 			tPesoDaCarga += relatorioFrota.getPesoDaCarga();
 			tValorDevolucao += relatorioFrota.getValorDevolucao();
+			tCargaLiquida += relatorioFrota.getMediaCargaLiquida();
 			
 			LitrosValor lv = reportDao.getDespesasLitroPorDestino(relatorioFrota.getId(),grb.getInicio(),grb.getFim());
 			relatorioFrota.setLitros(lv.litros);
 			relatorioFrota.setDespesaCombustivel(lv.valor);
+			relatorioFrota.setDiasViagensMedia(relatorioFrota.getDiasViagens()/relatorioFrota.getQtdViagens());
+			relatorioFrota.setQtdCidadesMedia(relatorioFrota.getQtdCidades()/relatorioFrota.getQtdViagens());
+			relatorioFrota.setMediaCargaLiquida((relatorioFrota.getValorDaCarga()-relatorioFrota.getDespesaCombustivel())/relatorioFrota.getQtdViagens());
+
 			
 			//relatorioFrota.setDespesaEstiva(reportDao.getDespesaEstiva(relatorioFrota.getId(),grb.getInicio(),grb.getFim()));  //id do motorista
 			
@@ -115,6 +121,7 @@ public class RelatorioDestinoBean extends Report implements Serializable {
 		parameters.put("tQtdCidades",tQtdCidades);
 		parameters.put("tQtdClientes",tQtdClientes);
 		parameters.put("tValorDaCarga",tValorDaCarga);
+		parameters.put("tCargaLiquida",tCargaLiquida);
 		parameters.put("tPesoDaCarga",tPesoDaCarga);
 		parameters.put("tValorDevolucao",tValorDevolucao);
 		parameters.put("tDistanciaPercorrida",tDistanciaPercorrida);
