@@ -120,17 +120,15 @@ public class EquipamentoDAO {
 	
 	
 	
-/*	public Equipamento getEquipamentoByImei(String imei) {
-		Equipamento equipamento = null;
+/*	public int getAtrasoGmtByImei(String imei) {
+		int atrasoGmt = 0;
 		Connection conn = Conexao.getMovelTrackConnection();
 		try {
-			PreparedStatement pstm = conn.prepareStatement("select * from Equipamento where imei = ?");
+			PreparedStatement pstm = conn.prepareStatement("select atrasoGmt from Equipamento where imei = ?");
 			pstm.setString(1,imei);
 			ResultSet rs = pstm.executeQuery();
 			if(rs.next()) {
-				equipamento = new Equipamento();
-				equipamento.setModelo(getModeloFromOrdinal(rs.getInt("modelo")));
-				equipamento.setId(rs.getInt("id"));
+				atrasoGmt = rs.getInt("atrasoGmt");
 			}
 				
 		} catch (SQLException e) {
@@ -142,7 +140,7 @@ public class EquipamentoDAO {
 				e.printStackTrace();
 			}
 		}
-		return equipamento;
+		return atrasoGmt;
 	}*/
 	
 	

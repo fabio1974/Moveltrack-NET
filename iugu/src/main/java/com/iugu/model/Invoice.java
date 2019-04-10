@@ -105,6 +105,9 @@ public class Invoice implements Serializable {
 	@JsonProperty("payable_with")
 	private PayableWith payableWith;
 
+	public Invoice() {
+	}
+	
 	public Invoice(String email, Date dueDate, Item... items) {
 		this.email = email;
 		this.dueDate = dueDate;

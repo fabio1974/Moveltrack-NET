@@ -1,12 +1,19 @@
 package com.iugu;
 
+import java.io.IOException;
 import java.io.Serializable;
+import java.security.KeyManagementException;
+import java.security.NoSuchAlgorithmException;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Named;
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.SSLSocket;
+import javax.net.ssl.SSLSocketFactory;
 import javax.ws.rs.client.Client;
 
+import org.jboss.resteasy.client.jaxrs.ResteasyClient;
 import org.jboss.resteasy.client.jaxrs.ResteasyClientBuilder;
 
 import com.iugu.utils.OSValidator;
@@ -33,7 +40,8 @@ public class IuguConfiguration implements Serializable {
 		
 	}
 	
-	public Client getNewClient() {
+	
+	public Client getNewClient()   {
 		return ResteasyClientBuilder.newClient().register(new Authenticator(tokenId, ""));
 	}
 

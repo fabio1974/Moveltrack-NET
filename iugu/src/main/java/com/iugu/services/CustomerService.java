@@ -23,7 +23,7 @@ public class CustomerService {
 		this.iugu = iuguConfiguration;
 	}
 
-	public CustomerResponse create(Customer customer) throws IuguException {
+	public CustomerResponse create(Customer customer) throws IuguException  {
 		Response response = this.iugu.getNewClient().target(CREATE_URL).request().post(Entity.entity(customer, MediaType.APPLICATION_JSON));
 
 		int ResponseStatus = response.getStatus();

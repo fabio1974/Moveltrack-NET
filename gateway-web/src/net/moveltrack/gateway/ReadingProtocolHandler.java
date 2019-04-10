@@ -49,9 +49,14 @@ public abstract class ReadingProtocolHandler implements Serializable{
 				lastLocation.getDateLocation().getTime()!=loc.getDateLocation().getTime()){
 
 			if(loc.getLatitude()!=0 && loc.getVelocidade()<200 && loc.getLatitude()> -90){
-				LocationDAO.getInstance().insert(loc,"Location");
-				LocationDAO.getInstance().insert(loc,"Location2");
-				lastLocation = loc;
+				
+				if(loc.getImei().equals("358899053628072") && EquipamentoDAO.getInstance().getAtraso("358899053628072")==10) {
+					System.err.println("SHOW DE BOLA DEMAIS!!!!!");
+				}else {
+					LocationDAO.getInstance().insert(loc,"Location");
+					LocationDAO.getInstance().insert(loc,"Location2");
+					lastLocation = loc;
+				}
 			}
 		}
 	}
